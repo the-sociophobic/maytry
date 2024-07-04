@@ -1,0 +1,57 @@
+$main-background: var(--main-background)
+$main-text: var(--main-text)
+$main-blue: var(--main-blue)
+$form-bg: var(--form-bg)
+$secondary-text: var(--secondary-text)
+$blue-text: var(--blue-text)
+$red-text: var(--red-text)
+$green-text: var(--green-text)
+
+$bg-blue: var(--bg-blue)
+$main-gray: var(--main-gray)
+$secondary-active: var(--secondary-active)
+$secondary-active-transparent: var(--secondary-active-transparent)
+
+$green-member: var(--green-member)
+$button-box-shadow: var(--button-box-shadow)
+$button-border: var(--button-border)
+$green-box-border: var(--green-box-border)
+$green-box-background: var(--green-box-background)
+$green-button-primary: var(--green-button-primary)
+$green-button-secondary: var(--green-button-secondary)
+$pink-primary: var(--pink-primary)
+$pink-secondary: var(--pink-secondary)
+
+$white: #E8E9EA
+$black: #0E0E0E
+$font-black: #060606
+$border-black: #18181B
+
+$gray: #E8E9EA40
+$light-gray: #E8E9EAAF
+$italic-gray: #E8E9EA9A
+$delimeter-gray: #282828
+
+// $green-avatar: #01FF83
+$green-avatar: #dbe9f1
+$green-shadow: #01FE01
+$green-button-border: #26DC38
+
+  
+@function get-breakpoints($key: "md")
+  @return map-get($container-max-widths, $key)
+
+  
+$spacer: 1rem
+$spacers: ( 0: 0, 1: $spacer * .25, 2: $spacer * .5, 3: $spacer, 4: $spacer * 1.5, 5: $spacer * 3 )
+
+
+// GRID
+$grid-columns: 12
+
+$grid-breakpoints: ( xs: 0, sm: 576px, md: 768px, lg: 1024px, xl: 1368px )
+
+$grid-gutter-width: 24px
+$gutters: ( 0: 0, 1: $grid-gutter-width, 2: $grid-gutter-width * 2, 3: $grid-gutter-width * 3, 4: $grid-gutter-width * 4, 5: $grid-gutter-width * 5 )
+
+$container-max-widths: ( xs: 100vw, sm: 540px + $grid-gutter-width, md: 720px + $grid-gutter-width, lg: 920px + $grid-gutter-width, xl: 1200px + $grid-gutter-width )
