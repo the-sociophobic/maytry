@@ -2,6 +2,7 @@
 @import './vars.sass'
 @import './fonts.sass'
 @import './modificators.sass'
+@import './components.sass'
 
 @import '~bootstrap/scss/bootstrap.scss'
 
@@ -25,7 +26,8 @@ body
     @extend .d-flex
     @extend .flex-column
     .Header
-      height: 80px
+      @extend .d-flex
+      min-height: 80px
       background-color: $main-background
       &--relative
         position: relative
@@ -35,195 +37,29 @@ body
         top: 0
         left: 0
         width: 100vw
-        border-bottom: 1px solid $main-text
+      &__logo
+        width: 180px
+      &__section
+        width: 120px
+    .Footer
+      height: 80px
+      line-height: 80px
     .content
       position: relative
       width: 100vw
       overflow-x: hidden
       // padding-top: 30px
-      @extend .flex-grow-1
       @extend .d-flex
       @extend .flex-column
+      @extend .flex-grow-1
       @extend .justify-content-start
       @extend .align-items-stretch
       .container
-        height: 100%
+        @extend .d-flex
+        @extend .flex-column
+        @extend .flex-grow-1
         padding-left: 15px
         padding-right: 15px
 
-.container
-  max-width: 600px
-
 a
   text-decoration: none !important
-
-$button-height: 39px
-.Button
-  cursor: pointer
-  &__left,
-  &__right
-    // @extend .font-inherit
-  &--disabled
-    opacity: .5
-    cursor: not-allowed
-  &--green,
-  &--pink,
-  &--transparent
-    width: 100%
-    border-radius: 12px
-    padding: 0 16px
-    height: $button-height
-    line-height: $button-height
-    color: $main-text
-    font-weight: 600
-    @extend .d-flex
-    @extend .flex-row
-    @extend .align-items-center
-    @extend .text-center
-    box-shadow: $button-box-shadow
-    &:hover:enabled
-      opacity: 0.85
-
-  &--green
-    background: linear-gradient(269.55deg, $green-button-primary 0.39%, $green-button-secondary 95.73%)
-    border: 1px solid $button-border
-    border: 0
-  &--pink
-    background: linear-gradient(269.55deg, $pink-secondary 0.39%, $pink-primary 95.73%)
-    border: 1px solid $pink-primary
-  &--transparent
-    box-shadow: none
-    background: none
-    color: $green-member
-
-.Input,
-.TextArea
-  width: 100%
-  position: relative
-  &__label
-    @extend .h4
-    @extend .mb-3
-  &__input
-    width: 100%
-    background-color: $main-background
-    border-radius: 15px
-    padding: 8px 15px
-    color: $main-text
-    line-height: 2
-    outline: none
-    border: .5px solid $secondary-text
-    transition: border-color .35s
-    position: relative
-    &:focus
-      border-color: $main-text
-    // Remove arrows
-    /* Chrome, Safari, Edge, Opera */
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button
-      -webkit-appearance: none
-      margin: 0
-    /* Firefox */
-    &[type=number]
-      -moz-appearance: textfield
-    &--max
-      padding-right: 170px
-  &__max
-    cursor: pointer
-    max-width: 200px
-    text-align: right
-    line-height: 2
-    padding: 8px 15px 8px 10px
-    position: absolute
-    top: 0
-    right: 0
-    &__text,
-    &__number
-      display: inline-block
-    &__text
-      margin-right: 10px
-      color: $green-member
-    &__number
-      color: $secondary-text
-  &__children
-    position: absolute
-    z-index: 100
-    left: 0
-    top: 100%
-    width: 100%
-  &--accepted
-    input,
-    textarea
-      @extend .accepted-input
-
-.inactive-input
-  transition: border-color .35s, box-shadow .35s
-  border: .5px solid $gray
-.focused-input
-  transition: border-color .35s, box-shadow .35s
-  border: .5px solid $main-text
-.accepted-input
-  transition: border-color .35s, box-shadow .35s
-  border: .5px solid $green-button-border !important
-  box-shadow: 0 0 10px 0 #01FE0180
-
-
-.Loader
-  position: fixed
-  top: 0
-  left: 0
-  width: 100vw
-  height: 100vh
-  background-color: $main-background
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  &__Logo
-    animation: scale 2s ease-in-out infinite
-    @keyframes scale
-      0%
-        transform: scale(2)
-      50%
-        transform: scale(2.4)
-      100%
-        transform: scale(2)
-
-$avatar-size: 24px
-.Avatar
-.ItemImg
-  width: $avatar-size
-  height: $avatar-size
-  border-radius: $avatar-size / 4
-  box-shadow: 0 0 0 2px black
-  background-color: $green-avatar
-  overflow: hidden
-  @include font-params(16, 24, 500, black)
-  text-align: center
-  position: relative
-  &__img,
-  &__icon
-    position: absolute
-    top: 50%
-    left: 50%
-    transform: translate(-50%, -50%)
-    width: 70%
-    height: 70%
-  &__img
-    width: 100%
-    height: 100%
-  &__icon
-    path
-      fill: black
-
-$member-height: 42px
-$member-height-simple: 30px
-$member-height-inline: 24px
-.green-box
-  height: $member-height
-  border: $green-box-border
-  border: .5px solid $green-member
-  border-radius: $member-height / 2
-  background: $green-box-background
-  @include font-params(14, 42, 600, $green-member)
-  padding: 0 9px
-  margin: 0 10px 10px 0

@@ -37,6 +37,8 @@ $green-avatar: #dbe9f1
 $green-shadow: #01FE01
 $green-button-border: #26DC38
 
+$menu-transition: .2s ease-in-out
+
   
 @function get-breakpoints($key: "md")
   @return map-get($container-max-widths, $key)
@@ -47,11 +49,11 @@ $spacers: ( 0: 0, 1: $spacer * .25, 2: $spacer * .5, 3: $spacer, 4: $spacer * 1.
 
 
 // GRID
-$grid-columns: 12
+$grid-columns: 9
 
 $grid-breakpoints: ( xs: 0, sm: 576px, md: 768px, lg: 1024px, xl: 1368px )
 
-$grid-gutter-width: 24px
+$grid-gutter-width: 4px
 $gutters: ( 0: 0, 1: $grid-gutter-width, 2: $grid-gutter-width * 2, 3: $grid-gutter-width * 3, 4: $grid-gutter-width * 4, 5: $grid-gutter-width * 5 )
 
-$container-max-widths: ( xs: 100vw, sm: 540px + $grid-gutter-width, md: 720px + $grid-gutter-width, lg: 920px + $grid-gutter-width, xl: 1200px + $grid-gutter-width )
+$container-max-widths: ( xs: 100vw, sm: 540px + $grid-gutter-width, md: 720px + $grid-gutter-width, lg: 1060px + $grid-gutter-width, xl: 1354px + $grid-gutter-width )

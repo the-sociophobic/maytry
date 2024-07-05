@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 
 import { Link, NavLink } from 'react-router-dom'
 
@@ -14,6 +14,8 @@ export type LinkWrapperProps = {
   disabled?: boolean
   exact?: boolean
   outerRef?: any
+  onMouseOver?: MouseEventHandler<HTMLAnchorElement>
+  onMouseLeave?: MouseEventHandler<HTMLAnchorElement>
 }
 
 

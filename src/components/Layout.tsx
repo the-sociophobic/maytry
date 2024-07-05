@@ -1,8 +1,10 @@
 import { FC, ReactNode } from 'react'
 
 import useTitle from '../hooks/useTitle'
-import LinkWrapper, { LinkWrapperProps } from './LinkWrapper'
-import Button, { ButtonProps } from './Button'
+import { LinkWrapperProps } from './LinkWrapper'
+import { ButtonProps } from './Button'
+import Header from './Header'
+import Footer from './Footer'
 
 
 export type NavigationProps = Pick<LinkWrapperProps, 'disabled' | 'to'> & Pick<ButtonProps, 'title'> & {
@@ -11,24 +13,28 @@ export type NavigationProps = Pick<LinkWrapperProps, 'disabled' | 'to'> & Pick<B
 
 export type LayoutProps = {
   title: string
-  description: string
+  description?: string
   children: ReactNode
-  navigations: NavigationProps[]
+  navigations?: NavigationProps[]
 }
 
 
 const Layout: FC<LayoutProps> = ({
   title,
-  description,
+  // description,
   children,
-  navigations
+  // navigations
 }) => {
   useTitle(title)
 
   return (
-    <div className='Layout'>
-      {children}
-    </div>
+    <>
+      <Header />
+      <div className='container'>
+        {children}
+      </div>
+      <Footer />
+    </>
   )
 }
 

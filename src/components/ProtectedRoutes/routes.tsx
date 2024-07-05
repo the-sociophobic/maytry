@@ -1,4 +1,5 @@
 import Login from '../../pages/Login'
+import Main from '../../pages/Main'
 
 
 export type RouteType = {
@@ -17,8 +18,8 @@ const routes: RouteType[] = [
   },
   {
     to: '/*',
-    title: 'Проверка билета',
-    Comp: <Login />,
+    title: 'main',
+    Comp: <Main />,
   },
 ]
 

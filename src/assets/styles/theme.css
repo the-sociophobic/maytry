@@ -1,8 +1,10 @@
 :root {
   color-scheme: light dark;
 
-  --main-background: #34302d;
-  --main-text: white;
+  /* --main-background: #34302d;
+  --main-text: white; */
+  --main-background: white;
+  --main-text: black;
   --main-blue: #00AEEF;
   --form-bg: rgba(240, 239, 256, .2);
   --secondary-text: #B0B0B0;
@@ -11,7 +13,7 @@
   --green-text: #00DE73;
 
   --bg-blue: #315d88;
-  --main-gray: #222938;
+  --main-gray: rgb(219, 219, 219);
   --secondary-active: #364460;
   --secondary-active-transparent: rgba(54, 68, 96, .5);
 
