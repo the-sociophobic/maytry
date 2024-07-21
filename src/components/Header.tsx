@@ -1,18 +1,20 @@
 import { FC } from 'react'
 
 import useStore, { SortByType } from '../hooks/useStore'
-import { ItemType } from '../hooks/useContentful/types'
+// import { ItemType } from '../hooks/useContentful/types'
 import LinkWrapper from './LinkWrapper'
 import Button from './Button'
 import Input from './Input'
 import useRoute from '../hooks/useRoute'
+
+import logoImg from '../assets/images/logo.png'
 
 
 export type HeaderProps = {}
 
 
 const Header: FC<HeaderProps> = ({ }) => {
-  const { hoveredItem } = useStore()
+  // const { hoveredItem } = useStore()
   const route = useRoute()
 
   return (
@@ -22,15 +24,10 @@ const Header: FC<HeaderProps> = ({ }) => {
         <div className='container'>
           <div className='h-100 d-flex flex-row align-items-center'>
             <LinkWrapper to='/'>
-              <div className='Header__logo'>
-                MAYTRY
-              </div>
+              <img src={logoImg} className='Header__logo' />
             </LinkWrapper>
             {route?.to === '/*' ?
-              hoveredItem ?
-                <HeaderPreview {...hoveredItem} />
-                :
-                <HeaderControls />
+              <HeaderControls />
               :
               <LinkWrapper to='/'>
                 <Button>
@@ -79,8 +76,8 @@ const Header: FC<HeaderProps> = ({ }) => {
 
 
 const HeaderControls = () => {
-  const { mainPageView } = useStore()
-  const { setMainPageView } = useStore()
+  // const { mainPageView } = useStore()
+  // const { setMainPageView } = useStore()
   const { showSearch } = useStore()
   const { setShowSearch } = useStore()
   const { searchString } = useStore()
@@ -99,7 +96,7 @@ const HeaderControls = () => {
       </div>
       {!showSort ?
         <>
-          <div className='Header__section d-flex'>
+          {/* <div className='Header__section d-flex'>
             <Button
               hoverable
               gray={mainPageView === 'IMG'}
@@ -114,7 +111,7 @@ const HeaderControls = () => {
             >
               TXT
             </Button>
-          </div>
+          </div> */}
           {showSearch ?
             <>
               <Input
@@ -158,15 +155,5 @@ const HeaderControls = () => {
   )
 }
 
-
-const HeaderPreview = (item: ItemType) =>
-  <>
-    <div className='Header__section ps-3'>
-      {item.name}
-    </div>
-    <div className='Header__section'>
-      {item.price} RUB
-    </div>
-  </>
 
 export default Header

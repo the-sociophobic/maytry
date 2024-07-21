@@ -8,7 +8,7 @@ const Login: FC = () => {
   const { data: user } = useUser()
 
   return (
-    <div>
+    <div className='container'>
       {user &&
         <>
           Привет, {printUsername(user)}

@@ -1,20 +1,20 @@
 import { FC } from 'react'
 
 
-export type ItemCardProps = {
+export type TemplateProps = {
 
 }
 
 
-const ItemCard: FC<ItemCardProps> = ({
+const Template: FC<TemplateProps> = ({
 
 }) => {
   return (
-    <div className='ItemCard'>
+    <div className='Template'>
 
     </div>
   )
 }
 
 
-export default ItemCard
+export default Template

@@ -4,6 +4,7 @@ import useContentful from '../hooks/useContentful'
 import ItemCard from '../components/ItemCard'
 import useStore from '../hooks/useStore'
 import ItemLine from '../components/ItemLine'
+import { FiberScene } from '../components/Fiber/FiberScene'
 
 
 export type MainProps = {}
@@ -15,20 +16,30 @@ const Main: FC<MainProps> = ({ }) => {
   const { mainPageView } = useStore()
 
   return (
-    <div className=''>
-      {contentful?.items
-        .filter(item =>
-          searchString.length === 0
-          || item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
-        )
-        .map(item =>
-          mainPageView === 'IMG' ?
-            <ItemCard {...item} />
-            :
-            <ItemLine {...item} />
-        )
-      }
-    </div>
+    <>
+      <FiberScene />
+      <div className='container'>
+        <div className={`
+      d-flex
+      flex-${mainPageView === 'IMG' ? 'row' : 'column'}
+      flex-wrap
+      justify-content-between
+    `}>
+          {contentful?.items
+            .filter(item =>
+              searchString.length === 0
+              || item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
+            )
+            .map(item =>
+              mainPageView === 'IMG' ?
+                <ItemCard {...item} />
+                :
+                <ItemLine {...item} />
+            )
+          }
+        </div>
+      </div>
+    </>
   )
 }
 

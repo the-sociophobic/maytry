@@ -30,9 +30,7 @@ const Layout: FC<LayoutProps> = ({
   return (
     <>
       <Header />
-      <div className='container'>
-        {children}
-      </div>
+      {children}
       <Footer />
     </>
   )

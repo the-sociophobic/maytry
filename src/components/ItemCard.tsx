@@ -4,6 +4,7 @@ import { ItemType } from '../hooks/useContentful/types'
 import LinkWrapper from './LinkWrapper'
 import Img from './Img'
 import useStore from '../hooks/useStore'
+import ItemData from './ItemData'
 
 
 export type ItemCardProps = ItemType
@@ -25,9 +26,10 @@ const ItemCard: FC<ItemCardProps> = (item) => {
           className='w-100'
         />
       }
-      <div className='ItemCard__name'>
+      {/* <div className='ItemCard__name'>
         {item.name}
-      </div>
+      </div> */}
+      <ItemData {...item} />
     </LinkWrapper>
   )
 }

@@ -174,15 +174,21 @@ $member-height-inline: 24px
 
 
 .ItemCard
-  width: 155px
+  width: 15.5%
   display: inline-block
   cursor: pointer
-  margin-right: 5px
-  margin-bottom: 30px
-  &__name
-    margin-top: 5px
-  &:hover .ItemCard__name
-    text-decoration: underline
+  // margin-right: 5px
+  margin-bottom: 20px
+  // &__name
+  //   margin-top: 5px
+  // &:hover .ItemCard__name
+  //   text-decoration: underline
+  *
+    color: $main-background
+  &:hover
+    *
+      color: $main-text
+
 
 .ItemLine
   @extend .d-flex
