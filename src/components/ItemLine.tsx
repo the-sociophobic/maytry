@@ -8,6 +8,8 @@ export type ItemLineProps = ItemType
 
 
 const ItemLine: FC<ItemLineProps> = (item) => {
+  const price = item.defaultPrice || item.color_price_size?.[0].price || 10000
+
   return (
     <LinkWrapper
       to={item.link}
@@ -17,7 +19,7 @@ const ItemLine: FC<ItemLineProps> = (item) => {
         {item.name}
       </div>
       <div className='ItemLine__price'>
-        {item.price} RUB
+        {price} RUB
       </div>
     </LinkWrapper>
   )

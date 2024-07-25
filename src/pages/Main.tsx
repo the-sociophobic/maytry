@@ -32,9 +32,15 @@ const Main: FC<MainProps> = ({ }) => {
             )
             .map(item =>
               mainPageView === 'IMG' ?
-                <ItemCard {...item} />
+                <ItemCard
+                  key={item.id}
+                  {...item}
+                />
                 :
-                <ItemLine {...item} />
+                <ItemLine
+                  key={item.id}
+                  {...item}
+                />
             )
           }
         </div>

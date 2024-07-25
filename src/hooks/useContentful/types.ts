@@ -2,13 +2,9 @@
 
 interface ContentfulItem {
   id: string
-  name: string
-  desc: JSX.Element
-  url: string
 }
 
 interface File extends ContentfulItem {
-  id: string
   file: {
     contentType: string
     details: {
@@ -27,18 +23,39 @@ interface File extends ContentfulItem {
 
 interface SiteType extends ContentfulItem {
   title: string
+  main_image: string
   header_filter_categories: CategoryType[]
   main_page_items: ItemType[]
-  main_image: string
+  footer_links: LinkType[]
 }
 interface ItemType extends ContentfulItem {
   link: string
   name: string
   description: string
-  price: number
-  images: File[]
   categories: CategoryType[]
-  available_sizes: SizeType[]
+  images: ImageType[]
+  color_price_size?: ColorPriceSizeType[]
+  defaultPrice?: number
+}
+
+interface ImageType extends ContentfulItem {
+  title: string
+  small: File
+  large?: File
+}
+
+interface ColorPriceSizeType extends ContentfulItem {
+  name: string
+  color: ColorType
+  price: number
+  salePrice?: number
+  size: SizeType
+}
+
+interface ColorType extends ContentfulItem {
+  name: string
+  small: File
+  large?: File
 }
 
 interface CategoryType extends ContentfulItem {
@@ -50,6 +67,18 @@ interface SizeType extends ContentfulItem {
   name: string
 }
 
+interface LinkType extends ContentfulItem {
+  link: string
+  title: string
+}
+
+interface PageType extends ContentfulItem {
+  link: string
+  title: string
+  text: JSX.Element
+  items: ItemType[]
+}
+
 
 export type {
   ContentfulItem,
@@ -57,6 +86,11 @@ export type {
 
   SiteType,
   ItemType,
+  ImageType,
+  ColorPriceSizeType,
+  ColorType,
   CategoryType,
-  SizeType
+  SizeType,
+  LinkType,
+  PageType,
 }

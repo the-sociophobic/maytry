@@ -1,12 +1,29 @@
 import { useQuery } from 'react-query'
 
 import { getContentfulData } from './helpers'
-import { ItemType, SiteType } from './types'
+import {
+  CategoryType,
+  ColorPriceSizeType,
+  ColorType,
+  ImageType,
+  ItemType,
+  LinkType,
+  PageType,
+  SiteType,
+  SizeType
+} from './types'
 
 
 export type ContentfulType = {
   sites: SiteType[]
   items: ItemType[]
+  images: ImageType[]
+  ColorPriceSize: ColorPriceSizeType[]
+  colors: ColorType[]
+  categories: CategoryType[]
+  sizes: SizeType[]
+  links: LinkType[]
+  pages: PageType[]
 }
 
 const useContentful = () => {

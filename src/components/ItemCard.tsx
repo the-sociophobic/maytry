@@ -22,7 +22,7 @@ const ItemCard: FC<ItemCardProps> = (item) => {
     >
       {item.images[0] &&
         <Img
-          file={item.images[0]}
+          file={item.images[0].small}
           className='w-100'
         />
       }

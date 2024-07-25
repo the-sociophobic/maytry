@@ -10,6 +10,7 @@ export type ItemProps = ItemType
 
 const Item: FC<ItemProps> = (item) => {
   const [zoomed, setZoomed] = useState(false)
+  const price = item.defaultPrice || item.color_price_size?.[0].price || 10000
 
   return (
     <div className='container'>
@@ -21,7 +22,7 @@ const Item: FC<ItemProps> = (item) => {
                 {item.name}
               </h3>
               <div className='mb-4'>
-                Price: {item.price} RUB
+                Price: {price} RUB
               </div>
               <div className=''>
                 {item.description}
@@ -34,7 +35,7 @@ const Item: FC<ItemProps> = (item) => {
             {item.images.map(image =>
               <div>
                 <Img
-                  file={image}
+                  file={zoomed ? image.large : image.small}
                   className={`mb-2 cursor-zoom-${zoomed ? 'out' : 'in'}`}
                   onClick={() => setZoomed(!zoomed)}
                 />
