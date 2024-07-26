@@ -4,6 +4,7 @@ import { ItemType } from '../hooks/useContentful/types'
 import ColorSizes from './ColorSizes'
 import printPrice from '../utils/printPrice'
 import parseColors from '../utils/parseColors'
+import Price from './Price'
 
 export type ItemDataProps = ItemType
 
@@ -21,21 +22,22 @@ const ItemData: FC<ItemDataProps> = ({
   return (
     <div className='ItemData'>
       <div className='d-flex flex-column'>
-        <div className={`ItemData__price ${salePrice && 'text-strikethrough'}`}>
-          {printPrice(price)}
+        <div className='ItemData__price'>
+          <Price
+            price={price}
+            salePrice={salePrice}
+          />
         </div>
-        {salePrice &&
-          <div className='ItemData__price'>
-            {printPrice(salePrice)}
-          </div>
-        }
       </div>
       <div className='d-flex flex-column'>
         <div className='mb-3'>
           {name}
         </div>
         {colors.map(colorSizes =>
-          <ColorSizes {...colorSizes} />
+          <ColorSizes
+            color={colorSizes.color}
+            sizes={colorSizes.sizes.map(size => size.size)}
+          />
         )}
       </div>
     </div>

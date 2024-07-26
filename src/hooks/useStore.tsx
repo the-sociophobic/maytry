@@ -2,6 +2,7 @@ import { create } from 'zustand'
 
 import { WebAppAuthObject } from '../utils/auth'
 import { ItemType } from './useContentful/types'
+import { ItemInCartType } from '../pages/Cart'
 
 
 export type StateType = {
@@ -25,6 +26,9 @@ export type StateType = {
 
   sortBy: SortByType
   setSortBy: (sortBy: SortByType) => void
+
+  itemsInCart: ItemInCartType[]
+  setItemInCart: (item: ItemInCartType, quantity: number) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -52,6 +56,22 @@ const useStore = create<StateType>(set => ({
 
   sortBy: 'Default',
   setSortBy: (sortBy: SortByType) => set({ sortBy }),
+
+  itemsInCart: [],
+  setItemInCart: (item: ItemInCartType, quantity) => set(state => {
+    const itemIndex = state.itemsInCart
+      .map(itemInCart => itemInCart.id)
+      .indexOf(item.id)
+
+    return ({
+      itemsInCart: [
+        ...state.itemsInCart.slice(0, itemIndex),
+        ...(quantity > 0 ? [{ ...item, quantity }] : []),
+        ...state.itemsInCart.slice(itemIndex + 1),
+      ]
+    })
+  }),
+
 }))
 
 

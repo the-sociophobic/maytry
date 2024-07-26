@@ -35,12 +35,16 @@ $button-height: 20px
   &:hover
     text-decoration: underline
   &--gray,
+  &--black,
   &--hoverable
     &:hover
       text-decoration: none
   &--gray,
   &--hoverable:hover
     background-color: $main-gray
+  &--black
+    color: $main-background
+    background-color: $main-text
 
 .Input,
 .TextArea
@@ -234,3 +238,30 @@ $color-square-size: 12px
   width: 100vw
   height: 100vh
   overflow-x: hidden
+
+
+.Cart
+  @extend .flex-grow-1
+  &__items
+    @extend .d-flex
+    @extend .flex-column
+  &__header,
+  &__items__item
+    @extend .d-flex
+    @extend .flex-row
+    @extend .justify-content-between
+    @extend .py-3
+    border-bottom: 1px solid $main-text
+    &__IMG
+      width: 200px
+    &__DETAILS
+      width: 200px
+    &__NAME
+      width: 200px
+    &__REMOVE
+      width: 200px
+    &__PRICE
+      width: 200px
+    &__SUBTOTAL
+      text-align: right
+      width: 200px

@@ -15,6 +15,10 @@ export type HeaderProps = {}
 
 const Header: FC<HeaderProps> = ({ }) => {
   // const { hoveredItem } = useStore()
+  const { itemsInCart } = useStore()
+  const numberOfItemsInCart = itemsInCart
+    .map(item => item.quantity)
+    .reduce((a, b) => a + b, 0)
   const route = useRoute()
 
   return (
@@ -61,8 +65,8 @@ const Header: FC<HeaderProps> = ({ }) => {
                   to='/cart'
                   className='d-inline-block'
                 >
-                  <Button hoverable>
-                    CART
+                  <Button black>
+                    КОРЗИНА ({numberOfItemsInCart})
                   </Button>
                 </LinkWrapper>
               </div>

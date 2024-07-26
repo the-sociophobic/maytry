@@ -1,10 +1,14 @@
 import { FC, useEffect, useRef, useState } from 'react'
 
 import { ItemType } from '../hooks/useContentful/types'
-import Img from '../components/Img'
-import Button from '../components/Button'
 import parseColors from '../utils/parseColors'
+import Button from '../components/Button'
 import Color from '../components/Color'
+import Img from '../components/Img'
+import Price from '../components/Price'
+import { pick } from 'lodash'
+import useStore from '../hooks/useStore'
+import { ItemInCartType } from './Cart'
 
 
 export type ItemProps = ItemType
@@ -15,7 +19,6 @@ const HEADER_HEIGHT = 80
 
 const Item: FC<ItemProps> = (item) => {
   const [zoomed, setZoomed] = useState(false)
-  const colors = parseColors(item.color_price_size)
 
   const [currentImage, setCurrentImage] = useState(0)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
@@ -62,7 +65,26 @@ const Item: FC<ItemProps> = (item) => {
   }
 
   const [currentColorIndex, setCurrentColorIndex] = useState(0)
+  const setColor = (colorIndex: number) => {
+    setCurrentColorIndex(colorIndex)
+    setCurrentSizeIndex(0)
+  }
+  const colors = parseColors(item.color_price_size)
   const currentColor = colors[currentColorIndex]
+  const [currentSizeIndex, setCurrentSizeIndex] = useState<number>(0)
+  const currentSize = currentColor.sizes[currentSizeIndex]
+  const { itemsInCart } = useStore()
+  const currentItemInCartBlank: ItemInCartType = {
+    ...item,
+    ...currentSize,
+    color: currentColor.color,
+    quantity: 0,
+    id: currentSize.id
+  }
+  const currentItemInCart = itemsInCart
+    .find(itemInCart => itemInCart.id === currentSize.id)
+    || currentItemInCartBlank
+  const { setItemInCart } = useStore()
 
   return (
     <div
@@ -78,29 +100,97 @@ const Item: FC<ItemProps> = (item) => {
                   {item.name}
                 </h3>
                 <div className='mb-4'>
-                  <div className='d-flex flex-row'>
+
+                  <div className='d-flex flex-column mb-4'>
                     {colors
-                      .map((colorSizes, colorSizesIndex) =>
-                        <Color
-                          {...colorSizes.color!}
-                          className='me-3'
-                          onClick={() => setCurrentColorIndex(colorSizesIndex)}
-                          selected={currentColorIndex === colorSizesIndex}
-                        />
-                      )
+                      .map((colorSizes, colorSizesIndex) => {
+                        const available = colorSizes.sizes
+                          .map(colorSize => colorSize.max_available > 0)
+                          .reduce((a, b) => a || b)
+
+                        return (
+                          <div
+                            className={`
+                              d-flex flex-row mb-2 cursor-pointer
+                              ${!available && 'text-disabled'}
+                            `}
+                            onClick={() => available && setColor(colorSizesIndex)}
+                          >
+                            <Color
+                              {...colorSizes.color!}
+                              className='me-3'
+                              selected={currentColorIndex === colorSizesIndex}
+                            />
+                            {colorSizes.color?.name}
+                          </div>
+                        )
+                      })
                     }
                   </div>
+
                   <div className='d-flex flex-row mt-3'>
-                    {currentColor.sizes.map(size =>
-                      <div className='me-3'>
-                        {size.name}
+                    <div className='me-3'>
+                      Размер:
+                    </div>
+                    {currentColor.sizes.map((size, sizeIndex) =>
+                      <div
+                        className={`
+                          me-3 cursor-pointer
+                          ${size.max_available === 0 && 'text-disabled'}
+                          ${(sizeIndex === currentSizeIndex && size.max_available > 0) && 'text-underline'}
+                        `}
+                        onClick={() => size.max_available > 0 && setCurrentSizeIndex(sizeIndex)}
+                      >
+                        {size.size.name}
                       </div>
                     )}
                   </div>
+
+                  <div className='d-flex flex-row mt-3 mb-4'>
+                    <div className='me-3'>
+                      Цена:
+                    </div>
+                    <Price {...pick(currentColor.sizes[currentSizeIndex], 'price', 'salePrice')} />
+                  </div>
+
+                  {currentItemInCart.quantity === 0 ?
+                    currentSize.max_available === 0 ? '' :
+                      <Button
+                        black
+                        className={``}
+                        onClick={() => setItemInCart(currentItemInCart, 1)}
+                      >
+                        В КОРЗИНУ
+                      </Button>
+                    :
+                    <div className='d-flex flex-row align-items-center'>
+                      <Button
+                        black
+                        className={``}
+                        onClick={() => setItemInCart(currentItemInCart, currentItemInCart.quantity - 1)}
+                      >
+                        -
+                      </Button>
+                      <div className='mx-3'>
+                        {currentItemInCart.quantity}
+                      </div>
+                      {currentItemInCart.quantity < currentItemInCart.max_available &&
+                        <Button
+                          black
+                          className={``}
+                          onClick={() => setItemInCart(currentItemInCart, currentItemInCart.quantity + 1)}
+                        >
+                          +
+                        </Button>
+                      }
+                    </div>
+                  }
+
                 </div>
                 <div className=''>
                   {item.description}
                 </div>
+
               </div>
             </div>
           }

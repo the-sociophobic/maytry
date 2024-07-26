@@ -51,7 +51,7 @@ interface ColorPriceSizeType extends ContentfulItem {
   price: number
   salePrice?: number
   size: SizeType
-  available: boolean
+  max_available: number
 }
 
 interface ColorType extends ContentfulItem {
