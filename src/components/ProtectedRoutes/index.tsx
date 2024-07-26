@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 
 import useStore from '../../hooks/useStore'
@@ -38,7 +38,8 @@ const ProtectedRoutes: React.FC = () => {
     , [contentful]
   )
 
-  useStore.setState({ user })
+  useEffect(() => useStore.setState({ user }), [user])
+  
 
   if (loadingUser)
     return <Loader />

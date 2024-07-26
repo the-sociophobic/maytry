@@ -36,6 +36,7 @@ interface ItemType extends ContentfulItem {
   images: ImageType[]
   color_price_size?: ColorPriceSizeType[]
   defaultPrice?: number
+  defaultSalePrice?: number
 }
 
 interface ImageType extends ContentfulItem {
@@ -46,16 +47,16 @@ interface ImageType extends ContentfulItem {
 
 interface ColorPriceSizeType extends ContentfulItem {
   name: string
-  color: ColorType
+  color?: ColorType
   price: number
   salePrice?: number
   size: SizeType
+  available: boolean
 }
 
 interface ColorType extends ContentfulItem {
   name: string
-  small: File
-  large?: File
+  colorCode: string
 }
 
 interface CategoryType extends ContentfulItem {

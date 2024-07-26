@@ -20,11 +20,11 @@ const Main: FC<MainProps> = ({ }) => {
       <FiberScene />
       <div className='container'>
         <div className={`
-      d-flex
-      flex-${mainPageView === 'IMG' ? 'row' : 'column'}
-      flex-wrap
-      justify-content-between
-    `}>
+          d-flex
+          flex-${mainPageView === 'IMG' ? 'row' : 'column'}
+          flex-wrap
+          justify-content-between
+        `}>
           {contentful?.items
             .filter(item =>
               searchString.length === 0

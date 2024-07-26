@@ -1,7 +1,9 @@
 import { FC } from 'react'
 
 import { ItemType } from '../hooks/useContentful/types'
-
+import ColorSizes from './ColorSizes'
+import printPrice from '../utils/printPrice'
+import parseColors from '../utils/parseColors'
 
 export type ItemDataProps = ItemType
 
@@ -9,28 +11,32 @@ export type ItemDataProps = ItemType
 const ItemData: FC<ItemDataProps> = ({
   name,
   color_price_size,
-  defaultPrice
+  defaultPrice,
+  defaultSalePrice
 }) => {
   const price = defaultPrice || color_price_size?.[0].price || 10000
+  const salePrice = defaultSalePrice || color_price_size?.[0].salePrice || 10000
+  const colors = parseColors(color_price_size)
 
   return (
-    <div className='d-flex flex-row my-3 justify-content-between'>
+    <div className='ItemData'>
       <div className='d-flex flex-column'>
-        <div className=''>
-          {price} RUB
+        <div className={`ItemData__price ${salePrice && 'text-strikethrough'}`}>
+          {printPrice(price)}
         </div>
+        {salePrice &&
+          <div className='ItemData__price'>
+            {printPrice(salePrice)}
+          </div>
+        }
       </div>
       <div className='d-flex flex-column'>
         <div className='mb-3'>
           {name}
         </div>
-        <div className='d-flex flex-row'>
-          {color_price_size?.map(c_p_s =>
-            <div className='me-3'>
-              {c_p_s.size.name}
-            </div>
-          )}
-        </div>
+        {colors.map(colorSizes =>
+          <ColorSizes {...colorSizes} />
+        )}
       </div>
     </div>
   )

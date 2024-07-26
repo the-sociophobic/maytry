@@ -177,17 +177,17 @@ $member-height-inline: 24px
   width: 15.5%
   display: inline-block
   cursor: pointer
-  // margin-right: 5px
   margin-bottom: 20px
-  // &__name
-  //   margin-top: 5px
-  // &:hover .ItemCard__name
-  //   text-decoration: underline
-  *
-    color: $main-background
-  &:hover
-    *
-      color: $main-text
+  &:hover .ItemData
+    opacity: 1
+  .ItemData
+    opacity: 0
+    @extend .d-flex
+    @extend .flex-row
+    @extend .my-3
+    @extend .justify-content-between
+    &__price
+      min-width: 75px
 
 
 .ItemLine
@@ -206,3 +206,31 @@ $member-height-inline: 24px
   &__price
     width: 200px
   
+
+$color-square-size: 12px
+.Color
+  width: $color-square-size
+  height: $color-square-size
+  border: 1px solid black
+  cursor: pointer
+  &--selected
+    position: relative
+    &::after
+      content: ''
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      width: 180%
+      height: 180%
+      border: 2px solid black
+.ColorSizes
+  @extend .d-flex
+  @extend .flex-row
+  &__size
+    @extend .me-3
+
+.ItemPage
+  width: 100vw
+  height: 100vh
+  overflow-x: hidden
