@@ -33,7 +33,8 @@ $button-height: 20px
   line-height: $button-height
   color: $main-text
   &:hover
-    text-decoration: underline
+    // text-decoration: underline
+    opacity: .4
   &--gray,
   &--black,
   &--hoverable
@@ -45,6 +46,12 @@ $button-height: 20px
   &--black
     color: $main-background
     background-color: $main-text
+  &--medium
+    font-size: 20px
+    padding: 0 15px
+    height: $button-height * 1.5
+    line-height: $button-height * 1.5
+
 
 .Input,
 .TextArea
@@ -179,16 +186,25 @@ $member-height-inline: 24px
 
 .ItemCard
   width: 15.5%
+  @include media-breakpoint-down(lg)
+    width: 31%
+  @include media-breakpoint-down(md)
+    width: 49%
+  // @include media-breakpoint-down(sm)
+  //   width: 99%
   display: inline-block
   cursor: pointer
   margin-bottom: 20px
   &:hover .ItemData
     opacity: 1
   .ItemData
+    @media (hover: none)
+      opacity: 1 !important
     opacity: 0
     @extend .d-flex
     @extend .flex-row
     @extend .my-3
+    @extend .px-2
     @extend .justify-content-between
     &__price
       min-width: 75px
@@ -238,6 +254,8 @@ $color-square-size: 12px
   width: 100vw
   height: 100vh
   overflow-x: hidden
+  &__description
+    width: 70%
 
 
 .Cart
@@ -265,3 +283,14 @@ $color-square-size: 12px
     &__SUBTOTAL
       text-align: right
       width: 200px
+
+.Fiber
+  width: 100%
+  height: 100vh
+  @extend .mb-3
+  @extend .position-relative
+  &__children
+    @extend .position-absolute
+    left: 50%
+    transform: translateX(-50%)
+    top: 60vh

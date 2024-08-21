@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query'
 
 import { getWebAppAuthObject } from '../utils/auth'
+import useStore from './useStore'
 
 
 export const getUser = async () => {
@@ -9,7 +10,9 @@ export const getUser = async () => {
 }
 
 const useUser = () => {
-  return useQuery('user', getUser)
+  const { user } = useStore()
+  
+  return useQuery('user', () => user)
 }
 
 

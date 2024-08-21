@@ -23,7 +23,10 @@ const ColorSizes: FC<ColorSizesProps> = ({
         className='me-3'
       />}
       {sizes.map(size =>
-        <div className='ColorSizes__size'>
+        <div
+          key={size.id}
+          className='ColorSizes__size'
+        >
           {size.name}
         </div>
       )}

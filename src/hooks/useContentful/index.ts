@@ -20,7 +20,7 @@ export type ContentfulType = {
   images: ImageType[]
   ColorPriceSize: ColorPriceSizeType[]
   colors: ColorType[]
-  categories: CategoryType[]
+  categorys: CategoryType[]
   sizes: SizeType[]
   links: LinkType[]
   pages: PageType[]

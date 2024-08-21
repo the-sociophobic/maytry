@@ -1,5 +1,6 @@
 import { FC } from 'react'
-import printPrice from '../utils/printPrice'
+
+import { printPrice } from '../utils/price'
 
 
 export type PriceProps = {

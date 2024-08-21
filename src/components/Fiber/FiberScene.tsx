@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import * as THREE from 'three'
 import { Canvas } from '@react-three/fiber'
@@ -12,19 +12,20 @@ import HeroImg from '../../assets/images/hero-image.jpg'
 
 
 export type FiberSceneProps = {
+  children?: ReactNode
 }
 
 
 export const FiberScene: React.FC<FiberSceneProps> = ({
+  children
 }) => {
   // const { data: { } } = useMainPage()
 
   return (
-    <div
-      style={{ width: '100%', height: '100vh' }}
-      className='mb-5'
-    >
-      <Canvas>
+    <div className='Fiber'>
+      <Canvas
+        style={{ width: '100%', height: '100%' }}
+      >
         <EffectComposer>
           <Glitch
             delay={new THREE.Vector2(.25, 1)} // min and max glitch delay
@@ -38,6 +39,11 @@ export const FiberScene: React.FC<FiberSceneProps> = ({
         <Plane img={HeroImg} />
         <ambientLight intensity={1} />
       </Canvas>
+      {children &&
+        <div className='Fiber__children'>
+          {children}
+        </div>
+      }
     </div>
   )
 }

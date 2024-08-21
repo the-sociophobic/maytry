@@ -9,7 +9,7 @@ import { getWebAppAuthObject } from '../utils/auth'
 import LinkWrapper from '../components/LinkWrapper'
 
 
-const Login: FC = () => {
+const Register: FC = () => {
   const { setUser } = useStore()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -18,7 +18,7 @@ const Login: FC = () => {
     <div className='container'>
       <div className='row'>
         <h3 className='h3 mb-5'>
-          Вход
+          Регистрация
         </h3>
         <p className='p'>
 
@@ -32,7 +32,7 @@ const Login: FC = () => {
               setTimeout(() => queryClient.invalidateQueries({ queryKey: ['user'] }), 25)
             }}
           >
-            Войти
+            Зарегестрироваться
           </Button>
         </LinkWrapper>
       </div>
@@ -41,4 +41,4 @@ const Login: FC = () => {
 }
 
 
-export default Login
+export default Register

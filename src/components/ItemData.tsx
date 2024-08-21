@@ -2,21 +2,21 @@ import { FC } from 'react'
 
 import { ItemType } from '../hooks/useContentful/types'
 import ColorSizes from './ColorSizes'
-import printPrice from '../utils/printPrice'
 import parseColors from '../utils/parseColors'
 import Price from './Price'
+import { getPrice, getSalePrice } from '../utils/price'
+
 
 export type ItemDataProps = ItemType
 
 
-const ItemData: FC<ItemDataProps> = ({
-  name,
-  color_price_size,
-  defaultPrice,
-  defaultSalePrice
-}) => {
-  const price = defaultPrice || color_price_size?.[0].price || 10000
-  const salePrice = defaultSalePrice || color_price_size?.[0].salePrice || 10000
+const ItemData: FC<ItemDataProps> = (item) => {
+  const price = getPrice(item) || 10000
+  const salePrice = getSalePrice(item) || 10000
+  const {
+    name,
+    color_price_size,
+  } = item
   const colors = parseColors(color_price_size)
 
   return (
@@ -33,8 +33,9 @@ const ItemData: FC<ItemDataProps> = ({
         <div className='mb-3'>
           {name}
         </div>
-        {colors.map(colorSizes =>
+        {colors.map((colorSizes, index) =>
           <ColorSizes
+            key={index}
             color={colorSizes.color}
             sizes={colorSizes.sizes.map(size => size.size)}
           />

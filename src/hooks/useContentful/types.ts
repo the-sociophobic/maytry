@@ -27,6 +27,7 @@ interface SiteType extends ContentfulItem {
   header_filter_categories: CategoryType[]
   main_page_items: ItemType[]
   footer_links: LinkType[]
+  pages: PageType[]
 }
 interface ItemType extends ContentfulItem {
   link: string
@@ -74,7 +75,7 @@ interface LinkType extends ContentfulItem {
 }
 
 interface PageType extends ContentfulItem {
-  link: string
+  link: LinkType
   title: string
   text: JSX.Element
   items: ItemType[]

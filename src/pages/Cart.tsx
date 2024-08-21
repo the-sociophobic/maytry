@@ -5,7 +5,7 @@ import useStore from '../hooks/useStore'
 import Img from '../components/Img'
 import Button from '../components/Button'
 import ColorSizes from '../components/ColorSizes'
-import printPrice from '../utils/printPrice'
+import { printPrice } from '../utils/price'
 import Price from '../components/Price'
 import LinkWrapper from '../components/LinkWrapper'
 
@@ -60,7 +60,10 @@ const Cart: FC<CartProps> = ({ }) => {
 
               <div className='Cart__items'>
                 {itemsInCart.map(item =>
-                  <div className='Cart__items__item'>
+                  <div
+                    key={item.id}
+                    className='Cart__items__item'
+                  >
                     <div className='Cart__items__item__IMG'>
                       <LinkWrapper
                         to={'/' + item.link}

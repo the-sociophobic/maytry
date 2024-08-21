@@ -9,6 +9,7 @@ export type ButtonProps = {
   className?: string | boolean
   gray?: boolean
   black?: boolean
+  medium?: boolean
   hoverable?: boolean
   onMouseOver?: MouseEventHandler<HTMLButtonElement>
 }
@@ -22,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   className,
   gray,
   black,
+  medium,
   hoverable,
   ...other
 }) => {
@@ -33,6 +35,7 @@ const Button: React.FC<ButtonProps> = ({
         ${disabled && 'Button--disabled'}
         ${gray && 'Button--gray'}
         ${black && 'Button--black'}
+        ${medium && 'Button--medium'}
         ${hoverable && 'Button--hoverable'}
         ${className}
       `}

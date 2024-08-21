@@ -1,12 +1,14 @@
 import { FC, useEffect, useRef, useState } from 'react'
 
+import { pick } from 'lodash'
+import { useNavigate } from 'react-router-dom'
+
 import { ItemType } from '../hooks/useContentful/types'
 import parseColors from '../utils/parseColors'
 import Button from '../components/Button'
 import Color from '../components/Color'
 import Img from '../components/Img'
 import Price from '../components/Price'
-import { pick } from 'lodash'
 import useStore from '../hooks/useStore'
 import { ItemInCartType } from './Cart'
 
@@ -72,26 +74,28 @@ const Item: FC<ItemProps> = (item) => {
   const colors = parseColors(item.color_price_size)
   const currentColor = colors[currentColorIndex]
   const [currentSizeIndex, setCurrentSizeIndex] = useState<number>(0)
-  const currentSize = currentColor.sizes[currentSizeIndex]
+  const currentSize = currentColor?.sizes[currentSizeIndex]
   const { itemsInCart } = useStore()
   const currentItemInCartBlank: ItemInCartType = {
     ...item,
     ...currentSize,
-    color: currentColor.color,
+    color: currentColor?.color,
     quantity: 0,
-    id: currentSize.id
+    id: currentSize?.id
   }
   const currentItemInCart = itemsInCart
-    .find(itemInCart => itemInCart.id === currentSize.id)
+    .find(itemInCart => itemInCart.id === currentSize?.id)
     || currentItemInCartBlank
   const { setItemInCart } = useStore()
+
+  const navigate = useNavigate()
 
   return (
     <div
       ref={scrollAreaRef}
       className='ItemPage'
     >
-      <div className='container'>
+      <div className='container-2'>
         <div className='row'>
           {!zoomed &&
             <div className='col-3'>
@@ -104,12 +108,13 @@ const Item: FC<ItemProps> = (item) => {
                   <div className='d-flex flex-column mb-4'>
                     {colors
                       .map((colorSizes, colorSizesIndex) => {
-                        const available = colorSizes.sizes
+                        const available = colorSizes?.sizes
                           .map(colorSize => colorSize.max_available > 0)
                           .reduce((a, b) => a || b)
 
                         return (
                           <div
+                            key={colorSizesIndex}
                             className={`
                               d-flex flex-row mb-2 cursor-pointer
                               ${!available && 'text-disabled'}
@@ -132,8 +137,9 @@ const Item: FC<ItemProps> = (item) => {
                     <div className='me-3'>
                       Размер:
                     </div>
-                    {currentColor.sizes.map((size, sizeIndex) =>
+                    {currentColor?.sizes.map((size, sizeIndex) =>
                       <div
+                        key={size.id}
                         className={`
                           me-3 cursor-pointer
                           ${size.max_available === 0 && 'text-disabled'}
@@ -150,15 +156,25 @@ const Item: FC<ItemProps> = (item) => {
                     <div className='me-3'>
                       Цена:
                     </div>
-                    <Price {...pick(currentColor.sizes[currentSizeIndex], 'price', 'salePrice')} />
+                    <Price {...(currentColor ?
+                      pick(currentColor.sizes[currentSizeIndex], 'price', 'salePrice')
+                      :
+                      {
+                        price: item.defaultPrice || 0,
+                        salePrice: item.defaultSalePrice,
+                      }
+                    )} />
                   </div>
 
                   {currentItemInCart.quantity === 0 ?
-                    currentSize.max_available === 0 ? '' :
+                    currentSize?.max_available === 0 ? '' :
                       <Button
                         black
                         className={``}
-                        onClick={() => setItemInCart(currentItemInCart, 1)}
+                        onClick={() => {
+                          setItemInCart(currentItemInCart, 1)
+                          navigate('/cart')
+                        }}
                       >
                         В КОРЗИНУ
                       </Button>
@@ -187,7 +203,7 @@ const Item: FC<ItemProps> = (item) => {
                   }
 
                 </div>
-                <div className=''>
+                <div className='ItemPage__description'>
                   {item.description}
                 </div>
 
@@ -216,8 +232,8 @@ const Item: FC<ItemProps> = (item) => {
             <div className='position-sticky' style={{ top: '100px' }}>
               {item.images.map((image, imageIndex) =>
                 <Button
-                  className={imageIndex === currentImage && 'text-underline'}
                   key={image.id + '_anchor'}
+                  className={imageIndex === currentImage && 'text-underline'}
                   onMouseOver={() => scrollToImage(imageIndex)}
                 >
                   {image.title}
