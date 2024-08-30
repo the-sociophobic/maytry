@@ -18,10 +18,14 @@ const Main: FC<MainProps> = ({ }) => {
   const { searchString } = useStore()
   const { filterBy } = useStore()
   const { showFilter } = useStore()
+  const { showExtendedFilter } = useStore()
+  const { sortOrder } = useStore()
   const { mainPageView } = useStore()
   const { showStartBanner } = useStore()
   const { priceFrom } = useStore()
   const { priceTo } = useStore()
+  const { selectedColorIds } = useStore()
+  const { selectedSizesIds } = useStore()
   const catalogRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -31,7 +35,7 @@ const Main: FC<MainProps> = ({ }) => {
           {showStartBanner &&
             <FiberScene>
               <Button
-                black
+                transparent
                 medium
                 className='flicker'
                 onClick={() => {
@@ -62,16 +66,36 @@ const Main: FC<MainProps> = ({ }) => {
                     .some(itemCategoryName => filterBy.includes(itemCategoryName))
               )
               .filter(item => {
-                if (priceFrom !== undefined)
-                  return getCurrentPrice(item) >= priceFrom
-                else
+                if (priceFrom === undefined)
                   return true
+                return getCurrentPrice(item) >= priceFrom
               })
               .filter(item => {
-                if (priceTo !== undefined)
-                  return getCurrentPrice(item) <= priceTo
-                else
+                if (priceTo === undefined)
                   return true
+                return getCurrentPrice(item) <= priceTo
+              })
+              .filter(item => {
+                if (selectedColorIds.length === 0)
+                  return true
+                return item.color_price_size
+                  ?.find(c_p_s =>
+                    selectedColorIds.includes(c_p_s.color?.id || ''))
+              })
+              .filter(item => {
+                if (selectedSizesIds.length === 0)
+                  return true
+                return item.color_price_size
+                  ?.find(c_p_s =>
+                    selectedSizesIds.includes(c_p_s.size?.id || ''))
+              })
+              .sort((a, b) => {
+                if (!showExtendedFilter)
+                  return 0
+                return sortOrder === 'asc' ?
+                  getCurrentPrice(a) - getCurrentPrice(b)
+                  :
+                  getCurrentPrice(b) - getCurrentPrice(a)
               })
               .map(item =>
                 mainPageView === 'IMG' ?

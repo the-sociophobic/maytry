@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useEffect } from 'react'
 
 import { useLocation } from 'react-router-dom'
 
@@ -8,6 +8,7 @@ import { ButtonProps } from './Button'
 import Header from './Header'
 import Footer from './Footer'
 import useContentful from '../hooks/useContentful'
+import useStore from '../hooks/useStore'
 
 
 export type NavigationProps = Pick<LinkWrapperProps, 'disabled' | 'to'> & Pick<ButtonProps, 'title'> & {
@@ -31,6 +32,12 @@ const Layout: FC<LayoutProps> = ({
   useTitle(title)
   const location = useLocation()
   const { data: contentful } = useContentful()
+
+  const { setShowExtendedFilter } = useStore()
+  useEffect(() => {
+    if (location.pathname !== '/')
+      setShowExtendedFilter(false)
+  }, [location.pathname])
 
   return (
     <>

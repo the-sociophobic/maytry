@@ -64,7 +64,6 @@ const ProtectedRoutes: React.FC<ProtectedRoutesProps> = () => {
 
   useEffect(() => useStore.setState({ user }), [user])
   
-
   // if (loadingUser)
   //   return <Loader />
 

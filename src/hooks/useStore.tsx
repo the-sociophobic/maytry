@@ -5,6 +5,8 @@ import { ItemType } from './useContentful/types'
 import { ItemInCartType } from '../pages/Cart'
 
 
+export type SortOrderType = 'asc' | 'desc'
+
 export type StateType = {
   user: null | WebAppAuthObject
   setUser: (user: null | WebAppAuthObject) => void
@@ -44,6 +46,15 @@ export type StateType = {
 
   priceTo: undefined | number
   setPriceTo: (priceFrom: undefined | number) => void
+
+  sortOrder: SortOrderType
+  setSortOrder: (sortOrder: SortOrderType) => void
+
+  selectedColorIds: string[]
+  setSelectedColorIds: (selectedColorIds: string[]) => void
+
+  selectedSizesIds: string[]
+  setSelectedSizesIds: (selectedSizesIds: string[]) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -85,10 +96,15 @@ const useStore = create<StateType>(set => ({
       .indexOf(item.id)
 
     return ({
-      itemsInCart: [
+      itemsInCart: itemIndex !== -1 ? [
         ...state.itemsInCart.slice(0, itemIndex),
         ...(quantity > 0 ? [{ ...item, quantity }] : []),
         ...state.itemsInCart.slice(itemIndex + 1),
+      ]
+      :
+      [
+        ...state.itemsInCart,
+        ...(quantity > 0 ? [{ ...item, quantity }] : [])
       ]
     })
   }),
@@ -101,6 +117,16 @@ const useStore = create<StateType>(set => ({
 
   priceTo: undefined,
   setPriceTo: (priceTo: undefined | number) => set({ priceTo }),
+
+  sortOrder: 'asc',
+  setSortOrder: (sortOrder: SortOrderType) => set({ sortOrder }),
+
+  selectedColorIds: [],
+  setSelectedColorIds: (selectedColorIds: string[]) => set({ selectedColorIds }),
+
+  selectedSizesIds: [],
+  setSelectedSizesIds: (selectedSizesIds: string[]) => set({ selectedSizesIds }),
+
 }))
 
 

@@ -20,6 +20,7 @@ const Footer: FC<FooterProps> = ({ }) => {
               <LinkWrapper
                 key={link.link}
                 to={link.link}
+                className={link.new_line ? 'd-block mb-4' : ''}
               >
                 <Button>
                   {link.title}

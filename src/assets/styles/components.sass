@@ -37,6 +37,7 @@ $button-height: 20px
     opacity: .4
   &--gray,
   &--black,
+  &--transparent,
   &--hoverable
     &:hover
       text-decoration: none
@@ -46,11 +47,14 @@ $button-height: 20px
   &--black
     color: $main-background
     background-color: $main-text
+  &--transparent
+    color: $main-background
+    background-color: rgba(0, 0, 0, 0)
   &--medium
-    font-size: 20px
+    font-size: 30px
     padding: 0 15px
-    height: $button-height * 1.5
-    line-height: $button-height * 1.5
+    height: $button-height * 2
+    line-height: $button-height * 2
 
 
 .Input,
@@ -247,6 +251,7 @@ $color-square-size: 12px
 .ColorSizes
   @extend .d-flex
   @extend .flex-row
+  @extend .align-items-center
   &__size
     @extend .me-3
 
@@ -293,4 +298,4 @@ $color-square-size: 12px
     @extend .position-absolute
     left: 50%
     transform: translateX(-50%)
-    top: 60vh
+    bottom: 20vh

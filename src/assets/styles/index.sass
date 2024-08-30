@@ -28,26 +28,25 @@ body
     .Header
       *
         font-size: 10px
-      @extend .d-flex
-      min-height: 80px
       background-color: $main-background
       &--relative
         position: relative
       &--fixed
+        @extend .d-flex
+        @extend .flex-column
         z-index: 1000
         position: fixed
         top: 0
         left: 0
         width: 100vw
-      &--extended
-        height: 160px
-      &__top,
-      &__extended-filter
+      &__top
         height: 80px
         @extend .d-flex
         @extend .flex-row
         @extend .align-items-center
       &__extended-filter
+        @extend .d-flex
+        @extend .flex-column
       &__logo
         width: 70px
         // height: 80%

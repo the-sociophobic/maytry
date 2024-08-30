@@ -8,6 +8,7 @@ import ColorSizes from '../components/ColorSizes'
 import { printPrice } from '../utils/price'
 import Price from '../components/Price'
 import LinkWrapper from '../components/LinkWrapper'
+import QuantitySelector from '../components/QuantitySelector'
 
 
 export type CartProps = {}
@@ -31,7 +32,7 @@ const Cart: FC<CartProps> = ({ }) => {
 
   return (
     <div className='Cart'>
-      <div className='container'>
+      <div className='container-2'>
         <div className='row'>
           <h3 className='h3 mb-5'>
             Корзина
@@ -93,7 +94,11 @@ const Cart: FC<CartProps> = ({ }) => {
                           КОЛИЧЕСТВО
                         </div>
                         <div className='Cart__items__item__NAME'>
-                          {item.quantity}
+                          <QuantitySelector
+                            value={item.quantity}
+                            onChange={quantity => setItemInCart(item, quantity)}
+                            max={item.max_available}
+                          />
                         </div>
                       </div>
                       <div className='d-flex flex-row mb-2'>

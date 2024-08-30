@@ -12,7 +12,7 @@ export type ItemDataProps = ItemType
 
 const ItemData: FC<ItemDataProps> = (item) => {
   const price = getPrice(item) || 10000
-  const salePrice = getSalePrice(item) || 10000
+  const salePrice = getSalePrice(item)
   const {
     name,
     color_price_size,

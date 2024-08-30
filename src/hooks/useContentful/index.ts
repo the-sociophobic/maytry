@@ -26,8 +26,24 @@ export type ContentfulType = {
   pages: PageType[]
 }
 
+const getContentfulDataWithoutBadItems = async () => {
+  const data = await getContentfulData<ContentfulType>()
+  const badItemsIds = data.items
+    .filter(item =>
+      !item.color_price_size ||
+      item.color_price_size?.length === 0 ||
+      item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size || !c_p_s.price)
+    )
+    .map(item => item.id)
+
+  return ({
+    ...data,
+    items: data.items.filter(item => !badItemsIds.includes(item.id)),
+  })
+}
+
 const useContentful = () => {
-  return useQuery<ContentfulType>('contentful', getContentfulData<ContentfulType>)
+  return useQuery<ContentfulType>('contentful', getContentfulDataWithoutBadItems)
 }
 
 const useMainPage = () => {

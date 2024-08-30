@@ -72,6 +72,7 @@ interface SizeType extends ContentfulItem {
 interface LinkType extends ContentfulItem {
   link: string
   title: string
+  new_line: boolean
 }
 
 interface PageType extends ContentfulItem {

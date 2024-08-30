@@ -33,6 +33,24 @@ const parseColors = (color_price_size: ColorPriceSizeType[] | undefined) => {
       })
       .filter(colorSizes => !!colorSizes.color)
   }
+  // else {
+  //   colors = [{
+  //     color: {
+  //       id: '_',
+  //       name: 'Один цвет',
+  //       colorCode: '#FFFFFF'
+  //     },
+  //     sizes: [{
+  //       id: '_',
+  //       size: {
+  //         id: '_',
+  //         name: 'Один размер'
+  //       },
+  //       price: defaultPrice || 10000,
+  //       max_available: 5
+  //     }]
+  //   }]
+  // }
 
   return colors
 }

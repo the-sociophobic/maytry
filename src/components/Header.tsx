@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useRef } from 'react'
 
 import { useQueryClient } from 'react-query'
 
@@ -13,6 +13,8 @@ import useContentful from '../hooks/useContentful'
 
 import LogoImg from '../assets/images/logo.svg'
 import { toggleInSet } from '../utils/sets'
+import ColorSelector from './ColorSelector'
+import SizeSelector from './SizeSelector'
 
 
 export type HeaderProps = {}
@@ -34,11 +36,20 @@ const Header: FC<HeaderProps> = ({ }) => {
   const { showExtendedFilter } = useStore()
   const { setUser } = useStore()
   const queryClient = useQueryClient()
+  const headerRef = useRef<HTMLDivElement>(null)
 
   return (
     <>
-      <div className={`Header Header--relative ${showExtendedFilter && 'Header--extended'}`} />
-      <div className={`Header Header--fixed ${showExtendedFilter && 'Header--extended'}`}>
+      <div
+        className={`Header Header--relative`}
+        style={headerRef.current?.clientHeight ? {
+          minHeight: headerRef.current?.clientHeight + 'px'
+        } : {}}
+      />
+      <div
+        ref={headerRef}
+        className={`Header Header--fixed`}
+      >
         <div className='container-2'>
           <div className='Header__top'>
             <LinkWrapper to='/'>
@@ -263,44 +274,74 @@ const ExtendedFilter = () => {
   const { setPriceFrom } = useStore()
   const { priceTo } = useStore()
   const { setPriceTo } = useStore()
+  const { sortOrder } = useStore()
+  const { setSortOrder } = useStore()
+  const { selectedColorIds } = useStore()
+  const { setSelectedColorIds } = useStore()
+  const { selectedSizesIds } = useStore()
+  const { setSelectedSizesIds } = useStore()
 
   return (
     <div className='Header__extended-filter'>
       <div className='d-flex flex-column'>
-      <div className='d-flex flex-row'>
-        <p>Все категории</p>
-        {contentful?.categorys
-          .map((category, index) =>
-            <Button
-              key={index}
-              hoverable
-              gray={filterBy.includes(category.name)}
-              onClick={() => {
-                setFilterBy(toggleInSet(filterBy, category.name))
-              }}
-            >
-              {category.name}
-            </Button>
-          )
-        }
-      </div>
-      <div className='d-flex flex-row'>
-        <p>Цена</p>
-        <Input
-          className='Header__section ms-3'
-          number
-          value={priceFrom === undefined ? '' : priceFrom}
-          onChange={value => setPriceFrom(parseInt(value) || undefined)}
-          placeholder='от'
+        <div className='d-flex flex-row align-items-center my-3'>
+          <p className='m-0'>Категории:</p>
+          {contentful?.categorys
+            .map((category, index) =>
+              <Button
+                key={index}
+                hoverable
+                gray={filterBy.includes(category.name)}
+                onClick={() => {
+                  setFilterBy(toggleInSet(filterBy, category.name))
+                }}
+              >
+                {category.name}
+              </Button>
+            )
+          }
+        </div>
+        <div className='d-flex flex-row my-3'>
+          <p className='m-0'>Цена:</p>
+          <Input
+            className='Header__section ms-3'
+            number
+            value={priceFrom === undefined ? '' : priceFrom}
+            onChange={value => setPriceFrom(parseInt(value) || undefined)}
+            placeholder='от'
+          />
+          <Input
+            className='Header__section ms-3'
+            number
+            value={priceTo === undefined ? '' : priceTo}
+            onChange={value => setPriceTo(parseInt(value) || undefined)}
+            placeholder='до'
+          />
+        </div>
+        <div className='d-flex flex-row my-3'>
+          <p className='m-0'>Сортировка по:</p>
+          <p
+            className='m-0 ms-3 cursor-pointer no-select'
+            onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+          >
+            Цене {sortOrder === 'asc' ?  '↑' : '↓'}
+          </p>
+        </div>
+        <ColorSelector
+          colors={contentful?.colors || []}
+          selectedColorIds={selectedColorIds}
+          onChange={setSelectedColorIds}
+          className='my-3'
         />
-        <Input
-          className='Header__section ms-3'
-          number
-          value={priceTo === undefined ? '' : priceTo}
-          onChange={value => setPriceTo(parseInt(value) || undefined)}
-          placeholder='до'
+        <SizeSelector
+          sizes={(contentful?.sizes || []).map(size => ({
+            ...size,
+            available: true
+          }))}
+          selectedIds={selectedSizesIds}
+          onChange={size => setSelectedSizesIds(toggleInSet(selectedSizesIds, size))}
+          className='my-3'
         />
-      </div>
       </div>
     </div>
   )
