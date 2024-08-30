@@ -14,21 +14,21 @@ const Footer: FC<FooterProps> = ({ }) => {
   return (
     <div className='Footer'>
       <div className='container-2'>
-        <div className='row'>
-          <div className='col pt-2 pb-4'>
+        <div className='row py-5'>
+          <div className='col-sm-10 col-md-5 pt-2 pb-4'>
             {site?.footer_links?.map(link =>
               <LinkWrapper
                 key={link.link}
                 to={link.link}
                 className={link.new_line ? 'd-block mb-4' : ''}
               >
-                <Button>
+                <Button className='p-0'>
                   {link.title}
                 </Button>
               </LinkWrapper>
             )}
           </div>
-          <div className='col'>
+          <div className='col-sm-10 col-md-5'>
             © 2024 by @the_sociophobic
           </div>
         </div>

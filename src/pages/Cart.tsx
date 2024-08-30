@@ -49,8 +49,8 @@ const Cart: FC<CartProps> = ({ }) => {
                 </div>
                 <div className='Cart__header__NAME'>
                 </div>
-                <div className='Cart__header__REMOVE'>
-                </div>
+                {/* <div className='Cart__header__REMOVE'>
+                </div> */}
                 <div className='Cart__header__PRICE'>
                   PRICE
                 </div>
@@ -75,49 +75,51 @@ const Cart: FC<CartProps> = ({ }) => {
                         />
                       </LinkWrapper>
                     </div>
-                    <div className='d-flex flex-column'>
-                      <div className='d-flex flex-row mb-2'>
-                        <div className='Cart__items__item__DETAILS'>
-                          ИМЯ
+                    <div className='Cart__items__item__NAME-DETAILS-PRICE'>
+                      <div className='Cart__items__item__NAME-DETAILS'>
+                        <div className='d-flex flex-row mb-2'>
+                          <div className='Cart__items__item__DETAILS'>
+                            ИМЯ
+                          </div>
+                          <div className='Cart__items__item__NAME'>
+                            {item.name}
+                          </div>
+                          {/* <div className='Cart__items__item__REMOVE'>
+                            <Button onClick={() => setItemInCart(item, 0)}>
+                              УДАЛИТЬ
+                            </Button>
+                          </div> */}
                         </div>
-                        <div className='Cart__items__item__NAME'>
-                          {item.name}
+                        <div className='d-flex flex-row mb-2'>
+                          <div className='Cart__items__item__DETAILS'>
+                            ЦВЕТ И РАЗМЕР
+                          </div>
+                          <div className='Cart__items__item__NAME'>
+                            <ColorSizes
+                              color={item.color}
+                              sizes={[item.size]}
+                            />
+                          </div>
                         </div>
-                        <div className='Cart__items__item__REMOVE'>
-                          <Button onClick={() => setItemInCart(item, 0)}>
-                            УДАЛИТЬ
-                          </Button>
+                        <div className='d-flex flex-row mb-2'>
+                          <div className='Cart__items__item__DETAILS'>
+                            КОЛИЧЕСТВО
+                          </div>
+                          <div className='Cart__items__item__NAME'>
+                            <QuantitySelector
+                              value={item.quantity}
+                              onChange={quantity => setItemInCart(item, quantity)}
+                              max={item.max_available}
+                            />
+                          </div>
                         </div>
                       </div>
-                      <div className='d-flex flex-row mb-2'>
-                        <div className='Cart__items__item__DETAILS'>
-                          КОЛИЧЕСТВО
-                        </div>
-                        <div className='Cart__items__item__NAME'>
-                          <QuantitySelector
-                            value={item.quantity}
-                            onChange={quantity => setItemInCart(item, quantity)}
-                            max={item.max_available}
-                          />
-                        </div>
+                      <div className='Cart__items__item__PRICE'>
+                        <Price
+                          price={item.price}
+                          salePrice={item.salePrice}
+                        />
                       </div>
-                      <div className='d-flex flex-row mb-2'>
-                        <div className='Cart__items__item__DETAILS'>
-                          ЦВЕТ И РАЗМЕР
-                        </div>
-                        <div className='Cart__items__item__NAME'>
-                          <ColorSizes
-                            color={item.color}
-                            sizes={[item.size]}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div className='Cart__items__item__PRICE'>
-                      <Price
-                        price={item.price}
-                        salePrice={item.salePrice}
-                      />
                     </div>
                     <div className='Cart__items__item__SUBTOTAL'>
                       {printPrice((item.salePrice || item.price) * item.quantity)}

@@ -6,15 +6,17 @@ import { printPrice } from '../utils/price'
 export type PriceProps = {
   price: number
   salePrice?: number
+  className?: string
 }
 
 
 const Price: FC<PriceProps> = ({
   price,
-  salePrice
+  salePrice,
+  className
 }) => {
   return (
-    <div className='d-flex flex-column'>
+    <div className={`d-flex flex-column ${className}`}>
       <div className={salePrice ? 'text-strikethrough' : ''}>
         {printPrice(price)}
       </div>

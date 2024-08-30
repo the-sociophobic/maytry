@@ -190,6 +190,8 @@ $member-height-inline: 24px
 
 .ItemCard
   width: 15.5%
+  @include media-breakpoint-down(xl)
+    width: 24%
   @include media-breakpoint-down(lg)
     width: 31%
   @include media-breakpoint-down(md)
@@ -205,8 +207,7 @@ $member-height-inline: 24px
     @media (hover: none)
       opacity: 1 !important
     opacity: 0
-    @extend .d-flex
-    @extend .flex-row
+    @extend .row
     @extend .my-3
     @extend .px-2
     @extend .justify-content-between
@@ -268,26 +269,74 @@ $color-square-size: 12px
   &__items
     @extend .d-flex
     @extend .flex-column
+  &__header
+    @include media-breakpoint-down(md)
+      display: none !important
+    @include media-breakpoint-up(md)
+      display: flex
   &__header,
   &__items__item
-    @extend .d-flex
+    display: flex
+    // @include media-breakpoint-up(md)
+    //   flex-direction: row
+    // @include media-breakpoint-down(md)
+    //   flex-direction: column
     @extend .flex-row
-    @extend .justify-content-between
+    @extend .flex-wrap
+    @extend .justify-content-start
     @extend .py-3
     border-bottom: 1px solid $main-text
     &__IMG
-      width: 200px
+      @include media-breakpoint-up(md)
+        min-width: 200px
+        max-width: 200px
+      @include media-breakpoint-down(md)
+        min-width: 49%
+        max-width: 49%
+    &__NAME-DETAILS-PRICE
+      @extend .d-flex
+      @include media-breakpoint-up(md)
+        flex-direction: row
+      @include media-breakpoint-down(md)
+        width: 50%
+        flex-direction: column
+    &__NAME-DETAILS
+      @extend .d-flex
+      @extend .flex-column
     &__DETAILS
-      width: 200px
+      @extend .desktop-only
+      min-width: 200px
+      max-width: 200px
     &__NAME
-      width: 200px
+      @include media-breakpoint-up(md)
+        min-width: 200px
+        max-width: 200px
+      @include media-breakpoint-down(md)
+        min-width: 49%
+        max-width: 49%
     &__REMOVE
-      width: 200px
+      @include media-breakpoint-up(md)
+        min-width: 200px
+        max-width: 200px
+      @include media-breakpoint-down(md)
+        min-width: 49%
+        max-width: 49%
     &__PRICE
-      width: 200px
+      @include media-breakpoint-up(md)
+        min-width: 200px
+        max-width: 200px
+      @include media-breakpoint-down(md)
+        min-width: 49%
+        max-width: 49%
     &__SUBTOTAL
       text-align: right
-      width: 200px
+      @extend .ms-auto
+      @include media-breakpoint-up(md)
+        min-width: 200px
+        max-width: 200px
+      @include media-breakpoint-down(md)
+        min-width: 49%
+        max-width: 49%
 
 .Fiber
   width: 100%

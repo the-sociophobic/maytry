@@ -13,10 +13,12 @@ import { ItemType } from '../hooks/useContentful/types'
 import parseColors from '../utils/parseColors'
 
 
-export type ItemInfoProps = ItemType
+export type ItemInfoProps = ItemType & {
+  className?: string
+}
 
 
-const ItemInfo: FC<ItemInfoProps> = (item) => {
+const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
   const colors = parseColors(item.color_price_size)
 
   const defaultColor = colors.find(color => color.sizes.some(size => size.max_available > 0))
@@ -50,7 +52,7 @@ const ItemInfo: FC<ItemInfoProps> = (item) => {
   const navigate = useNavigate()
 
   return (
-    <div className='col-3'>
+    <div className={className}>
       <div className='position-sticky pe-4' style={{ top: '100px' }}>
         <h3 className='h3 mb-5'>
           {item.name}

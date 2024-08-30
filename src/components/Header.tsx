@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react'
+import { FC, useRef, useState } from 'react'
 
 import { useQueryClient } from 'react-query'
 
@@ -34,16 +34,18 @@ const Header: FC<HeaderProps> = ({ }) => {
   const { setShowSearch } = useStore()
   const { setShowFilter } = useStore()
   const { showExtendedFilter } = useStore()
+  const { setShowExtendedFilter } = useStore()
   const { setUser } = useStore()
   const queryClient = useQueryClient()
   const headerRef = useRef<HTMLDivElement>(null)
+  const [mobileHeaderOpened, setMobileHeaderOpened] = useState(false)
 
   return (
     <>
       <div
         className={`Header Header--relative`}
         style={headerRef.current?.clientHeight ? {
-          minHeight: headerRef.current?.clientHeight + 'px'
+          minHeight: (!showExtendedFilter ? 80 : headerRef.current?.clientHeight) + 'px'
         } : {}}
       />
       <div
@@ -56,92 +58,105 @@ const Header: FC<HeaderProps> = ({ }) => {
               {/* <img src={logoImg} className='Header__logo' /> */}
               <LogoImg className='Header__logo' />
             </LinkWrapper>
-            {route?.to === '/' ?
-              <HeaderControls />
-              :
-              <LinkWrapper to='/'>
-                <Button>
-                  {route?.to === '/cart' ? 'ПРОДОЛЖИТЬ ПОКУПКИ' : 'НА ГЛАВНУЮ'}
-                </Button>
-              </LinkWrapper>
-            }
-            <div className='d-flex flex-row ms-auto'>
-              {user ?
-                <>
-                  <div className='Header__section d-flex justify-content-end'>
-                    <LinkWrapper
-                      to='/account'
-                      className='d-inline-block'
-                    >
-                      <Button hoverable>
-                        АККАУНТ
-                      </Button>
-                    </LinkWrapper>
-                  </div>
-                  <div className='Header__section d-flex justify-content-end'>
-                    <Button
-                      hoverable
-                      onClick={() => {
-                        setUser(null)
-                        setTimeout(() => queryClient.invalidateQueries({ queryKey: ['user'] }), 25)
-                      }}
-                    >
-                      ВЫЙТИ
-                    </Button>
-                  </div>
-                </>
+
+            <div
+              className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
+              onClick={() => {
+                setShowExtendedFilter(!mobileHeaderOpened)
+                setMobileHeaderOpened(!mobileHeaderOpened)
+              }}
+            />
+
+            <div className='Header__desktop'>
+              {route?.to === '/' ?
+                <HeaderControls />
                 :
-                showAccount ?
+                <LinkWrapper to='/'>
+                  <Button>
+                    {route?.to === '/cart' ? 'ПРОДОЛЖИТЬ ПОКУПКИ' : 'НА ГЛАВНУЮ'}
+                  </Button>
+                </LinkWrapper>
+              }
+              <div className='d-flex flex-row ms-auto'>
+                {user ?
                   <>
                     <div className='Header__section d-flex justify-content-end'>
                       <LinkWrapper
-                        to='/login'
+                        to='/account'
                         className='d-inline-block'
                       >
                         <Button hoverable>
-                          ВХОД
+                          АККАУНТ
                         </Button>
                       </LinkWrapper>
                     </div>
                     <div className='Header__section d-flex justify-content-end'>
-                      <LinkWrapper
-                        to='/register'
-                        className='d-inline-block'
+                      <Button
+                        hoverable
+                        onClick={() => {
+                          setUser(null)
+                          setTimeout(() => queryClient.invalidateQueries({ queryKey: ['user'] }), 25)
+                        }}
                       >
-                        <Button hoverable>
-                          РЕГИСТРАЦИЯ
-                        </Button>
-                      </LinkWrapper>
+                        ВЫЙТИ
+                      </Button>
                     </div>
-                    <Button onClick={() => setShowAccount(false)}>
-                      ЗАКРЫТЬ
-                    </Button>
                   </>
                   :
-                  <Button onClick={() => {
-                    setShowAccount(true)
-                    setShowSearch(false)
-                    setShowFilter(false)
-                  }}>
-                    АККАУНТ
-                  </Button>
-              }
+                  showAccount ?
+                    <>
+                      <div className='Header__section d-flex justify-content-end'>
+                        <LinkWrapper
+                          to='/login'
+                          className='d-inline-block'
+                        >
+                          <Button hoverable>
+                            ВХОД
+                          </Button>
+                        </LinkWrapper>
+                      </div>
+                      <div className='Header__section d-flex justify-content-end'>
+                        <LinkWrapper
+                          to='/register'
+                          className='d-inline-block'
+                        >
+                          <Button hoverable>
+                            РЕГИСТРАЦИЯ
+                          </Button>
+                        </LinkWrapper>
+                      </div>
+                      <Button onClick={() => setShowAccount(false)}>
+                        ЗАКРЫТЬ
+                      </Button>
+                    </>
+                    :
+                    <Button onClick={() => {
+                      setShowAccount(true)
+                      setShowSearch(false)
+                      setShowFilter(false)
+                    }}>
+                      АККАУНТ
+                    </Button>
+                }
 
-              <div className='Header__section d-flex justify-content-end'>
-                <LinkWrapper
-                  to='/cart'
-                  className='d-inline-block'
-                >
-                  <Button black>
-                    КОРЗИНА ({numberOfItemsInCart})
-                  </Button>
-                </LinkWrapper>
+                <div className='Header__section d-flex justify-content-end'>
+                  <LinkWrapper
+                    to='/cart'
+                    className='d-inline-block'
+                  >
+                    <Button black>
+                      КОРЗИНА ({numberOfItemsInCart})
+                    </Button>
+                  </LinkWrapper>
+                </div>
               </div>
             </div>
           </div>
+
           {showExtendedFilter &&
             <ExtendedFilter />
           }
+
         </div>
       </div>
     </>
@@ -177,6 +192,7 @@ const HeaderControls = () => {
             setShowAccount(false)
             setShowSearch(false)
           }
+          setShowExtendedFilter(false)
           setShowFilter(!showFilter)
         }}>
           ФИЛЬТР
@@ -324,7 +340,7 @@ const ExtendedFilter = () => {
             className='m-0 ms-3 cursor-pointer no-select'
             onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
           >
-            Цене {sortOrder === 'asc' ?  '↑' : '↓'}
+            Цене {sortOrder === 'asc' ? '↑' : '↓'}
           </p>
         </div>
         <ColorSelector

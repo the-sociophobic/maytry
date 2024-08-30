@@ -65,9 +65,13 @@ const Item: FC<ItemProps> = (item) => {
       className='ItemPage'
     >
       <div className='container-2'>
-        <div className='row'>
+
+        <div className='row desktop-only'>
           {!zoomed &&
-            <ItemInfo {...item} />
+            <ItemInfo
+              className='col-3'
+              {...item}
+            />
           }
           <div className={`col-${zoomed ? 6 : 3}`}>
             <div
@@ -101,6 +105,29 @@ const Item: FC<ItemProps> = (item) => {
             </div>
           </div>
         </div>
+
+        <div className='row mobile-only'>
+          <div className='col'>
+            {item.images[0] &&
+              <Img
+                file={item.images[0].small}
+                className={`mb-2`}
+              />
+            }
+            <ItemInfo
+              className='mb-5'
+              {...item}
+            />
+            {item.images.slice(1).map(image =>
+              <Img
+                key={image.id}
+                file={image.small}
+                className={`mb-2`}
+              />
+            )}
+          </div>
+        </div>
+
       </div>
     </div>
   )

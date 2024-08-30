@@ -21,18 +21,19 @@ const ItemData: FC<ItemDataProps> = (item) => {
 
   return (
     <div className='ItemData'>
-      <div className='d-flex flex-column'>
+      <div className='col-sm-9 col-md-4'>
         <div className='ItemData__price'>
+          <div className='mb-3'>
+            {name}
+          </div>
           <Price
+            className='mb-3'
             price={price}
             salePrice={salePrice}
           />
         </div>
       </div>
-      <div className='d-flex flex-column'>
-        <div className='mb-3'>
-          {name}
-        </div>
+      <div className='col-sm-9 col-md-4'>
         {colors.map((colorSizes, index) =>
           <ColorSizes
             key={index}
