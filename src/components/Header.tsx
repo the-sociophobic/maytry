@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
 import { useQueryClient } from 'react-query'
 
@@ -27,6 +27,8 @@ const Header: FC<HeaderProps> = ({ }) => {
     .map(item => item.quantity)
     .reduce((a, b) => a + b, 0)
   const route = useRoute()
+  const is_main_page = route?.to === '/'
+  const is_cart_page = route?.to === '/cart'
   // const { data: user } = useUser()
   const { user } = useStore()
   const { showAccount } = useStore()
@@ -39,6 +41,16 @@ const Header: FC<HeaderProps> = ({ }) => {
   const queryClient = useQueryClient()
   const headerRef = useRef<HTMLDivElement>(null)
   const [mobileHeaderOpened, setMobileHeaderOpened] = useState(false)
+
+  useEffect(() =>
+    setShowExtendedFilter(is_main_page && mobileHeaderOpened)
+  , [is_main_page, mobileHeaderOpened])
+
+  const closeMobileHeader = () => {
+    setShowExtendedFilter(false)
+    setMobileHeaderOpened(false)
+  }
+  useEffect(() => closeMobileHeader(), [route])
 
   return (
     <>
@@ -61,19 +73,16 @@ const Header: FC<HeaderProps> = ({ }) => {
 
             <div
               className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
-              onClick={() => {
-                setShowExtendedFilter(!mobileHeaderOpened)
-                setMobileHeaderOpened(!mobileHeaderOpened)
-              }}
+              onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
             />
 
             <div className='Header__desktop'>
-              {route?.to === '/' ?
+              {is_main_page ?
                 <HeaderControls />
                 :
                 <LinkWrapper to='/'>
                   <Button>
-                    {route?.to === '/cart' ? 'ПРОДОЛЖИТЬ ПОКУПКИ' : 'НА ГЛАВНУЮ'}
+                    {is_cart_page ? 'ПРОДОЛЖИТЬ ПОКУПКИ' : 'НА ГЛАВНУЮ'}
                   </Button>
                 </LinkWrapper>
               }
@@ -153,6 +162,26 @@ const Header: FC<HeaderProps> = ({ }) => {
             </div>
           </div>
 
+          {mobileHeaderOpened &&
+            <div className={`Header__mobile ${!is_main_page && 'py-5'}`}>
+              {!is_main_page &&
+                <LinkWrapper to='/'>
+                  <Button>
+                    {is_cart_page ? 'ПРОДОЛЖИТЬ ПОКУПКИ' : 'НА ГЛАВНУЮ'}
+                  </Button>
+                </LinkWrapper>
+              }
+              <LinkWrapper
+                to='/cart'
+                className='d-inline-block ms-auto'
+                onClick={closeMobileHeader}
+              >
+                <Button black>
+                  КОРЗИНА ({numberOfItemsInCart})
+                </Button>
+              </LinkWrapper>
+            </div>
+          }
           {showExtendedFilter &&
             <ExtendedFilter />
           }

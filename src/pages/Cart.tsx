@@ -122,7 +122,7 @@ const Cart: FC<CartProps> = ({ }) => {
                       </div>
                     </div>
                     <div className='Cart__items__item__SUBTOTAL'>
-                      {printPrice((item.salePrice || item.price) * item.quantity)}
+                    {item.quantity} × {printPrice(item.salePrice || item.price)} = {printPrice((item.salePrice || item.price) * item.quantity)}
                     </div>
                   </div>
                 )}

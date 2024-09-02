@@ -32,18 +32,14 @@ $button-height: 20px
   height: $button-height
   line-height: $button-height
   color: $main-text
-  &:hover
-    // text-decoration: underline
-    opacity: .4
-  &--gray,
-  &--black,
-  &--transparent,
-  &--hoverable
+  @media (hover: hover) and (pointer: fine)
     &:hover
-      text-decoration: none
-  &--gray,
-  &--hoverable:hover
+      opacity: .4
+  &--gray
     background-color: $main-gray
+  &--hoverable:hover
+    @media (hover: hover) and (pointer: fine)
+      background-color: $main-gray
   &--black
     color: $main-background
     background-color: $main-text
@@ -201,8 +197,9 @@ $member-height-inline: 24px
   display: inline-block
   cursor: pointer
   margin-bottom: 20px
-  &:hover .ItemData
-    opacity: 1
+  @media (hover: hover) and (pointer: fine)
+    &:hover .ItemData
+      opacity: 1
   .ItemData
     @media (hover: none)
       opacity: 1 !important
