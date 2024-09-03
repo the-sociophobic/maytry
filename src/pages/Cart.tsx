@@ -9,6 +9,7 @@ import { printPrice } from '../utils/price'
 import Price from '../components/Price'
 import LinkWrapper from '../components/LinkWrapper'
 import QuantitySelector from '../components/QuantitySelector'
+import Boxberry from '../components/Boxberry'
 
 
 export type CartProps = {}
@@ -29,6 +30,8 @@ const Cart: FC<CartProps> = ({ }) => {
   const totalPrice = itemsInCart
     .map(item => (item.salePrice || item.price) * item.quantity)
     .reduce((a, b) => a + b, 0)
+
+  const { boxberryData } = useStore()
 
   return (
     <div className='Cart'>
@@ -138,7 +141,11 @@ const Cart: FC<CartProps> = ({ }) => {
               </div>
 
               <div className='d-flex flex-row justify-content-between py-3'>
-                <Button black>
+                <Boxberry />
+              </div>
+              
+              <div className='d-flex flex-row justify-content-between py-3'>
+                <Button black disabled={!boxberryData}>
                   ЗАКАЗАТЬ
                 </Button>
               </div>

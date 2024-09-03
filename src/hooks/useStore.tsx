@@ -3,6 +3,7 @@ import { create } from 'zustand'
 import { WebAppAuthObject } from '../utils/auth'
 import { ItemType } from './useContentful/types'
 import { ItemInCartType } from '../pages/Cart'
+import { BoxberryResultType } from '../components/Boxberry'
 
 
 export type SortOrderType = 'asc' | 'desc'
@@ -55,6 +56,9 @@ export type StateType = {
 
   selectedSizesIds: string[]
   setSelectedSizesIds: (selectedSizesIds: string[]) => void
+
+  boxberryData?: BoxberryResultType
+  setBoxberryData: (boxberryData: BoxberryResultType) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -127,6 +131,8 @@ const useStore = create<StateType>(set => ({
   selectedSizesIds: [],
   setSelectedSizesIds: (selectedSizesIds: string[]) => set({ selectedSizesIds }),
 
+  boxberryData: undefined,
+  setBoxberryData: (boxberryData: BoxberryResultType) => set({ boxberryData }),
 }))
 
 

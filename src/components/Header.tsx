@@ -50,7 +50,11 @@ const Header: FC<HeaderProps> = ({ }) => {
     setShowExtendedFilter(false)
     setMobileHeaderOpened(false)
   }
-  useEffect(() => closeMobileHeader(), [route])
+  useEffect(() => {
+    closeMobileHeader()
+    setShowFilter(false)
+    setShowSearch(false)
+  }, [route])
 
   return (
     <>
