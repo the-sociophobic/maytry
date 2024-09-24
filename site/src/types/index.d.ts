@@ -9,6 +9,9 @@ declare global {
       open: (callback_function: (result: BoxberryResultType) => void) => void
     }
     ymaps3?: any
+    cp?: any & {
+      CloudPayments: () => any
+    }
     Telegram?: any & {
       WebApp: any & {
         initData: String

@@ -11,6 +11,7 @@ export type BoxberryProps = {
 const Boxberry: FC<BoxberryProps> = ({
 
 }) => {
+  const { boxberryData } = useStore()
   const { setBoxberryData } = useStore()
   const { boxberry } = window
   const boxberryResult = (result: BoxberryResultType) => {
@@ -26,11 +27,17 @@ const Boxberry: FC<BoxberryProps> = ({
   }, [])
 
   return (
-    <div className='Boxberry'>
+    <div className='Boxberry d-flex flex-column'>
       <div
         id='boxberry_map'
         ref={boxberry_map_ref}
       />
+
+      {boxberryData &&
+        <div className='d-flex flex-row justify-content-between py-3'>
+          Товары будут доставлены по адресу: {boxberryData.address}
+        </div>
+      }
     </div>
   )
 }
@@ -40,12 +47,14 @@ export default Boxberry
 
 
 export type BoxberryResultType = {
-  name: string
-  price: string
   id: string
+  zip: string
+  name: string
   address: string
-  workschedule: string
   phone: string
+  workschedule: string
   period: string
+  price: string
   prepaid: string
+  loadlimit: string
 }

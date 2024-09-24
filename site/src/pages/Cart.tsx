@@ -3,13 +3,13 @@ import { FC } from 'react'
 import { ColorPriceSizeType, ItemType } from '../hooks/useContentful/types'
 import useStore from '../hooks/useStore'
 import Img from '../components/Img'
-import Button from '../components/Button'
 import ColorSizes from '../components/ColorSizes'
 import { printPrice } from '../utils/price'
 import Price from '../components/Price'
 import LinkWrapper from '../components/LinkWrapper'
 import QuantitySelector from '../components/QuantitySelector'
-import Boxberry from '../components/Boxberry'
+import Button from '../components/Button'
+import useTotalPrice from '../hooks/useTotalPrice'
 
 
 export type CartProps = {}
@@ -27,11 +27,7 @@ export type ItemInCartType = Omit<ItemType,
 const Cart: FC<CartProps> = ({ }) => {
   const { itemsInCart } = useStore()
   const { setItemInCart } = useStore()
-  const totalPrice = itemsInCart
-    .map(item => (item.salePrice || item.price) * item.quantity)
-    .reduce((a, b) => a + b, 0)
-
-  const { boxberryData } = useStore()
+  const totalPrice = useTotalPrice()
 
   return (
     <div className='Cart'>
@@ -125,7 +121,7 @@ const Cart: FC<CartProps> = ({ }) => {
                       </div>
                     </div>
                     <div className='Cart__items__item__SUBTOTAL'>
-                    {item.quantity} × {printPrice(item.salePrice || item.price)} = {printPrice((item.salePrice || item.price) * item.quantity)}
+                      {item.quantity} × {printPrice(item.salePrice || item.price)} = {printPrice((item.salePrice || item.price) * item.quantity)}
                     </div>
                   </div>
                 )}
@@ -141,14 +137,16 @@ const Cart: FC<CartProps> = ({ }) => {
               </div>
 
               <div className='d-flex flex-row justify-content-between py-3'>
-                <Boxberry />
+                <LinkWrapper
+                  to='/checkout'
+                  // className='d-inline-block'
+                >
+                  <Button black>
+                    ЗАКАЗАТЬ
+                  </Button>
+                </LinkWrapper>
               </div>
-              
-              <div className='d-flex flex-row justify-content-between py-3'>
-                <Button black disabled={!boxberryData}>
-                  ЗАКАЗАТЬ
-                </Button>
-              </div>
+
             </>
           }
 

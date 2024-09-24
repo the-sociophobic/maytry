@@ -38,6 +38,7 @@ export type StateType = {
 
   itemsInCart: ItemInCartType[]
   setItemInCart: (item: ItemInCartType, quantity: number) => void
+  emptyCart: () => void
 
   showStartBanner: boolean
   setShowStartBanner: (showStartBanner: boolean) => void
@@ -58,7 +59,7 @@ export type StateType = {
   setSelectedSizesIds: (selectedSizesIds: string[]) => void
 
   boxberryData?: BoxberryResultType
-  setBoxberryData: (boxberryData: BoxberryResultType) => void
+  setBoxberryData: (boxberryData: BoxberryResultType | undefined) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -112,6 +113,7 @@ const useStore = create<StateType>(set => ({
       ]
     })
   }),
+  emptyCart: () => set({ itemsInCart: [] }),
 
   showStartBanner: true,
   setShowStartBanner: (showStartBanner: boolean) => set({ showStartBanner }),
@@ -122,7 +124,7 @@ const useStore = create<StateType>(set => ({
   priceTo: undefined,
   setPriceTo: (priceTo: undefined | number) => set({ priceTo }),
 
-  sortOrder: 'asc',
+  sortOrder: 'asc' as SortOrderType,
   setSortOrder: (sortOrder: SortOrderType) => set({ sortOrder }),
 
   selectedColorIds: [],
@@ -132,7 +134,7 @@ const useStore = create<StateType>(set => ({
   setSelectedSizesIds: (selectedSizesIds: string[]) => set({ selectedSizesIds }),
 
   boxberryData: undefined,
-  setBoxberryData: (boxberryData: BoxberryResultType) => set({ boxberryData }),
+  setBoxberryData: (boxberryData: BoxberryResultType | undefined) => set({ boxberryData }),
 }))
 
 

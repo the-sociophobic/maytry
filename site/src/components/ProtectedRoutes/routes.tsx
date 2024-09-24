@@ -4,6 +4,9 @@ import Main from '../../pages/Main'
 import Register from '../../pages/Register'
 import Account from '../../pages/Account'
 import Redirect from '../Redirect'
+import Checkout from '../../pages/Checkout'
+import Success from '../../pages/Success'
+import Fail from '../../pages/Fail'
 
 
 export type RouteType = {
@@ -34,6 +37,21 @@ const routes: RouteType[] = [
     to: '/cart',
     title: 'Корзина',
     Comp: <Cart />,
+  },
+  {
+    to: '/checkout',
+    title: 'Доставка',
+    Comp: <Checkout />,
+  },
+  {
+    to: '/success',
+    title: 'Заказ оформлен',
+    Comp: <Success />,
+  },
+  {
+    to: '/fail',
+    title: 'Что-то пошло не так',
+    Comp: <Fail />,
   },
   {
     to: '/account',
