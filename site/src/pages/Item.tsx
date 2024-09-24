@@ -18,6 +18,7 @@ const Item: FC<ItemProps> = (item) => {
   const [currentImage, setCurrentImage] = useState(0)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
   const imagesAreaRef = useRef<HTMLDivElement>(null)
+  const imagesAreaMobileRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!scrollAreaRef.current)
@@ -50,6 +51,19 @@ const Item: FC<ItemProps> = (item) => {
       return
 
     const { children } = imagesAreaRef.current;
+    const currentImgNode = [...children]
+      .find((_img, imgIndex) => imgIndex === imageIndex)
+
+    if (currentImgNode) {
+      scrollAreaRef.current
+        .scrollTo(0, (currentImgNode as any).offsetTop - HEADER_HEIGHT)
+    }
+  }
+  const scrollToImageMobile = (imageIndex: number) => {
+    if (!imagesAreaMobileRef.current || !scrollAreaRef.current)
+      return
+
+    const { children } = imagesAreaMobileRef.current;
     const currentImgNode = [...children]
       .filter(child => child.classList.contains('Img'))
       .find((_img, imgIndex) => imgIndex === imageIndex)
@@ -110,7 +124,7 @@ const Item: FC<ItemProps> = (item) => {
         <div className='row mobile-only'>
           <div
             className='col'
-            ref={imagesAreaRef}
+            ref={imagesAreaMobileRef}
           >
             {item.images[0] &&
               <Img
@@ -136,7 +150,7 @@ const Item: FC<ItemProps> = (item) => {
                 <div
                   key={image.id}
                   className='ItemPage__ImgSelectorMobile'
-                  onClick={() => scrollToImage(imageIndex)}
+                  onClick={() => scrollToImageMobile(imageIndex)}
                 />
               )}
             </div>
