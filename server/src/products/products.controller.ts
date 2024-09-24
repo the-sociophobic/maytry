@@ -11,8 +11,9 @@ export class ProductsController {
     const res = await axios.get(
       'https://1c.yoot.pro:4443/trade3/hs/catalog/products',
       {
-        headers: {
-          'Authorization': 'Basic c2l0ZTo4Z1c2bFhCVTRYeGlnMg=='
+        auth: {
+          username: 'site',
+          password: '8gW6lXBU4Xxig2'
         }
       }
     )
