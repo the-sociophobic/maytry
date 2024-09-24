@@ -51,6 +51,7 @@ const Item: FC<ItemProps> = (item) => {
 
     const { children } = imagesAreaRef.current;
     const currentImgNode = [...children]
+      .filter(child => child.classList.contains('Img'))
       .find((_img, imgIndex) => imgIndex === imageIndex)
 
     if (currentImgNode) {
@@ -107,7 +108,10 @@ const Item: FC<ItemProps> = (item) => {
         </div>
 
         <div className='row mobile-only'>
-          <div className='col'>
+          <div
+            className='col'
+            ref={imagesAreaRef}
+          >
             {item.images[0] &&
               <Img
                 file={item.images[0].small}
@@ -125,6 +129,17 @@ const Item: FC<ItemProps> = (item) => {
                 className={`mb-2`}
               />
             )}
+          </div>
+          <div className='col-1'>
+            <div className='position-sticky' style={{top: '30px'}}>
+              {item.images.map((image, imageIndex) =>
+                <div
+                  key={image.id}
+                  className='ItemPage__ImgSelectorMobile'
+                  onClick={() => scrollToImage(imageIndex)}
+                />
+              )}
+            </div>
           </div>
         </div>
 
