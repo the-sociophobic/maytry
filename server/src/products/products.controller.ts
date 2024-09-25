@@ -7,8 +7,8 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
-  async getProducts(): Promise<string> {
-    const res = await axios.get(
+  async getProducts(): Promise<any> {
+    const res: any = await axios.get(
       'https://1c.yoot.pro:4443/trade3/hs/catalog/products',
       {
         auth: {
@@ -18,6 +18,6 @@ export class ProductsController {
       }
     )
 
-    return JSON.stringify(res)
+    return res
   }
 }
