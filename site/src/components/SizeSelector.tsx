@@ -27,9 +27,9 @@ const SizeSelector: FC<SizeSelectorProps> = ({
         <div className='me-3'>
           Размер:
         </div>
-        {sizes.map(size =>
+        {sizes.map((size, sizeIndex) =>
           <div
-            key={size.id}
+            key={sizeIndex}
             className={`
               me-3 cursor-pointer no-select
               ${!size.available && 'text-disabled'}

@@ -3,6 +3,7 @@ import cors from 'cors'
 import 'dotenv/config'
 
 import useCombinedData from './hooks/useCombinedData'
+import storage from './utils/storage'
 
 
 
@@ -15,6 +16,16 @@ const { SERVER_PORT } = process.env
 
 app.get('/data', async (request: Request, response: Responce) => {
   response.send(await useCombinedData())
+})
+
+app.get('/update-data', async (request: Request, response: Responce) => {
+  storage.delete('contentful.json')
+  storage.delete('1C.json')
+  setTimeout(async () => {
+    await useCombinedData()
+
+    response.send(true)
+  }, 150)
 })
 
 

@@ -7,6 +7,7 @@ import Redirect from '../Redirect'
 import Checkout from '../../pages/Checkout'
 import Success from '../../pages/Success'
 import Fail from '../../pages/Fail'
+import Admin from '../../pages/Admin'
 
 
 export type RouteType = {
@@ -57,6 +58,11 @@ const routes: RouteType[] = [
     to: '/account',
     title: 'Корзина',
     Comp: <Cart />,
+  },
+  {
+    to: '/admin',
+    title: 'Кабинет',
+    Comp: <Admin />,
   },
   {
     to: '/',

@@ -2,7 +2,7 @@ export type ContentfulDataType = {
   sites: ContentfulSiteType[]
   items: ContentfulItemType[]
   images: ContentfulImageType[]
-  ColorPriceSize: ContentfulColorPriceSizeType[]
+  itemColorPrices: ContentfulColorPriceSizeType[]
   colors: ContentfulColorType[]
   categorys: ContentfulCategoryType[]
   sizes: ContentfulSizeType[]
@@ -29,12 +29,13 @@ export const emptyContentfulItem = {
   images: []
 }
 
-export interface ContentfulColorPriceSizeType {
-  // name: string
+export interface ContentfulColorPriceSizeType extends ContentfulItemClass {
+  name: string
+  item_number: string
   color?: ContentfulColorType
   price: number
-  salePrice?: number
   size: ContentfulSizeType
+  salePrice?: number
   max_available: number
 }
 export interface ContentfulSizeType extends ContentfulItemClass {
@@ -42,7 +43,7 @@ export interface ContentfulSizeType extends ContentfulItemClass {
 }
 export const emptySize: ContentfulSizeType = {
   id: '0',
-  name: 'L',
+  name: '-',
 }
 
 export interface ContentfulColorType extends ContentfulItemClass {
@@ -51,8 +52,8 @@ export interface ContentfulColorType extends ContentfulItemClass {
 }
 export const emptyColor: ContentfulColorType = {
   id: '0',
-  name: 'чёрный',
-  colorCode: '#000000'
+  name: '',
+  colorCode: '#FF0000'
 }
 
 interface ContentfulItemClass {
@@ -106,6 +107,6 @@ interface ContentfulLinkType extends ContentfulItemClass {
 interface ContentfulPageType extends ContentfulItemClass {
   link: ContentfulLinkType
   title: string
-  // text: JSX.Element
+  text: string
   items: ContentfulItemType[]
 }

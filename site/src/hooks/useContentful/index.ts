@@ -13,13 +13,14 @@ import {
   SiteType,
   SizeType
 } from './types'
+import isProd from '../../utils/isProd'
 
 
 export type ContentfulType = {
   sites: SiteType[]
   items: ItemType[]
   images: ImageType[]
-  ColorPriceSize: ColorPriceSizeType[]
+  itemColorPrices: ColorPriceSizeType[]
   colors: ColorType[]
   categorys: CategoryType[]
   sizes: SizeType[]
@@ -27,13 +28,19 @@ export type ContentfulType = {
   pages: PageType[]
 }
 
+
+const dataURL = isProd() ?
+  'https://hyperdao.xyz/maytry/data'
+  :
+  'http://localhost:5010/data'
+
 const getContentfulDataWithoutBadItems = async () => {
-  const data = (await axios.get<ContentfulType>('https://hyperdao.xyz/maytry/data')).data
+  const data = (await axios.get<ContentfulType>(dataURL)).data
   const badItemsIds = data.items
     .filter(item =>
       !item.color_price_size ||
       item.color_price_size?.length === 0 ||
-      item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size || !c_p_s.price)
+      item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size)
     )
     .map(item => item.id)
 

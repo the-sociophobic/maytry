@@ -23,7 +23,6 @@ class storage {
     return file
   }
   
-  
   static write = (fileName: string, dataToSave: object) => {
     const filePath = this.createFilePath(fileName)
   
@@ -33,7 +32,17 @@ class storage {
       { flag: 'w+' },
       err => console.log(err)
     )
-  }  
+  }
+
+  static delete = (fileName: string) => {
+    const filePath = this.createFilePath(fileName)
+
+    if (fs.existsSync(filePath))
+      fs.unlink(
+        filePath,
+        err => console.log(err)
+      )
+  }
 }
 
 

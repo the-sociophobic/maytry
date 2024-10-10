@@ -129,10 +129,10 @@ const Main: FC<MainProps> = ({ }) => {
                   :
                   getCurrentPrice(b) - getCurrentPrice(a)
               })
-              .map(item =>
+              .map((item, itemIndex) =>
                 mainPageView === 'IMG' ?
                   <ItemCard
-                    key={item.id}
+                    key={item.oneC_item?.barcode || itemIndex}
                     {...item}
                   />
                   :

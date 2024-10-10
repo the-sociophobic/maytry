@@ -75,10 +75,11 @@ export interface ImageType extends ContentfulItem {
 
 export interface ColorPriceSizeType extends ContentfulItem {
   name: string
+  item_number: string
   color?: ColorType
   price: number
-  salePrice?: number
   size: SizeType
+  salePrice?: number
   max_available: number
 }
 
@@ -105,6 +106,6 @@ export interface LinkType extends ContentfulItem {
 export interface PageType extends ContentfulItem {
   link: LinkType
   title: string
-  text: JSX.Element
+  text: string
   items: ItemType[]
 }
