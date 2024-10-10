@@ -1,10 +1,10 @@
 
 
-interface ContentfulItem {
+export interface ContentfulItem {
   id: string
 }
 
-interface File extends ContentfulItem {
+export interface File extends ContentfulItem {
   file: {
     contentType: string
     details: {
@@ -21,7 +21,7 @@ interface File extends ContentfulItem {
 }
 
 
-interface SiteType extends ContentfulItem {
+export interface SiteType extends ContentfulItem {
   title: string
   main_image: string
   header_filter_categories: CategoryType[]
@@ -29,7 +29,12 @@ interface SiteType extends ContentfulItem {
   footer_links: LinkType[]
   pages: PageType[]
 }
-interface ItemType extends ContentfulItem {
+
+export type ItemType = ContentfulItemType & {
+  oneC_item?: OneCItemType
+}
+
+export interface ContentfulItemType extends ContentfulItem {
   link: string
   name: string
   description: string
@@ -40,13 +45,35 @@ interface ItemType extends ContentfulItem {
   defaultSalePrice?: number
 }
 
-interface ImageType extends ContentfulItem {
+export type OneCItemType = {
+  code: string
+  category_name: string
+  name: string
+  price: number
+  count: number
+  barcode: string
+  type_of_clothing: string
+  seasonality: string
+  color: string
+  size: string
+  size_real: number
+  upper_fabric: string
+  lining: string
+  insulation: string
+  manufacture_date: string
+  height: number
+  chest: number
+  waist: number
+}
+
+
+export interface ImageType extends ContentfulItem {
   title: string
   small: File
   large?: File
 }
 
-interface ColorPriceSizeType extends ContentfulItem {
+export interface ColorPriceSizeType extends ContentfulItem {
   name: string
   color?: ColorType
   price: number
@@ -55,45 +82,29 @@ interface ColorPriceSizeType extends ContentfulItem {
   max_available: number
 }
 
-interface ColorType extends ContentfulItem {
+export interface ColorType extends ContentfulItem {
   name: string
   colorCode: string
 }
 
-interface CategoryType extends ContentfulItem {
+export interface CategoryType extends ContentfulItem {
   name: string
   subcategories: CategoryType[]
 }
 
-interface SizeType extends ContentfulItem {
+export interface SizeType extends ContentfulItem {
   name: string
 }
 
-interface LinkType extends ContentfulItem {
+export interface LinkType extends ContentfulItem {
   link: string
   title: string
   new_line: boolean
 }
 
-interface PageType extends ContentfulItem {
+export interface PageType extends ContentfulItem {
   link: LinkType
   title: string
   text: JSX.Element
   items: ItemType[]
-}
-
-
-export type {
-  ContentfulItem,
-  File,
-
-  SiteType,
-  ItemType,
-  ImageType,
-  ColorPriceSizeType,
-  ColorType,
-  CategoryType,
-  SizeType,
-  LinkType,
-  PageType,
 }

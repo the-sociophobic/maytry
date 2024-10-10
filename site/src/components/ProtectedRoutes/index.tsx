@@ -6,7 +6,7 @@ import useStore from '../../hooks/useStore'
 import Loader from '../Loader'
 import routes, { RouteType } from './routes'
 import Layout from '../Layout'
-import useContentful, { ContentfulType } from '../../hooks/useContentful'
+import useContentful, { ContentfulDataType } from '../../hooks/useContentful'
 import Item from '../../pages/Item'
 import PageTemplate from '../PageTemplate'
 import Redirect from '../Redirect'
@@ -60,7 +60,7 @@ const mapRoutes = (
     errorElement: <Redirect to='/' />
   }))
 
-const mapContentfulRoutes = (contentful: ContentfulType) => [
+const mapContentfulRoutes = (contentful: ContentfulDataType) => [
   ...(contentful.items.map(item => ({
     to: item.link,
     title: item.name,

@@ -1,12 +1,4 @@
-import { ContentfulItemType } from './contentful.type'
-
-
-export type getProductsResponce = {
-  items_count: number
-  items: ProductType[]
-}
-
-export type ProductType = {
+export type OneCItemType = {
   code: string
   category_name: string
   name: string
@@ -26,6 +18,3 @@ export type ProductType = {
   chest: number
   waist: number
 }
-
-export type ParsedProductType = Pick<ContentfulItemType, 'name' | 'color_price_size'>
-

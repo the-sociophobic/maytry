@@ -1,4 +1,5 @@
 import { useQuery } from 'react-query'
+import axios from 'axios'
 
 import { getContentfulData } from './helpers'
 import {
@@ -27,7 +28,7 @@ export type ContentfulType = {
 }
 
 const getContentfulDataWithoutBadItems = async () => {
-  const data = await getContentfulData<ContentfulType>()
+  const data = (await axios.get<ContentfulType>('https://hyperdao.xyz/maytry/data')).data
   const badItemsIds = data.items
     .filter(item =>
       !item.color_price_size ||

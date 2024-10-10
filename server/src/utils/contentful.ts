@@ -60,8 +60,8 @@ const createContentfulClient = () =>
   
   const contentfulClient = createContentfulClient()
   
-  const getContentfulData = async <T>(typeId: string) => {
-    return await getContentfulItems<T>(contentfulClient, { content_type: typeId })
+  const getContentfulData = async <T>(content_type?: string) => {
+    return await getContentfulItems<T>(contentfulClient, content_type ? { content_type } : undefined)
   }
   
   

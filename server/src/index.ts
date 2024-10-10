@@ -1,7 +1,9 @@
-import 'dotenv/config'
 import express, { Request, Responce } from 'express'
 import cors from 'cors'
-import { getProducts } from './routes/products'
+import 'dotenv/config'
+
+import useCombinedData from './hooks/useCombinedData'
+
 
 
 const app = express()
@@ -11,10 +13,8 @@ app.use(express.json())
 const { SERVER_PORT } = process.env
 
 
-app.get('/products', async (request: Request, response: Responce) => {
-  const products = await getProducts()
-
-  response.send(products)
+app.get('/data', async (request: Request, response: Responce) => {
+  response.send(await useCombinedData())
 })
 
 
