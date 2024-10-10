@@ -16,7 +16,7 @@ import {
 import isProd from '../../utils/isProd'
 
 
-export type ContentfulType = {
+export type ContentfulDataType = {
   sites: SiteType[]
   items: ItemType[]
   images: ImageType[]
@@ -35,7 +35,7 @@ const dataURL = isProd() ?
   'http://localhost:5010/data'
 
 const getContentfulDataWithoutBadItems = async () => {
-  const data = (await axios.get<ContentfulType>(dataURL)).data
+  const data = (await axios.get<ContentfulDataType>(dataURL)).data
   const badItemsIds = data.items
     .filter(item =>
       !item.color_price_size ||
@@ -51,12 +51,12 @@ const getContentfulDataWithoutBadItems = async () => {
 }
 
 const useContentful = () => {
-  return useQuery<ContentfulType>('contentful', getContentfulDataWithoutBadItems)
+  return useQuery<ContentfulDataType>('contentful', getContentfulDataWithoutBadItems)
 }
 
 const useMainPage = () => {
   return useQuery<SiteType>('contentful', async () => {
-    const data = await getContentfulData<ContentfulType>()
+    const data = await getContentfulData<ContentfulDataType>()
   
     return data.sites[0]
   })

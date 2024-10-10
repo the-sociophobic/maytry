@@ -38,11 +38,12 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
     ...(currentSize || {
       size: { id: '', name: '' },
       price: 0,
-      max_available: 0
+      max_available: 0,
     }),
     color: currentColor?.color,
     quantity: 0,
-    id: currentSize ? currentSize.id : ''
+    id: currentSize ? currentSize.id : '',
+    item_number: ''
   }
   const currentItemInCart = itemsInCart
     .find(itemInCart => itemInCart.id === currentSize?.id)
