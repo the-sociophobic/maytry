@@ -1,4 +1,5 @@
 import express, { Request, Responce } from 'express'
+import axios from 'axios'
 import cors from 'cors'
 import 'dotenv/config'
 
@@ -26,6 +27,16 @@ app.get('/update-data', async (request: Request, response: Responce) => {
 
     response.send(true)
   }, 150)
+})
+
+app.post('/post-boxberry', async (request, response) => {
+  const { body } = request
+  const res = (await axios.post(
+    'https://api.boxberry.ru/json.php',
+    body
+  )).data
+
+  response.send(res)
 })
 
 

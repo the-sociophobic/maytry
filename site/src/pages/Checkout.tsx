@@ -7,6 +7,7 @@ import Button from '../components/Button'
 import openCloudpayments from '../utils/openCloudpayments'
 import useTotalPrice from '../hooks/useTotalPrice'
 import { printPrice } from '../utils/price'
+import postToBoxberry from '../utils/postToBoxberry'
 
 
 export type CheckoutProps = {}
@@ -30,23 +31,40 @@ const Checkout: FC<CheckoutProps> = ({
         <div className='d-flex flex-row justify-content-between py-3'>
           <Boxberry />
         </div>
-      
+
         <div className='d-flex flex-row justify-content-between py-3'>
           <Button
             black
             disabled={!boxberryData}
-            onClick={() => openCloudpayments({
-              amount: totalPriceWithBoxberry,
-              onSuccess: () => {
-                emptyCart()
-                setBoxberryData(undefined)
-                navigate('/success')
-              },
-              onFail: () => {
-                navigate('/fail')
-              },
-              onComplete: () => {},
-            })}
+            onClick={() => {
+              postToBoxberry({
+                order_id: '1',
+
+                price: totalPrice,
+                payment_sum: totalPriceWithBoxberry,
+                delivery_sum: totalPriceWithBoxberry - totalPrice,
+              
+                pvz_number: boxberryData?.id || '',
+              
+                fio: 'Тест Тестовый Тестович',
+                phone: '+79217406762',
+                email: 'torikowashi@gmail.com',
+              
+                items: [],
+              })
+              openCloudpayments({
+                amount: totalPriceWithBoxberry,
+                onSuccess: () => {
+                  emptyCart()
+                  setBoxberryData(undefined)
+                  navigate('/success')
+                },
+                onFail: () => {
+                  navigate('/fail')
+                },
+                onComplete: () => { },
+              })
+            }}
           >
             ОПЛАТИТЬ {printPrice(totalPriceWithBoxberry)}
           </Button>
