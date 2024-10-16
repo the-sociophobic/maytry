@@ -60,6 +60,9 @@ export type StateType = {
 
   boxberryData?: BoxberryResultType
   setBoxberryData: (boxberryData: BoxberryResultType | undefined) => void
+
+  userCity?: string
+  setUserCity: (userCity: string | undefined) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -135,6 +138,10 @@ const useStore = create<StateType>(set => ({
 
   boxberryData: undefined,
   setBoxberryData: (boxberryData: BoxberryResultType | undefined) => set({ boxberryData }),
+
+  userCity: undefined,
+  setUserCity: (userCity: string | undefined) => set({ userCity }),
+
 }))
 
 

@@ -36,7 +36,7 @@ function App() {
     }
     requestAnimationFrame(scrollFrame)
   }
-
+  
   return (
     <QueryWrapper>
       <div className='App'>

@@ -69,9 +69,11 @@ const Cart: FC<CartProps> = ({ }) => {
                         to={'/' + item.link}
                         className='w-50 d-block'
                       >
-                        <Img
-                          file={item.images[0].small}
-                        />
+                        {item.images[0] &&
+                          <Img
+                            file={item.images[0].small}
+                          />
+                        }
                       </LinkWrapper>
                     </div>
                     <div className='Cart__items__item__NAME-DETAILS-PRICE'>
@@ -139,7 +141,7 @@ const Cart: FC<CartProps> = ({ }) => {
               <div className='d-flex flex-row justify-content-between py-3'>
                 <LinkWrapper
                   to='/checkout'
-                  // className='d-inline-block'
+                // className='d-inline-block'
                 >
                   <Button black>
                     ЗАКАЗАТЬ

@@ -17,7 +17,7 @@ const openCloudpayments = (props: openCloudpaymentsProps) => {
   var widget = new cp.CloudPayments()
   widget.pay('auth', // или 'charge'
     { //options
-      publicId: 'pk_15732f58701e01bbff1459cfeb9bf', //id из личного кабинета
+      publicId: import.meta.env.VITE_CLOUDPAYMENTS_TOKEN, //id из личного кабинета
       description: 'Оплата товаров maytry', //назначение
       amount,
       currency: 'RUB', //валюта

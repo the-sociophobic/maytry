@@ -1,11 +1,11 @@
 import { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import useStore from '../hooks/useStore'
 import Boxberry from '../components/Boxberry'
 import Button from '../components/Button'
 import openCloudpayments from '../utils/openCloudpayments'
 import useTotalPrice from '../hooks/useTotalPrice'
-import { useNavigate } from 'react-router-dom'
 import { printPrice } from '../utils/price'
 
 

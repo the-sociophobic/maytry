@@ -13,10 +13,12 @@ export type OneCDataType = {
 
 
 const use1C = async () => {
-  const local_items_from_1C = storage.read('1C.json') as OneCDataType | undefined
+  const localStorage = storage.read('1C.json') as OneCDataType | undefined
 
-  if (local_items_from_1C)
-    return local_items_from_1C
+  if (localStorage?.items_from_1C)
+    return ({
+      items_from_1C: localStorage.items_from_1C
+    })
 
   const items_from_1C = await get1C()
 
@@ -43,6 +45,8 @@ const get1C = async () => {
     }
   )).data
 
+  console.log(items_from_1C)
+  
   return items_from_1C
 }
 

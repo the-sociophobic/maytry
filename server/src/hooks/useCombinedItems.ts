@@ -69,6 +69,9 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
       })
     })
 
+    // console.log('items_from_1C.length', [...items_combined][0])
+    // console.log('items_combined.keys.length', items_combined.get('3522'))
+
     return [...items_combined].map(([_name, value]) => value)
 
   } catch (err) {

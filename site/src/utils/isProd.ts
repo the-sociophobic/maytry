@@ -1,5 +1,5 @@
 const isProd = () =>
-  process.env.NODE_ENV !== 'development'
+  import.meta.env.MODE !== 'development'
 
 
 export default isProd

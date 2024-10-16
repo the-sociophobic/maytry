@@ -2,6 +2,7 @@ export type OneCItemType = {
   code: string
   category_name: string
   name: string
+  article: string
   price: number
   count: number
   barcode: string
