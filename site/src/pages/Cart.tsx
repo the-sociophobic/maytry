@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { ColorPriceSizeType, ItemType } from '../hooks/useContentful/types'
 import useStore from '../hooks/useStore'
-import Img from '../components/Img'
 import ColorSizes from '../components/ColorSizes'
 import { printPrice } from '../utils/price'
 import Price from '../components/Price'
@@ -10,6 +9,7 @@ import LinkWrapper from '../components/LinkWrapper'
 import QuantitySelector from '../components/QuantitySelector'
 import Button from '../components/Button'
 import useTotalPrice from '../hooks/useTotalPrice'
+import ImgDummy from '../components/ImgDummy'
 
 
 export type CartProps = {}
@@ -66,14 +66,10 @@ const Cart: FC<CartProps> = ({ }) => {
                   >
                     <div className='Cart__items__item__IMG'>
                       <LinkWrapper
-                        to={'/' + item.link}
+                        to={'/item/' + item.link}
                         className='w-50 d-block'
                       >
-                        {item.images[0] &&
-                          <Img
-                            file={item.images[0].small}
-                          />
-                        }
+                        <ImgDummy img={item.images[0]} />
                       </LinkWrapper>
                     </div>
                     <div className='Cart__items__item__NAME-DETAILS-PRICE'>

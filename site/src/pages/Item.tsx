@@ -5,6 +5,7 @@ import { ItemType } from '../hooks/useContentful/types'
 import Button from '../components/Button'
 import Img from '../components/Img'
 import ItemInfo from '../components/ItemInfo'
+import ImgDummy from '../components/ImgDummy'
 
 
 export type ItemProps = ItemType
@@ -104,6 +105,16 @@ const Item: FC<ItemProps> = (item) => {
                   }}
                 />
               )}
+              {item.images.length === 0 &&
+                <ImgDummy
+                  img={undefined}
+                  className={`mb-2 cursor-zoom-${zoomed ? 'out' : 'in'}`}
+                  onClick={() => {
+                    setZoomed(!zoomed)
+                    setTimeout(() => scrollToImage(0), 25)
+                  }}
+                />
+              }
             </div>
           </div>
           <div className='col-3'>
@@ -126,12 +137,10 @@ const Item: FC<ItemProps> = (item) => {
             className='col'
             ref={imagesAreaMobileRef}
           >
-            {item.images[0] &&
-              <Img
-                file={item.images[0].small}
-                className={`mb-2`}
-              />
-            }
+            <ImgDummy
+              img={item.images[0]}
+              className='mb-2'
+            />
             <ItemInfo
               className='mb-5'
               {...item}
@@ -145,7 +154,7 @@ const Item: FC<ItemProps> = (item) => {
             )}
           </div>
           <div className='col-1'>
-            <div className='position-sticky' style={{top: '30px'}}>
+            <div className='position-sticky' style={{ top: '30px' }}>
               {item.images.map((image, imageIndex) =>
                 <div
                   key={image.id}

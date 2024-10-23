@@ -2,9 +2,9 @@ import { FC } from 'react'
 
 import { ItemType } from '../hooks/useContentful/types'
 import LinkWrapper from './LinkWrapper'
-import Img from './Img'
 import useStore from '../hooks/useStore'
 import ItemData from './ItemData'
+import ImgDummy from './ImgDummy'
 
 
 export type ItemCardProps = ItemType
@@ -15,17 +15,15 @@ const ItemCard: FC<ItemCardProps> = (item) => {
 
   return (
     <LinkWrapper
-      to={item.link}
+      to={'/item/' + item.link}
       className='ItemCard'
       onMouseOver={() => setHoveredItem(item)}
       onMouseLeave={() => setHoveredItem(undefined)}
     >
-      {item.images[0] &&
-        <Img
-          file={item.images[0].small}
-          className='w-100'
-        />
-      }
+      <ImgDummy
+        img={item.images[0]}
+        className='w-100'
+      />
       {/* <div className='ItemCard__name'>
         {item.name}
       </div> */}

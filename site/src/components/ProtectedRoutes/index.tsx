@@ -62,7 +62,7 @@ const mapRoutes = (
 
 const mapContentfulRoutes = (contentful: ContentfulDataType) => [
   ...(contentful.items.map(item => ({
-    to: item.link,
+    to: '/item/' + item.link,
     title: item.name,
     Comp: <Item {...item} />
   })) || []),

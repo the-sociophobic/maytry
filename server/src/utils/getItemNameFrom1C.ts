@@ -8,7 +8,7 @@ export const getItemNameFrom1C = (item: OneCItemType) => {
 }
 
 export const getItemNumberFrom1C = (item: OneCItemType) => {
-  return item.article
+  return item.article.match(/\d{4}/gm)?.[0] || item.article
 }
 
 export const getInvertedName = (name: string) => {

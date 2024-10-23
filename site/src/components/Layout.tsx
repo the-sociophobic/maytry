@@ -7,7 +7,6 @@ import { LinkWrapperProps } from './LinkWrapper'
 import { ButtonProps } from './Button'
 import Header from './Header'
 import Footer from './Footer'
-import useContentful from '../hooks/useContentful'
 import useStore from '../hooks/useStore'
 
 
@@ -31,7 +30,6 @@ const Layout: FC<LayoutProps> = ({
 }) => {
   useTitle(title)
   const location = useLocation()
-  const { data: contentful } = useContentful()
 
   const { setShowExtendedFilter } = useStore()
   useEffect(() => {
@@ -43,11 +41,8 @@ const Layout: FC<LayoutProps> = ({
     <>
       <Header />
       {children}
-      {!contentful?.items
-        .map(item => '/' + item.link)
-        .includes(location.pathname)
-
-        && <Footer />
+      {!location.pathname.includes('/item/') &&
+        <Footer />
       }
     </>
   )

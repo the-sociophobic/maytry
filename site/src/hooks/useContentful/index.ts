@@ -43,11 +43,19 @@ const getContentfulDataWithoutBadItems = async () => {
       item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size)
     )
     .map(item => item.id)
-
-  return ({
+  const filteredData = {
     ...data,
-    items: data.items.filter(item => !badItemsIds.includes(item.id)),
-  })
+    items: data.items
+      .filter(item => !badItemsIds.includes(item.id))
+      .map(item => ({
+        ...item,
+        link: item.link.replace('/', '')
+      }))
+  }
+
+  // console.log(filteredData)
+
+  return filteredData
 }
 
 const useContentful = () => {

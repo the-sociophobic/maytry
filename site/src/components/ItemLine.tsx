@@ -12,7 +12,7 @@ const ItemLine: FC<ItemLineProps> = (item) => {
 
   return (
     <LinkWrapper
-      to={item.link}
+      to={'/item/' + item.link}
       className='ItemLine'
     >
       <div className='ItemLine__name'>
