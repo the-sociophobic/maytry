@@ -21,7 +21,7 @@ app.get('/data', async (request: Request, response: Responce) => {
 
 app.get('/update-data', async (request: Request, response: Responce) => {
   storage.delete('contentful.json')
-  storage.delete('1C.json')
+  // storage.delete('1C.json')
   setTimeout(async () => {
     await useCombinedData()
 
