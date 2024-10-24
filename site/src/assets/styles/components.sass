@@ -52,14 +52,19 @@ $button-height: 20px
     height: $button-height * 2
     line-height: $button-height * 2
 
+.Link
+  &--disabled
+    opacity: .5
+    cursor: not-allowed
 
+  
 .Input,
 .TextArea
   width: 100%
   position: relative
   &__label
-    @extend .h4
-    @extend .mb-3
+    @include font-params(11, 14)
+    @extend .mb-1
   &__input
     width: 100%
     background-color: $main-background
@@ -363,3 +368,30 @@ $color-square-size: 12px
   #boxberry_map
     width: 100%
     // @extend .abs-cover
+
+.Radio
+  @extend .d-flex
+  @extend .flex-column
+  &__option
+    padding-left: 12px
+    position: relative
+    cursor: pointer
+    &::before,
+    &::after
+      content: ''
+      position: absolute
+      border-radius: 10px
+      top: 50%
+      transform: translateY(-50%)
+    &::before
+      left: 0
+      width: 10px
+      height: 10px
+      border: 1px solid black
+    &--selected
+      cursor: default
+      &::after
+        left: 2px
+        width: 6px
+        height: 6px
+        background-color: black

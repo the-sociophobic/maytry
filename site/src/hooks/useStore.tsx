@@ -63,11 +63,30 @@ export type StateType = {
 
   userCity?: string
   setUserCity: (userCity: string | undefined) => void
+
+  userFullName: string
+  setUserFullName: (userFullName: string) => void
+
+  userPhone: string
+  setUserPhone: (userPhone: string) => void
+
+  userEmail: string
+  setUserEmail: (userEmail: string) => void
+
+  deliveryType: DeliveryTypeType
+  setDeliveryType: (deliveryType: DeliveryTypeType) => void
+
+  userAddress: string
+  setUserAddress: (userAddress: string) => void
+
+  paymentType: PaymentTypeType
+  setPaymentType: (paymentType: PaymentTypeType) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
 // export type SortByType = 'Default' | 'Category' | 'Style' | 'Season'
-
+export type DeliveryTypeType = 'Доставка до двери' | 'Пункт выдачи Boxberry'
+export type PaymentTypeType = 'Оплата онлайн' | 'Оплата долями CloudPayments' | 'Оплата при получении'
 
 const useStore = create<StateType>(set => ({
   user: null,
@@ -142,6 +161,23 @@ const useStore = create<StateType>(set => ({
   userCity: undefined,
   setUserCity: (userCity: string | undefined) => set({ userCity }),
 
+  userFullName: '',
+  setUserFullName: (userFullName: string) => set({ userFullName }),
+
+  userPhone: '',
+  setUserPhone: (userPhone: string) => set({ userPhone }),
+
+  userEmail: '',
+  setUserEmail: (userEmail: string) => set({ userEmail }),
+
+  deliveryType: 'Доставка до двери',
+  setDeliveryType: (deliveryType: DeliveryTypeType) => set({ deliveryType }),
+
+  userAddress: '',
+  setUserAddress: (userAddress: string) => set({ userAddress }),
+
+  paymentType: 'Оплата онлайн',
+  setPaymentType: (paymentType: PaymentTypeType) => set({ paymentType }),
 }))
 
 

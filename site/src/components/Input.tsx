@@ -5,7 +5,7 @@ type InputProps = {
   value: string | number
   onChange: (value: any) => void
   onBlur?: (e: any) => void
-  number?: boolean
+  type?: React.HTMLInputTypeAttribute
   label?: string
   placeholder?: string
   className?: string
@@ -21,7 +21,7 @@ type InputProps = {
 const Input: React.FC<InputProps> = ({
   value,
   onChange,
-  number,
+  type,
   label,
   placeholder,
   className,
@@ -40,7 +40,7 @@ const Input: React.FC<InputProps> = ({
     }
     <input
       ref={_ref}
-      type={number ? 'number' : undefined}
+      type={type}
       className={`Input__input ${max && 'Input__input--max'} ${
         isSuccess && 'text-success form-control bg-transparent is-valid'
       }`}
@@ -49,8 +49,8 @@ const Input: React.FC<InputProps> = ({
       autoComplete="off"
       autoCorrect="off"
       onChange={(e) => onChange(e.target.value)}
-      min={number ? min || '0' : undefined}
-      max={(number && max) || undefined}
+      min={type === 'number' ? min || '0' : undefined}
+      max={(type === 'number' && max) || undefined}
       placeholder={placeholder}
     />
     {children &&

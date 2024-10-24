@@ -354,14 +354,14 @@ const ExtendedFilter = () => {
           <p className='m-0'>Цена:</p>
           <Input
             className='Header__section ms-3'
-            number
+            type={'number'}
             value={priceFrom === undefined ? '' : priceFrom}
             onChange={value => setPriceFrom(parseInt(value) || undefined)}
             placeholder='от'
           />
           <Input
             className='Header__section ms-3'
-            number
+            type={'number'}
             value={priceTo === undefined ? '' : priceTo}
             onChange={value => setPriceTo(parseInt(value) || undefined)}
             placeholder='до'

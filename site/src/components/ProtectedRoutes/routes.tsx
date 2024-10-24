@@ -8,6 +8,7 @@ import Checkout from '../../pages/Checkout'
 import Success from '../../pages/Success'
 import Fail from '../../pages/Fail'
 import Admin from '../../pages/Admin'
+import Details from '../../pages/Details'
 
 
 export type RouteType = {
@@ -38,6 +39,11 @@ const routes: RouteType[] = [
     to: '/cart',
     title: 'Корзина',
     Comp: <Cart />,
+  },
+  {
+    to: '/details',
+    title: 'Данные покупателя',
+    Comp: <Details />,
   },
   {
     to: '/checkout',
