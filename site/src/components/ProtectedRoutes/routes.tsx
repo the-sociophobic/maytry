@@ -9,6 +9,7 @@ import Success from '../../pages/Success'
 import Fail from '../../pages/Fail'
 import Admin from '../../pages/Admin'
 import Details from '../../pages/Details'
+import BoxberrySelect from '../../pages/BoxberrySelect'
 
 
 export type RouteType = {
@@ -46,9 +47,9 @@ const routes: RouteType[] = [
     Comp: <Details />,
   },
   {
-    to: '/checkout',
-    title: 'Доставка',
-    Comp: <Checkout />,
+    to: '/boxberry-select',
+    title: 'Выбор пункта Boxberry',
+    Comp: <BoxberrySelect />,
   },
   {
     to: '/success',

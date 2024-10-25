@@ -44,7 +44,7 @@ const Header: FC<HeaderProps> = ({ }) => {
 
   useEffect(() =>
     setShowExtendedFilter(is_main_page && mobileHeaderOpened)
-  , [is_main_page, mobileHeaderOpened])
+    , [is_main_page, mobileHeaderOpened])
 
   const closeMobileHeader = () => {
     setShowExtendedFilter(false)
@@ -75,10 +75,18 @@ const Header: FC<HeaderProps> = ({ }) => {
               <LogoImg className='Header__logo' />
             </LinkWrapper>
 
-            <div
+            {/* <div
               className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
               onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
-            />
+            /> */}
+            <LinkWrapper
+              to='/cart'
+              className='ms-auto mobile-only'
+            >
+              <Button black>
+                КОРЗИНА ({numberOfItemsInCart})
+              </Button>
+            </LinkWrapper>
 
             <div className='Header__desktop'>
               {is_main_page ?

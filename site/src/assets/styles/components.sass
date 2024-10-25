@@ -270,7 +270,17 @@ $color-square-size: 12px
     border-top: 1px solid $black
     margin-left: 45%
     margin-bottom: 4px
-
+    position: relative
+    &__tooltip
+      position: absolute
+      top: 50%
+      left: -10px
+      transform: translate(-100%, -50%)
+      background-color: white
+      border: 1px solid black
+      line-height: 1.5
+      padding: 0 7px
+      white-space: nowrap
 
 .Cart
   @extend .flex-grow-1

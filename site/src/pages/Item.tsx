@@ -76,7 +76,9 @@ const Item: FC<ItemProps> = (item) => {
   }
 
   const touchScrollerRef = useRef<HTMLDivElement>(null)
+  const [currentMobileImage, setCurrentMobileImage] = useState(-1)
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    // e.preventDefault()
     const touch = e.changedTouches[0]
     const touchScroller = touchScrollerRef.current
 
@@ -87,8 +89,12 @@ const Item: FC<ItemProps> = (item) => {
     const numberOfPhoto = Math.floor(progress * item.images.length)
     
     scrollToImageMobile(numberOfPhoto)
+    setCurrentMobileImage(numberOfPhoto)
   }
-
+  const onTouchEnd = () => {
+    setCurrentMobileImage(-1)
+  }
+  
   return (
     <div
       ref={scrollAreaRef}
@@ -171,15 +177,25 @@ const Item: FC<ItemProps> = (item) => {
             <div
               ref={touchScrollerRef}
               className='position-sticky'
-              style={{ top: '30px' }}
+              style={{
+                top: '30px',
+                touchAction: 'none'
+              }}
               onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
             >
               {item.images.map((image, imageIndex) =>
                 <div
                   key={image.id}
                   className='ItemPage__ImgSelectorMobile'
                   onClick={() => scrollToImageMobile(imageIndex)}
-                />
+                >
+                  {currentMobileImage === imageIndex &&
+                    <div className='ItemPage__ImgSelectorMobile__tooltip'>
+                      {image.title}
+                    </div>
+                  }
+                </div>
               )}
             </div>
           </div>

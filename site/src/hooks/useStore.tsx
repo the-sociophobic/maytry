@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 import { WebAppAuthObject } from '../utils/auth'
 import { ItemType } from './useContentful/types'
@@ -88,97 +89,105 @@ export type MainPageViewType = 'IMG' | 'TXT'
 export type DeliveryTypeType = 'Доставка до двери' | 'Пункт выдачи Boxberry'
 export type PaymentTypeType = 'Оплата онлайн' | 'Оплата долями CloudPayments' | 'Оплата при получении'
 
-const useStore = create<StateType>(set => ({
-  user: null,
-  setUser: (user: null | WebAppAuthObject) => set({ user }),
+const useStore = create(
+  persist<StateType>(
+    set => ({
+      user: null,
+      setUser: (user: null | WebAppAuthObject) => set({ user }),
 
-  hoveredItem: undefined,
-  setHoveredItem: (hoveredItem: ItemType | undefined) => set({ hoveredItem }),
+      hoveredItem: undefined,
+      setHoveredItem: (hoveredItem: ItemType | undefined) => set({ hoveredItem }),
 
-  mainPageView: 'IMG',
-  setMainPageView: (mainPageView: MainPageViewType) => set({ mainPageView }),
+      mainPageView: 'IMG',
+      setMainPageView: (mainPageView: MainPageViewType) => set({ mainPageView }),
 
-  showSearch: false,
-  setShowSearch: (showSearch: boolean) => set({ showSearch }),
+      showSearch: false,
+      setShowSearch: (showSearch: boolean) => set({ showSearch }),
 
-  searchString: '',
-  setSearchString: (searchString: string) => set({ searchString }),
+      searchString: '',
+      setSearchString: (searchString: string) => set({ searchString }),
 
-  showFilter: false,
-  setShowFilter: (showFilter: boolean) => set({ showFilter }),
+      showFilter: false,
+      setShowFilter: (showFilter: boolean) => set({ showFilter }),
 
-  filterBy: [],
-  setFilterBy: (filterBy: string[]) => set({ filterBy }),
+      filterBy: [],
+      setFilterBy: (filterBy: string[]) => set({ filterBy }),
 
-  showExtendedFilter: false,
-  setShowExtendedFilter: (showExtendedFilter: boolean) => set({ showExtendedFilter }),
+      showExtendedFilter: false,
+      setShowExtendedFilter: (showExtendedFilter: boolean) => set({ showExtendedFilter }),
 
-  showAccount: false,
-  setShowAccount: (showAccount: boolean) => set({ showAccount }),
+      showAccount: false,
+      setShowAccount: (showAccount: boolean) => set({ showAccount }),
 
-  itemsInCart: [],
-  setItemInCart: (item: ItemInCartType, quantity) => set(state => {
-    const itemIndex = state.itemsInCart
-      .map(itemInCart => itemInCart.id)
-      .indexOf(item.id)
+      itemsInCart: [],
+      setItemInCart: (item: ItemInCartType, quantity) => set(state => {
+        const itemIndex = state.itemsInCart
+          .map(itemInCart => itemInCart.id)
+          .indexOf(item.id)
 
-    return ({
-      itemsInCart: itemIndex !== -1 ? [
-        ...state.itemsInCart.slice(0, itemIndex),
-        ...(quantity > 0 ? [{ ...item, quantity }] : []),
-        ...state.itemsInCart.slice(itemIndex + 1),
-      ]
-      :
-      [
-        ...state.itemsInCart,
-        ...(quantity > 0 ? [{ ...item, quantity }] : [])
-      ]
-    })
-  }),
-  emptyCart: () => set({ itemsInCart: [] }),
+        return ({
+          itemsInCart: itemIndex !== -1 ? [
+            ...state.itemsInCart.slice(0, itemIndex),
+            ...(quantity > 0 ? [{ ...item, quantity }] : []),
+            ...state.itemsInCart.slice(itemIndex + 1),
+          ]
+            :
+            [
+              ...state.itemsInCart,
+              ...(quantity > 0 ? [{ ...item, quantity }] : [])
+            ]
+        })
+      }),
+      emptyCart: () => set({ itemsInCart: [] }),
 
-  showStartBanner: true,
-  setShowStartBanner: (showStartBanner: boolean) => set({ showStartBanner }),
+      showStartBanner: true,
+      setShowStartBanner: (showStartBanner: boolean) => set({ showStartBanner }),
 
-  priceFrom: undefined,
-  setPriceFrom: (priceFrom: undefined | number) => set({ priceFrom }),
+      priceFrom: undefined,
+      setPriceFrom: (priceFrom: undefined | number) => set({ priceFrom }),
 
-  priceTo: undefined,
-  setPriceTo: (priceTo: undefined | number) => set({ priceTo }),
+      priceTo: undefined,
+      setPriceTo: (priceTo: undefined | number) => set({ priceTo }),
 
-  sortOrder: 'asc' as SortOrderType,
-  setSortOrder: (sortOrder: SortOrderType) => set({ sortOrder }),
+      sortOrder: 'asc' as SortOrderType,
+      setSortOrder: (sortOrder: SortOrderType) => set({ sortOrder }),
 
-  selectedColorIds: [],
-  setSelectedColorIds: (selectedColorIds: string[]) => set({ selectedColorIds }),
+      selectedColorIds: [],
+      setSelectedColorIds: (selectedColorIds: string[]) => set({ selectedColorIds }),
 
-  selectedSizesIds: [],
-  setSelectedSizesIds: (selectedSizesIds: string[]) => set({ selectedSizesIds }),
+      selectedSizesIds: [],
+      setSelectedSizesIds: (selectedSizesIds: string[]) => set({ selectedSizesIds }),
 
-  boxberryData: undefined,
-  setBoxberryData: (boxberryData: BoxberryResultType | undefined) => set({ boxberryData }),
+      boxberryData: undefined,
+      setBoxberryData: (boxberryData: BoxberryResultType | undefined) => set({ boxberryData }),
 
-  userCity: undefined,
-  setUserCity: (userCity: string | undefined) => set({ userCity }),
+      userCity: undefined,
+      setUserCity: (userCity: string | undefined) => set({ userCity }),
 
-  userFullName: '',
-  setUserFullName: (userFullName: string) => set({ userFullName }),
+      userFullName: '',
+      setUserFullName: (userFullName: string) => set({ userFullName }),
 
-  userPhone: '',
-  setUserPhone: (userPhone: string) => set({ userPhone }),
+      userPhone: '',
+      setUserPhone: (userPhone: string) => set({ userPhone }),
 
-  userEmail: '',
-  setUserEmail: (userEmail: string) => set({ userEmail }),
+      userEmail: '',
+      setUserEmail: (userEmail: string) => set({ userEmail }),
 
-  deliveryType: 'Доставка до двери',
-  setDeliveryType: (deliveryType: DeliveryTypeType) => set({ deliveryType }),
+      deliveryType: 'Доставка до двери',
+      setDeliveryType: (deliveryType: DeliveryTypeType) => set({ deliveryType }),
 
-  userAddress: '',
-  setUserAddress: (userAddress: string) => set({ userAddress }),
+      userAddress: '',
+      setUserAddress: (userAddress: string) => set({ userAddress }),
 
-  paymentType: 'Оплата онлайн',
-  setPaymentType: (paymentType: PaymentTypeType) => set({ paymentType }),
-}))
+      paymentType: 'Оплата онлайн',
+      setPaymentType: (paymentType: PaymentTypeType) => set({ paymentType }),
+    }),
+    {
+      name: 'main-storage',
+      // storage: createJSONStorage(() => sessionStorage)
+    }
+  )
+)
 
 
 export default useStore

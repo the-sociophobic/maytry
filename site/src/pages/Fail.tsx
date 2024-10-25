@@ -13,7 +13,7 @@ const Fail: FC<FailProps> = ({
     <div className='container-2'>
       Что-то пошло не так
       <LinkWrapper
-        to='/checkout'
+        to='/cart'
       >
         <Button black>
           ЗАКАЗАТЬ ЕЩЁ РАЗ
