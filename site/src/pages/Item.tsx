@@ -75,6 +75,20 @@ const Item: FC<ItemProps> = (item) => {
     }
   }
 
+  const touchScrollerRef = useRef<HTMLDivElement>(null)
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.changedTouches[0]
+    const touchScroller = touchScrollerRef.current
+
+    if (!touch || !touchScroller)
+      return
+
+    const progress = (touch.pageY - touchScroller.getBoundingClientRect().top) / touchScroller.clientHeight
+    const numberOfPhoto = Math.floor(progress * item.images.length)
+    
+    scrollToImageMobile(numberOfPhoto)
+  }
+
   return (
     <div
       ref={scrollAreaRef}
@@ -154,7 +168,12 @@ const Item: FC<ItemProps> = (item) => {
             )}
           </div>
           <div className='col-1'>
-            <div className='position-sticky' style={{ top: '30px' }}>
+            <div
+              ref={touchScrollerRef}
+              className='position-sticky'
+              style={{ top: '30px' }}
+              onTouchMove={onTouchMove}
+            >
               {item.images.map((image, imageIndex) =>
                 <div
                   key={image.id}
