@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query'
-import axios from 'axios'
 
 import { getContentfulData } from './helpers'
 import {
@@ -13,7 +12,7 @@ import {
   SiteType,
   SizeType
 } from './types'
-import isProd from '../../utils/isProd'
+import { get } from '../../utils/requests'
 
 
 export type ContentfulDataType = {
@@ -29,13 +28,8 @@ export type ContentfulDataType = {
 }
 
 
-const dataURL = isProd() ?
-  'https://hyperdao.xyz/maytry/data'
-  :
-  'http://localhost:5010/data'
-
 const getContentfulDataWithoutBadItems = async () => {
-  const data = (await axios.get<ContentfulDataType>(dataURL)).data
+  const data = await get<ContentfulDataType>('/data')
   const badItemsIds = data.items
     .filter(item =>
       !item.color_price_size ||

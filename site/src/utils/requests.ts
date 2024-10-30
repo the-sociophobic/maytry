@@ -11,6 +11,7 @@ export const get = async <T>(path: string, params = {}) => {
   } catch(error: any) {
     console.log(error)
     // throw new Error(error)
+    return ({}) as T
   }
 }
 
@@ -22,6 +23,7 @@ export const post = async <T>(path: string, data: object) => {
   } catch(error: any) {
     console.log(error)
     // throw new Error(error)
+    return ({}) as T
   }
 }
 
@@ -33,6 +35,7 @@ export const put = async <T>(path: string, data: object) => {
   } catch(error: any) {
     console.log(error)
     // throw new Error(error)
+    return ({}) as T
   }
 }
 
@@ -44,6 +47,7 @@ export const deleteReq = async <T>(path: string) => {
   } catch(error: any) {
     console.log(error)
     // throw new Error(error)
+    return ({}) as T
   }
 }
 
