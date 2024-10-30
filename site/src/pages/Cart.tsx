@@ -136,7 +136,7 @@ const Cart: FC<CartProps> = ({ }) => {
 
               <div className='d-flex flex-row justify-content-between py-3'>
                 <LinkWrapper
-                  to='/details'
+                  to='/checkout'
                 // className='d-inline-block'
                 >
                   <Button black>

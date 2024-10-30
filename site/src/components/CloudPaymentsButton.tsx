@@ -6,8 +6,8 @@ import Button from '../components/Button'
 import openCloudpayments from '../utils/openCloudpayments'
 import useTotalPrice from '../hooks/useTotalPrice'
 import { printPrice } from '../utils/price'
-import postToBoxberry from '../utils/postToBoxberry'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
+import useOrderCreate from '../hooks/useOrderCreate'
 
 
 export type CloudPaymentsButtonProps = {
@@ -19,18 +19,15 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
   disabled
 }) => {
   const { boxberryData } = useStore()
-  const { setBoxberryData } = useStore()
-  const { emptyCart } = useStore()
 
   const totalPrice = useTotalPrice()
   const deliveryPrice = useDeliveryPrice()
   const totalPriceWithBoxberry = totalPrice + deliveryPrice
 
+  const orderCreate = useOrderCreate()
+
   const navigate = useNavigate()
 
-  const { userFullName } = useStore()
-  const { userPhone } = useStore()
-  const { userEmail } = useStore()
 
   return (
     <Button
@@ -39,26 +36,7 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
       onClick={() =>
         openCloudpayments({
           amount: totalPriceWithBoxberry,
-          onSuccess: () => {
-            postToBoxberry({
-              order_id: '1',
-
-              price: totalPrice,
-              payment_sum: totalPriceWithBoxberry,
-              delivery_sum: totalPriceWithBoxberry - totalPrice,
-
-              pvz_number: boxberryData?.id || '',
-
-              fio: userFullName,
-              phone: userPhone,
-              email: userEmail,
-
-              items: [],
-            })
-            emptyCart()
-            setBoxberryData(undefined)
-            navigate('/success')
-          },
+          onSuccess: orderCreate,
           onFail: () => {
             navigate('/fail')
           },

@@ -3,14 +3,13 @@ import { FC, useEffect, useRef } from 'react'
 import useStore from '../hooks/useStore'
 import getUserLocation from '../utils/getIP'
 import useTotalPrice from '../hooks/useTotalPrice'
+import { ParselCreateResponceType } from '../types/boxberry.type'
 
 
-export type BoxberryProps = {
-
-}
+export type BoxberryPanelProps = {}
 
 
-const Boxberry: FC<BoxberryProps> = ({
+const BoxberryPanel: FC<BoxberryPanelProps> = ({
 
 }) => {
   const { userCity } = useStore()
@@ -19,14 +18,23 @@ const Boxberry: FC<BoxberryProps> = ({
     setUserCity((await getUserLocation()).city)
   }
 
-  useEffect(() => { updateUserCity() }, [])
+  useEffect(
+    () => {
+      if (userCity.length === 0)
+        updateUserCity()
+    },
+    [userCity]
+  )
 
-  const { boxberryData } = useStore()
   const { setBoxberryData } = useStore()
+  const { setUserZIP } = useStore()
+  const { setUserAddress } = useStore()
   const { boxberry } = window
-  const boxberryCallbackFn = (result: BoxberryResultType) => {
+  const boxberryCallbackFn = (result: ParselCreateResponceType) => {
     setBoxberryData(result)
-    console.log(result)
+    setUserZIP(result.zip)
+    setUserCity(result.name)
+    setUserAddress(result.address.replace(`${result.zip}, ${result.name} г, `, ''))
   }
 
   const boxberry_map_ref = useRef<HTMLDivElement>(null)
@@ -63,34 +71,14 @@ const Boxberry: FC<BoxberryProps> = ({
   }, [userCity])
 
   return (
-    <div className='Boxberry d-flex flex-column'>
+    <div className='Boxberry'>
       <div
         id='boxberry_map'
         ref={boxberry_map_ref}
       />
-
-      {boxberryData &&
-        <div className='d-flex flex-row justify-content-between py-3'>
-          Товары будут доставлены по адресу: {boxberryData.address}
-        </div>
-      }
     </div>
   )
 }
 
 
-export default Boxberry
-
-
-export type BoxberryResultType = {
-  id: string
-  zip: string
-  name: string
-  address: string
-  phone: string
-  workschedule: string
-  period: string
-  price: string
-  prepaid: string
-  loadlimit: string
-}
+export default BoxberryPanel

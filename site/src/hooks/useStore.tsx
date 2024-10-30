@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware'
 import { WebAppAuthObject } from '../utils/auth'
 import { ItemType } from './useContentful/types'
 import { ItemInCartType } from '../pages/Cart'
-import { BoxberryResultType } from '../components/Boxberry'
+import { ParselCreateResponceType } from '../types/boxberry.type'
 
 
 export type SortOrderType = 'asc' | 'desc'
@@ -59,11 +59,11 @@ export type StateType = {
   selectedSizesIds: string[]
   setSelectedSizesIds: (selectedSizesIds: string[]) => void
 
-  boxberryData?: BoxberryResultType
-  setBoxberryData: (boxberryData: BoxberryResultType | undefined) => void
+  boxberryData?: ParselCreateResponceType
+  setBoxberryData: (boxberryData: ParselCreateResponceType | undefined) => void
 
-  userCity?: string
-  setUserCity: (userCity: string | undefined) => void
+  userCity: string
+  setUserCity: (userCity: string) => void
 
   userFullName: string
   setUserFullName: (userFullName: string) => void
@@ -80,8 +80,17 @@ export type StateType = {
   userAddress: string
   setUserAddress: (userAddress: string) => void
 
+  userZIP: string
+  setUserZIP: (userZIP: string) => void
+
+  userZIP_DeliveryPrice: number
+  setUserZIP_DeliveryPrice: (userZIP_DeliveryPrice: number) => void
+
   paymentType: PaymentTypeType
   setPaymentType: (paymentType: PaymentTypeType) => void
+
+  parselCreateError: undefined | string
+  setParselCreateError: (parselCreateError: undefined | string) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -98,7 +107,7 @@ const useStore = create(
       hoveredItem: undefined,
       setHoveredItem: (hoveredItem: ItemType | undefined) => set({ hoveredItem }),
 
-      mainPageView: 'IMG',
+      mainPageView: 'IMG' as MainPageViewType,
       setMainPageView: (mainPageView: MainPageViewType) => set({ mainPageView }),
 
       showSearch: false,
@@ -159,10 +168,10 @@ const useStore = create(
       setSelectedSizesIds: (selectedSizesIds: string[]) => set({ selectedSizesIds }),
 
       boxberryData: undefined,
-      setBoxberryData: (boxberryData: BoxberryResultType | undefined) => set({ boxberryData }),
+      setBoxberryData: (boxberryData: ParselCreateResponceType | undefined) => set({ boxberryData }),
 
-      userCity: undefined,
-      setUserCity: (userCity: string | undefined) => set({ userCity }),
+      userCity: '',
+      setUserCity: (userCity: string) => set({ userCity }),
 
       userFullName: '',
       setUserFullName: (userFullName: string) => set({ userFullName }),
@@ -179,8 +188,17 @@ const useStore = create(
       userAddress: '',
       setUserAddress: (userAddress: string) => set({ userAddress }),
 
+      userZIP: '',
+      setUserZIP: (userZIP: string) => set({ userZIP }),
+
+      userZIP_DeliveryPrice: 0,
+      setUserZIP_DeliveryPrice: (userZIP_DeliveryPrice: number) => set({ userZIP_DeliveryPrice }),
+
       paymentType: 'Оплата онлайн',
       setPaymentType: (paymentType: PaymentTypeType) => set({ paymentType }),
+
+      parselCreateError: undefined,
+      setParselCreateError: (parselCreateError: undefined | string) => set({ parselCreateError }),
     }),
     {
       name: 'main-storage',

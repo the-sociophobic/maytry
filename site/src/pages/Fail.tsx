@@ -1,6 +1,8 @@
 import { FC } from 'react'
+
 import LinkWrapper from '../components/LinkWrapper'
 import Button from '../components/Button'
+import useStore from '../hooks/useStore'
 
 
 export type FailProps = {}
@@ -9,11 +11,17 @@ export type FailProps = {}
 const Fail: FC<FailProps> = ({
 
 }) => {
+  const { parselCreateError } = useStore()
+
   return (
     <div className='container-2'>
-      Что-то пошло не так
+      <h4 className='h4 mt-5 mb-4 font-bold'>
+        Ошибка
+      </h4>
+      {parselCreateError || 'Что-то пошло не так'}
       <LinkWrapper
         to='/cart'
+        className='mt-4'
       >
         <Button black>
           ЗАКАЗАТЬ ЕЩЁ РАЗ

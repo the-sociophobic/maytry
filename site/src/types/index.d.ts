@@ -1,4 +1,4 @@
-import { BoxberryResultType } from '../components/Boxberry'
+import { ParselCreateResponceType } from './boxberry.type'
 
 export {};
 
@@ -7,7 +7,7 @@ declare global {
     boxberry: {
       openOnPage: (id: string) => void
       open: (
-        callback_function: (result: BoxberryResultType) => void,
+        callback_function: (result: ParselCreateResponceType) => void,
         api_token?: string,
         custom_city?: string,
         target_start?: string, // Код пункта приема посылок

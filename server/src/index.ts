@@ -1,10 +1,15 @@
-import express, { Request, Responce } from 'express'
-import axios from 'axios'
+import express, { Request, Response } from 'express'
 import cors from 'cors'
 import 'dotenv/config'
 
-import useCombinedData from './hooks/useCombinedData'
 import storage from './utils/storage'
+import parselCreate from './utils/boxberry/parselCreate'
+import deliveryCalculation from './utils/boxberry/deliveryCalculation'
+import useCombinedData from './hooks/useCombinedData'
+import {
+  DeliveryCalculationRequestType,
+  ParselCreateRequestTypeFE
+} from './types/boxberry.type'
 
 
 
@@ -15,11 +20,11 @@ app.use(express.json())
 const { SERVER_PORT } = process.env
 
 
-app.get('/data', async (request: Request, response: Responce) => {
+app.get('/data', async (request: Request, response: Response) => {
   response.send(await useCombinedData())
 })
 
-app.get('/update-data', async (request: Request, response: Responce) => {
+app.get('/update-data', async (request: Request, response: Response) => {
   storage.delete('contentful.json')
   // storage.delete('1C.json')
   setTimeout(async () => {
@@ -29,14 +34,24 @@ app.get('/update-data', async (request: Request, response: Responce) => {
   }, 150)
 })
 
-app.post('/post-boxberry', async (request, response) => {
+app.post('/parsel-create', async (
+  request: Request<{}, {}, ParselCreateRequestTypeFE>,
+  response
+) => {
   const { body } = request
-  const res = (await axios.post(
-    'https://api.boxberry.ru/json.php',
-    body
-  )).data
+  const result = await parselCreate(body)
 
-  response.send(res)
+  response.send(result)
+})
+
+app.post('/delivery-calculation', async (
+  request: Request<{}, {}, DeliveryCalculationRequestType>,
+  response
+) => {
+  const { body } = request
+  const result = await deliveryCalculation(body)
+
+  response.send(result)
 })
 
 
