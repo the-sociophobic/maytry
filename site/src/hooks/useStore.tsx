@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware'
 import { WebAppAuthObject } from '../utils/auth'
 import { ItemType } from './useContentful/types'
 import { ItemInCartType } from '../pages/Cart'
-import { ParselCreateResponceType } from '../types/boxberry.type'
+import { BoxberryDataType } from '../types/boxberry.type'
 
 
 export type SortOrderType = 'asc' | 'desc'
@@ -59,8 +59,8 @@ export type StateType = {
   selectedSizesIds: string[]
   setSelectedSizesIds: (selectedSizesIds: string[]) => void
 
-  boxberryData?: ParselCreateResponceType
-  setBoxberryData: (boxberryData: ParselCreateResponceType | undefined) => void
+  boxberryData?: BoxberryDataType
+  setBoxberryData: (boxberryData: BoxberryDataType | undefined) => void
 
   userCity: string
   setUserCity: (userCity: string) => void
@@ -168,7 +168,7 @@ const useStore = create(
       setSelectedSizesIds: (selectedSizesIds: string[]) => set({ selectedSizesIds }),
 
       boxberryData: undefined,
-      setBoxberryData: (boxberryData: ParselCreateResponceType | undefined) => set({ boxberryData }),
+      setBoxberryData: (boxberryData: BoxberryDataType | undefined) => set({ boxberryData }),
 
       userCity: '',
       setUserCity: (userCity: string) => set({ userCity }),

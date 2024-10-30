@@ -5,7 +5,8 @@ import {
   ParselCreateRequestTypeFE,
   ParselCreateRequestTypeBE,
   ParselCreateResponceType,
-  ParselCreateErrorType
+  ParselCreateErrorType,
+  OrderType
 } from '../../types/boxberry.type'
 
 
@@ -23,17 +24,24 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
   }
   orders = { last_order_id }
   storage.write('boxberry-order-id.json', orders)
+  
+  const parselCreatePropsBE = {
+    ...props,
+    order_id: 'lev-order-' + last_order_id
+  }
 
   try {
-    const res = (await axios.post<ParselCreateResponceType | ParselCreateErrorType>(
+    const parcel = (await axios.post<ParselCreateResponceType | ParselCreateErrorType>(
       'https://api.boxberry.ru/json.php',
-      createParselCreateRequest({
-        ...props,
-        order_id: 'lev-order-' + last_order_id
-      })
+      createParselCreateRequest(parselCreatePropsBE)
     )).data
 
-    return res
+    storage.push('orders.json', {
+      details: parselCreatePropsBE,
+      parcel
+    } as OrderType)
+
+    return parcel
   } catch (err) {
     console.log('parselCreate() error')
     console.log(err)

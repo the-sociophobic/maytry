@@ -3,7 +3,7 @@ import { FC, useEffect, useRef } from 'react'
 import useStore from '../hooks/useStore'
 import getUserLocation from '../utils/getIP'
 import useTotalPrice from '../hooks/useTotalPrice'
-import { ParselCreateResponceType } from '../types/boxberry.type'
+import { BoxberryDataType } from '../types/boxberry.type'
 
 
 export type BoxberryPanelProps = {}
@@ -30,7 +30,7 @@ const BoxberryPanel: FC<BoxberryPanelProps> = ({
   const { setUserZIP } = useStore()
   const { setUserAddress } = useStore()
   const { boxberry } = window
-  const boxberryCallbackFn = (result: ParselCreateResponceType) => {
+  const boxberryCallbackFn = (result: BoxberryDataType) => {
     setBoxberryData(result)
     setUserZIP(result.zip)
     setUserCity(result.name)

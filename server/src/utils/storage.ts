@@ -9,9 +9,9 @@ class storage {
     return filePath
   }
 
-  static read = (fileName: string) => {
+  static read = <T>(fileName: string): T => {
     const filePath = this.createFilePath(fileName)
-    let file: object | undefined = undefined
+    let file: object | any[] | undefined = undefined
   
     if (fs.existsSync(filePath))
       file = JSON.parse(
@@ -20,7 +20,7 @@ class storage {
           'utf8'
         ))
   
-    return file
+    return file as T
   }
   
   static write = (fileName: string, dataToSave: object) => {
@@ -42,6 +42,17 @@ class storage {
         filePath,
         err => console.log(err)
       )
+  }
+
+  static push = (fileName: string, dataToPush: object) => {
+    let array = this.read(fileName) as any[] | undefined
+
+    if (array)
+      array.push(dataToPush)
+    else
+      array = [dataToPush]
+
+    this.write(fileName, array)
   }
 }
 

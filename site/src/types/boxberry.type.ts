@@ -1,3 +1,16 @@
+export type BoxberryDataType = {
+  id: string
+  zip: string
+  name: string
+  address: string
+  phone: string
+  workschedule: string
+  period: string
+  price: string
+  prepaid: string
+  loadlimit: string
+}
+
 export type ParselCreateRequestTypeBE = {
   order_id: string
 
@@ -30,16 +43,8 @@ export type ParselCreateItemType = {
 }
 
 export type ParselCreateResponceType = {
-  id: string
-  zip: string
-  name: string
-  address: string
-  phone: string
-  workschedule: string
-  period: string
-  price: string
-  prepaid: string
-  loadlimit: string
+  track: string
+  label: string
 }
 
 export type ParselCreateErrorType = {
@@ -69,4 +74,9 @@ export type ParcelDeliveryCostType = {
   PriceBase: number
   DeliveryTypeId: number
   DeliveryPeriod: number
+}
+
+export type OrderType = {
+  details: ParselCreateRequestTypeBE
+  parcel: ParselCreateResponceType
 }

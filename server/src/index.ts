@@ -8,6 +8,7 @@ import deliveryCalculation from './utils/boxberry/deliveryCalculation'
 import useCombinedData from './hooks/useCombinedData'
 import {
   DeliveryCalculationRequestType,
+  OrderType,
   ParselCreateRequestTypeFE
 } from './types/boxberry.type'
 
@@ -52,6 +53,12 @@ app.post('/delivery-calculation', async (
   const result = await deliveryCalculation(body)
 
   response.send(result)
+})
+
+app.get('/orders', async (request: Request, response: Response) => {
+  const orders = storage.read<OrderType[]>('orders.json') || []
+
+  response.send(orders)
 })
 
 
