@@ -15,6 +15,11 @@ export type SizeSelectorProps = {
 }
 
 
+const SIZES_ORDER = [
+  'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL', '46', '48', '50', '52', '146р.'
+]
+
+
 const SizeSelector: FC<SizeSelectorProps> = ({
   sizes,
   selectedIds,
@@ -27,7 +32,9 @@ const SizeSelector: FC<SizeSelectorProps> = ({
         <div className='me-3'>
           Размер:
         </div>
-        {sizes.map((size, sizeIndex) =>
+        {sizes
+        .sort((a, b) => SIZES_ORDER.indexOf(a.name) - SIZES_ORDER.indexOf(b.name))
+        .map((size, sizeIndex) =>
           <div
             key={sizeIndex}
             className={`
