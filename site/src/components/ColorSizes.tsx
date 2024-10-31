@@ -6,7 +6,7 @@ import Color from './Color'
 
 export type ColorSizesProps = {
   color?: ColorType
-  sizes: (SizeType & { available: boolean } )[]
+  sizes: (SizeType & { available?: boolean } )[]
   className?: string
 }
 
@@ -25,7 +25,10 @@ const ColorSizes: FC<ColorSizesProps> = ({
       {sizes.map((size, sizeIndex) =>
         <div
           key={sizeIndex}
-          className={`ColorSizes__size ${!size.available && 'text-disabled'}`}
+          className={`
+            ColorSizes__size
+            ${(typeof size.available === 'boolean' && !size.available) && 'text-disabled'}
+          `}
         >
           {size.name}
         </div>

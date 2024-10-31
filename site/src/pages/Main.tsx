@@ -93,7 +93,7 @@ const Main: FC<MainProps> = ({ }) => {
                 item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
               )
               .filter(item =>
-                (!showFilter || filterBy.length === 0) ||
+                (!(showFilter || showExtendedFilter) || filterBy.length === 0) ||
                 item.categories?.map(itemCategory => itemCategory.name)
                   .some(itemCategoryName => filterBy.includes(itemCategoryName))
               )

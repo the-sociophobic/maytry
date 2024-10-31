@@ -344,14 +344,15 @@ const ExtendedFilter = () => {
   return (
     <div className='Header__extended-filter'>
       <div className='d-flex flex-column'>
-        <div className='d-flex flex-row align-items-center my-3'>
-          <p className='m-0'>Категории:</p>
+        <p className='m-0 mt-3'>Категории:</p>
+        <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
           {contentful?.categorys
             .map((category, index) =>
               <Button
                 key={index}
                 hoverable
                 gray={filterBy.includes(category.name)}
+                className='me-2 mb-2'
                 onClick={() => {
                   setFilterBy(toggleInSet(filterBy, category.name))
                 }}
