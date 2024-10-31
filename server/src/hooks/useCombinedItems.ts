@@ -48,7 +48,7 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
         )
       
       const color_price_size: ContentfulColorPriceSizeType = {
-        id: oneC_item.size,
+        id: oneC_item.code,
         name: '',
         item_number,
         ...contentfulColorPriceSize,

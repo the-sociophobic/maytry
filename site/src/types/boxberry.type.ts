@@ -34,11 +34,11 @@ export type ParselCreateRequestTypeBE = {
 }
 
 export type ParselCreateRequestTypeFE = Omit<ParselCreateRequestTypeBE, 'order_id' | 'items'> & {
-  order_id: string
   items: ItemInCartType[]
 }
 
 export type OrderType = ParselCreateRequestTypeFE & {
+  order_id: string
   parcel: ParselCreateResponceType
 }
 
