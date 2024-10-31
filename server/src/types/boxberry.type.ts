@@ -1,3 +1,6 @@
+import { ItemInCartType } from './site.type'
+
+
 export type BoxberryDataType = {
   id: string
   zip: string
@@ -30,7 +33,14 @@ export type ParselCreateRequestTypeBE = {
   items: ParselCreateItemType[]
 }
 
-export type ParselCreateRequestTypeFE = Omit<ParselCreateRequestTypeBE, 'order_id'>
+export type ParselCreateRequestTypeFE = Omit<ParselCreateRequestTypeBE, 'order_id' | 'items'> & {
+  order_id: string
+  items: ItemInCartType[]
+}
+
+export type OrderType = ParselCreateRequestTypeFE & {
+  parcel: ParselCreateResponceType
+}
 
 export type ParselCreateItemType = {
   id: string
@@ -74,9 +84,4 @@ export type ParcelDeliveryCostType = {
   PriceBase: number
   DeliveryTypeId: number
   DeliveryPeriod: number
-}
-
-export type OrderType = {
-  details: ParselCreateRequestTypeBE
-  parcel: ParselCreateResponceType
 }

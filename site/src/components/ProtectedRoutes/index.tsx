@@ -6,15 +6,17 @@ import useStore from '../../hooks/useStore'
 import Loader from '../Loader'
 import routes, { RouteType } from './routes'
 import Layout from '../Layout'
-import useContentful, { ContentfulDataType } from '../../hooks/useContentful'
+import useContentful from '../../hooks/useContentful'
 import Item from '../../pages/Item'
 import PageTemplate from '../PageTemplate'
 import Redirect from '../Redirect'
+import { ContentfulDataTypeFE } from '../../types/contentful.type'
 
 
 export type ProtectedRoutesProps = {
   contentRef: React.RefObject<HTMLDivElement>
 }
+
 
 const ProtectedRoutes: React.FC<ProtectedRoutesProps> = () => {
   const { user } = useStore()
@@ -60,7 +62,7 @@ const mapRoutes = (
     errorElement: <Redirect to='/' />
   }))
 
-const mapContentfulRoutes = (contentful: ContentfulDataType) => [
+const mapContentfulRoutes = (contentful: ContentfulDataTypeFE) => [
   ...(contentful.items.map(item => ({
     to: '/item/' + item.link,
     title: item.name,

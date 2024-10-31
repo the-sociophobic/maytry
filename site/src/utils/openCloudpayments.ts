@@ -14,7 +14,7 @@ const openCloudpayments = (props: openCloudpaymentsProps) => {
     onFail,
     onComplete
   } = props
-  var widget = new cp.CloudPayments()
+  const widget = new cp.CloudPayments()
   widget.pay('auth', // или 'charge'
     { //options
       publicId: import.meta.env.VITE_CLOUDPAYMENTS_TOKEN, //id из личного кабинета

@@ -1,4 +1,4 @@
-import { FC, useMemo, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
@@ -12,7 +12,7 @@ export const AssetRender: FC<AssetRenderData> = ({
   asset: _asset,
   onClick
 }) => {
-  const asset = useMemo(() => useLoader(GLTFLoader, _asset.model_path), [_asset])
+  const asset = useLoader(GLTFLoader, _asset.model_path)
   const assetAnimations = useAnimations(asset.animations, asset.scene)
   const [playedOnce, setPlayedOnce] = useState(false)
 

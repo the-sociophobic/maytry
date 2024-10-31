@@ -23,7 +23,7 @@ const BoxberryPanel: FC<BoxberryPanelProps> = ({
       if (userCity.length === 0)
         updateUserCity()
     },
-    [userCity]
+    [userCity, updateUserCity]
   )
 
   const { setBoxberryData } = useStore()

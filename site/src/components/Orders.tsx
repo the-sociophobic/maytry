@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import useOrders from '../hooks/useOrders'
 import { printPrice } from '../utils/price'
-import useContentful from '../hooks/useContentful'
+import ColorSizes from './ColorSizes'
 
 
 export type OrdersProps = {}
@@ -12,7 +12,6 @@ const Orders: FC<OrdersProps> = ({
 
 }) => {
   const { data: orders } = useOrders()
-  const { data: contentful } = useContentful()
 
   return (
     <div className='Orders'>
@@ -23,28 +22,30 @@ const Orders: FC<OrdersProps> = ({
         >
           <div className='col-1 mb-2'>
             order_id:<br />
-            {order.details.order_id}
+            {order.order_id}
           </div>
           <div className='col-1'>
-            items: {order.details.items.map(item => {
-              const original_item = contentful?.items
-                .find(contentful_item => contentful_item.id === item.id)
-              console.log(original_item)
-              console.log(item.id)
-              
+            items: {order.items.map(item => {
+
               return (
                 <div
                   key={item.id}
-                  className=''
+                  className='mb-3'
                 >
                   {item.name} × {item.quantity}
+                  <ColorSizes
+                    colorAsText
+                    color={item.color}
+                    sizes={[item.size]}
+                  />
                 </div>
               )
             })}
           </div>
 
           {Object.entries({
-            ...order.details,
+            ...order,
+            parcel: undefined,
             ...order.parcel,
           })
             .filter(([key]) => !['order_id', 'items'].includes(key))

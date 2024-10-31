@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-import { ColorType } from '../hooks/useContentful/types'
 import Color from './Color'
 import { toggleInSet } from '../utils/sets'
+import { ContentfulColorType } from '../types/contentful.type'
 
 
 export type ColorSelectorProps = {
-  colors: ColorType[]
+  colors: ContentfulColorType[]
   selectedColorIds: string[]
   onChange: (selectedColorIds: string[]) => void
   className?: string

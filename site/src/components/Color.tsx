@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-import { ColorType } from '../hooks/useContentful/types'
+import { ContentfulColorType } from '../types/contentful.type'
 
 
-export type ColorProps = ColorType & {
+export type ColorProps = ContentfulColorType & {
   className?: string
   onClick?: () => void
   selected?: boolean

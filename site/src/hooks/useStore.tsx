@@ -2,9 +2,9 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import { WebAppAuthObject } from '../utils/auth'
-import { ItemType } from './useContentful/types'
-import { ItemInCartType } from '../pages/Cart'
 import { BoxberryDataType } from '../types/boxberry.type'
+import { CombinedItemType } from '../types/contentful.type'
+import { ItemInCartType } from '../types/site.type'
 
 
 export type SortOrderType = 'asc' | 'desc'
@@ -13,8 +13,8 @@ export type StateType = {
   user: null | WebAppAuthObject
   setUser: (user: null | WebAppAuthObject) => void
 
-  hoveredItem: ItemType | undefined
-  setHoveredItem: (hoveredItem: ItemType | undefined) => void
+  hoveredItem: CombinedItemType | undefined
+  setHoveredItem: (hoveredItem: CombinedItemType | undefined) => void
 
   mainPageView: MainPageViewType
   setMainPageView: (mainPageView: MainPageViewType) => void
@@ -105,7 +105,7 @@ const useStore = create(
       setUser: (user: null | WebAppAuthObject) => set({ user }),
 
       hoveredItem: undefined,
-      setHoveredItem: (hoveredItem: ItemType | undefined) => set({ hoveredItem }),
+      setHoveredItem: (hoveredItem: CombinedItemType | undefined) => set({ hoveredItem }),
 
       mainPageView: 'IMG' as MainPageViewType,
       setMainPageView: (mainPageView: MainPageViewType) => set({ mainPageView }),

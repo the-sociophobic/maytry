@@ -1,31 +1,9 @@
 import { useQuery } from 'react-query'
 
-import { getContentfulData } from './helpers'
-import {
-  CategoryType,
-  ColorPriceSizeType,
-  ColorType,
-  ImageType,
-  ItemType,
-  LinkType,
-  PageType,
-  SiteType,
-  SizeType
-} from './types'
 import { get } from '../../utils/requests'
+import { getContentfulData } from './helpers'
+import { ContentfulDataTypeFE, ContentfulSiteType } from '../../types/contentful.type'
 
-
-export type ContentfulDataType = {
-  sites: SiteType[]
-  items: ItemType[]
-  images: ImageType[]
-  itemColorPrices: ColorPriceSizeType[]
-  colors: ColorType[]
-  categorys: CategoryType[]
-  sizes: SizeType[]
-  links: LinkType[]
-  pages: PageType[]
-}
 
 export const emptyContentful = {
   sites: [],
@@ -41,7 +19,7 @@ export const emptyContentful = {
 
 
 const getContentfulDataWithoutBadItems = async () => {
-  const data = await get<ContentfulDataType | undefined>('/data')
+  const data = await get<ContentfulDataTypeFE | undefined>('/data')
 
   if (!data?.items)
     return emptyContentful
@@ -69,12 +47,12 @@ const getContentfulDataWithoutBadItems = async () => {
 }
 
 const useContentful = () => {
-  return useQuery<ContentfulDataType>('contentful', getContentfulDataWithoutBadItems)
+  return useQuery<ContentfulDataTypeFE>('contentful', getContentfulDataWithoutBadItems)
 }
 
 const useMainPage = () => {
-  return useQuery<SiteType>('contentful', async () => {
-    const data = await getContentfulData<ContentfulDataType>()
+  return useQuery<ContentfulSiteType>('contentful', async () => {
+    const data = await getContentfulData<ContentfulDataTypeFE>()
   
     return data.sites[0]
   })

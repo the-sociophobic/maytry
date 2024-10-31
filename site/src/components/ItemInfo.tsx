@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react'
-import { pick } from 'lodash'
+
 import { useNavigate } from 'react-router-dom'
+import { pick } from 'lodash'
 
 import useStore from '../hooks/useStore'
 import Color from './Color'
@@ -8,12 +9,12 @@ import Price from './Price'
 import Button from './Button'
 import SizeSelector from './SizeSelector'
 import QuantitySelector from './QuantitySelector'
-import { ItemInCartType } from '../pages/Cart'
-import { ItemType } from '../hooks/useContentful/types'
 import parseColors from '../utils/parseColors'
+import { CombinedItemType } from '../types/contentful.type'
+import { ItemInCartType } from '../types/site.type'
 
 
-export type ItemInfoProps = ItemType & {
+export type ItemInfoProps = CombinedItemType & {
   className?: string
 }
 

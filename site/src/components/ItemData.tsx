@@ -1,13 +1,13 @@
 import { FC } from 'react'
 
-import { ItemType } from '../hooks/useContentful/types'
 import ColorSizes from './ColorSizes'
 import parseColors from '../utils/parseColors'
 import Price from './Price'
 import { getPrice, getSalePrice } from '../utils/price'
+import { CombinedItemType } from '../types/contentful.type'
 
 
-export type ItemDataProps = ItemType
+export type ItemDataProps = CombinedItemType
 
 
 const ItemData: FC<ItemDataProps> = (item) => {

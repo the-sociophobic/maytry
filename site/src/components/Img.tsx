@@ -1,15 +1,13 @@
 import React from 'react'
 
+import { ContentfulFile } from '../types/contentful.type'
 // import ResizeObserver from 'resize-observer-polyfill'
-
-import { File } from '../hooks/useContentful/types'
-
 
 
 type Props = {
   src?: string
   className?: string
-  file?: File | undefined
+  file?: ContentfulFile | undefined
   alt?: string
   noCrop?: boolean
   urlParams?: string

@@ -2,7 +2,7 @@ import {
   ContentfulCategoryType,
   ContentfulColorPriceSizeType,
   ContentfulColorType,
-  ContentfulDataType,
+  ContentfulDataTypeBE,
   ContentfulImageType,
   ContentfulItemType,
   ContentfulLinkType,
@@ -14,13 +14,13 @@ import { getContentfulData } from '../utils/contentful'
 import storage from '../utils/storage'
 
 
-const useContentful = async (): Promise<ContentfulDataType> => {
-  const local_contentful_data = storage.read('contentful.json') as ContentfulDataType | undefined
+const useContentful = async (): Promise<ContentfulDataTypeBE> => {
+  const local_contentful_data = storage.read('contentful.json') as ContentfulDataTypeBE | undefined
 
   if (local_contentful_data)
     return local_contentful_data
 
-  const contentful_data: ContentfulDataType = {
+  const contentful_data: ContentfulDataTypeBE = {
     ...(await getContentfulData<{ sites: ContentfulSiteType[] }>('site')),
     ...(await getContentfulData<{ items: ContentfulItemType[] }>('item')),
     ...(await getContentfulData<{ images: ContentfulImageType[] }>('image')),

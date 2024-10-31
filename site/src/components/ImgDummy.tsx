@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-import { ImageType } from '../hooks/useContentful/types'
 import useBlankImage from '../hooks/useBlankImage'
 import Img from './Img'
+import { ContentfulImageType } from '../types/contentful.type'
 
 
 export type ImgDummyProps = {
-  img: ImageType | undefined
+  img: ContentfulImageType | undefined
   className?: string
   onClick?: () => void
 }

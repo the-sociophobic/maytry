@@ -1,10 +1,10 @@
 import { FC } from 'react'
 
 import LinkWrapper from './LinkWrapper'
-import { ItemType } from '../hooks/useContentful/types'
+import { CombinedItemType } from '../types/contentful.type'
 
 
-export type ItemLineProps = ItemType
+export type ItemLineProps = CombinedItemType
 
 
 const ItemLine: FC<ItemLineProps> = (item) => {

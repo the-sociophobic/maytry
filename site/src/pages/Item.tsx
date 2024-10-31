@@ -1,14 +1,14 @@
 import { FC, useEffect, useRef, useState } from 'react'
 
 
-import { ItemType } from '../hooks/useContentful/types'
 import Button from '../components/Button'
 import Img from '../components/Img'
 import ItemInfo from '../components/ItemInfo'
 import ImgDummy from '../components/ImgDummy'
+import { CombinedItemType } from '../types/contentful.type'
 
 
-export type ItemProps = ItemType
+export type ItemProps = CombinedItemType
 
 
 const HEADER_HEIGHT = 80

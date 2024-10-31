@@ -3,12 +3,14 @@ import use1C from '../hooks/use1C'
 import { getItemNumberFrom1C } from '../utils/getItemNameFrom1C'
 import {
   ContentfulColorPriceSizeType,
-  emptyContentfulItem,
-  emptyColor,
-  emptySize
 } from '../types/contentful.type'
 import { CombinedItemType } from '../types/combined.type'
 import storage from '../utils/storage'
+import {
+  emptyContentfulItem,
+  emptyColor,
+  emptySize
+} from '../utils/defaultValues'
 
 
 const SIZES_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']

@@ -25,9 +25,19 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
   orders = { last_order_id }
   storage.write('boxberry-order-id.json', orders)
   
+  const order_id = 'lev-order-' + last_order_id
   const parselCreatePropsBE = {
     ...props,
-    order_id: 'lev-order-' + last_order_id
+    items: props.items.map(item => ({
+      id: item.id,
+      name: item.name,
+      UnitName: "шт.",
+      // nds: string
+      price: item.price,
+      quantity: item.quantity,
+      // marking_crpt: Маркировка товара ЦРПТ
+    })),
+    order_id
   }
 
   try {
@@ -37,7 +47,8 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
     )).data
 
     storage.push('orders.json', {
-      details: parselCreatePropsBE,
+      order_id,
+      ...props,
       parcel
     } as OrderType)
 

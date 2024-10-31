@@ -1,33 +1,41 @@
 import { FC } from 'react'
 
-import { ColorType, SizeType } from '../hooks/useContentful/types'
 import Color from './Color'
+import { ContentfulColorType, ContentfulSizeType } from '../types/contentful.type'
 
 
 export type ColorSizesProps = {
-  color?: ColorType
-  sizes: (SizeType & { available?: boolean } )[]
+  color?: ContentfulColorType
+  sizes: (ContentfulSizeType & { available?: boolean })[]
   className?: string
+  colorAsText?: boolean
 }
 
 
 const ColorSizes: FC<ColorSizesProps> = ({
   color,
   sizes,
-  className
+  className,
+  colorAsText
 }) => {
   return (
     <div className={`ColorSizes ${className}`}>
-      {color && <Color
-        {...color}
-        className='me-3'
-      />}
+      {color && (
+        colorAsText ?
+          color.name
+          :
+          <Color
+            {...color}
+            className='me-3'
+          />
+      )}
       {sizes.map((size, sizeIndex) =>
         <div
           key={sizeIndex}
           className={`
             ColorSizes__size
             ${(typeof size.available === 'boolean' && !size.available) && 'text-disabled'}
+            ${colorAsText && 'ms-2'}
           `}
         >
           {size.name}

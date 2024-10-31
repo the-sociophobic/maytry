@@ -1,13 +1,13 @@
 import { FC } from 'react'
 
-import { ItemType } from '../hooks/useContentful/types'
 import LinkWrapper from './LinkWrapper'
 import useStore from '../hooks/useStore'
 import ItemData from './ItemData'
 import ImgDummy from './ImgDummy'
+import { CombinedItemType } from '../types/contentful.type'
 
 
-export type ItemCardProps = ItemType
+export type ItemCardProps = CombinedItemType
 
 
 const ItemCard: FC<ItemCardProps> = (item) => {

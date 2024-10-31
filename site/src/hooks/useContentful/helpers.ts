@@ -11,7 +11,7 @@ const createContentfulClient = () =>
   })
 
 const getContentfulItems = async <T>(client: any, options?: object): Promise<T> => {
-  let itemsByType: {[key: string]: any} = {};
+  const itemsByType: {[key: string]: any} = {};
 
   (await client.getEntries(options)).items
     .forEach((item: any) => {

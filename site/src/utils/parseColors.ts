@@ -1,15 +1,15 @@
 import { isEqual } from 'lodash'
 
-import { ColorPriceSizeType, ColorType } from '../hooks/useContentful/types'
+import { ContentfulColorPriceSizeType, ContentfulColorType } from '../types/contentful.type'
 
 
 export type ParsedColorType = {
-  color?: ColorType
-  sizes: Pick<ColorPriceSizeType, 'id' | 'size' | 'price' | 'salePrice' | 'max_available'>[]
+  color?: ContentfulColorType
+  sizes: Pick<ContentfulColorPriceSizeType, 'id' | 'size' | 'price' | 'salePrice' | 'max_available'>[]
 }
 
 
-const parseColors = (color_price_size: ColorPriceSizeType[] | undefined) => {
+const parseColors = (color_price_size: ContentfulColorPriceSizeType[] | undefined) => {
   let colors: ParsedColorType[] = []
 
   if (color_price_size) {

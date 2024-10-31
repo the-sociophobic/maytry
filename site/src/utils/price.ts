@@ -1,13 +1,13 @@
-import { ItemType } from '../hooks/useContentful/types'
+import { CombinedItemType } from '../types/contentful.type'
 
 
-const getPrice = (item: ItemType) =>
+const getPrice = (item: CombinedItemType) =>
   item.defaultPrice || item.color_price_size?.[0].price || undefined
 
-const getSalePrice = (item: ItemType) =>
+const getSalePrice = (item: CombinedItemType) =>
   item.defaultSalePrice || item.color_price_size?.[0].salePrice || undefined
 
-const getCurrentPrice = (item: ItemType) =>
+const getCurrentPrice = (item: CombinedItemType) =>
   getSalePrice(item) || getPrice(item) || 10000
 
 const printPrice = (price: number) => {

@@ -1,6 +1,5 @@
 import { FC } from 'react'
 
-import { ColorPriceSizeType, ItemType } from '../hooks/useContentful/types'
 import useStore from '../hooks/useStore'
 import ColorSizes from '../components/ColorSizes'
 import { printPrice } from '../utils/price'
@@ -13,15 +12,6 @@ import ImgDummy from '../components/ImgDummy'
 
 
 export type CartProps = {}
-
-export type ItemInCartType = Omit<ItemType,
-  | 'color_price_size'
-  | 'defaultPrice'
-  | 'defaultSalePrice'
-> & ColorPriceSizeType & {
-  quantity: number
-}
-
 
 
 const Cart: FC<CartProps> = ({ }) => {

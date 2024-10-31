@@ -46,15 +46,7 @@ const useOrderCreate = () => {
       phone: userPhone,
       email: userEmail,
 
-      items: itemsInCart.map(item => ({
-        id: item.id,
-        name: item.name,
-        UnitName: "шт.",
-        // nds: string
-        price: item.price,
-        quantity: item.quantity,
-        // marking_crpt: Маркировка товара ЦРПТ
-      })),
+      items: itemsInCart,
     })
     console.log(res)
 

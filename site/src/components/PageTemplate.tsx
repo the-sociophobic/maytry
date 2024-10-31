@@ -1,8 +1,9 @@
 import { FC } from 'react'
-import { PageType } from '../hooks/useContentful/types'
+
+import { ContentfulPageType } from '../types/contentful.type'
 
 
-export type PageTemplateProps = PageType
+export type PageTemplateProps = ContentfulPageType
 
 
 const PageTemplate: FC<PageTemplateProps> = ({
