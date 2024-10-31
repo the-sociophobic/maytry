@@ -44,8 +44,6 @@ const get1C = async () => {
       }
     }
   )).data
-
-  console.log(items_from_1C)
   
   return items_from_1C
 }

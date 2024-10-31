@@ -17,7 +17,7 @@ const Redirect: FC<RedirectProps> = ({
     navigate(to)
   }, [])
 
-  return <div>aaa</div>
+  return <div>Redirect page</div>
 }
 
 

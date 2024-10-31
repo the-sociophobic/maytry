@@ -56,11 +56,11 @@ export const emptyColor: ContentfulColorType = {
   colorCode: '#FF0000'
 }
 
-interface ContentfulItemClass {
+export interface ContentfulItemClass {
   id: string
 }
 
-interface ContentfulFile extends ContentfulItemClass {
+export interface ContentfulFile extends ContentfulItemClass {
   file: {
     contentType: string
     details: {
@@ -77,7 +77,7 @@ interface ContentfulFile extends ContentfulItemClass {
 }
 
 
-interface ContentfulSiteType extends ContentfulItemClass {
+export interface ContentfulSiteType extends ContentfulItemClass {
   title: string
   main_image: string
   header_filter_categories: ContentfulCategoryType[]
@@ -87,24 +87,24 @@ interface ContentfulSiteType extends ContentfulItemClass {
 }
 
 
-interface ContentfulImageType extends ContentfulItemClass {
+export interface ContentfulImageType extends ContentfulItemClass {
   title: string
   small: ContentfulFile
   large?: ContentfulFile
 }
 
-interface ContentfulCategoryType extends ContentfulItemClass {
+export interface ContentfulCategoryType extends ContentfulItemClass {
   name: string
   subcategories: ContentfulCategoryType[]
 }
 
-interface ContentfulLinkType extends ContentfulItemClass {
+export interface ContentfulLinkType extends ContentfulItemClass {
   link: string
   title: string
   new_line: boolean
 }
 
-interface ContentfulPageType extends ContentfulItemClass {
+export interface ContentfulPageType extends ContentfulItemClass {
   link: ContentfulLinkType
   title: string
   text: string

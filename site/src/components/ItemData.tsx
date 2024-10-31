@@ -38,7 +38,10 @@ const ItemData: FC<ItemDataProps> = (item) => {
           <ColorSizes
             key={index}
             color={colorSizes.color}
-            sizes={colorSizes.sizes.map(size => size.size)}
+            sizes={colorSizes.sizes.map(size => ({
+              ...size.size,
+              available: size.max_available > 0
+            }))}
           />
         )}
       </div>

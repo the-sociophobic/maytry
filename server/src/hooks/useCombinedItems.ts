@@ -8,9 +8,18 @@ import {
   emptySize
 } from '../types/contentful.type'
 import { CombinedItemType } from '../types/combined.type'
+import storage from '../utils/storage'
+
+
+const SIZES_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 
 const useCombinedItems = async (): Promise<CombinedItemType[]> => {
+  const local_combined_items = storage.read<CombinedItemType[]>('combined.json')
+
+  if (local_combined_items)
+    return local_combined_items
+
   try {
     const {
       items: contentfulItems,
@@ -35,6 +44,7 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
           c_p_s.size.name === oneC_item.size &&
           c_p_s.item_number === item_number
         )
+      
       const color_price_size: ContentfulColorPriceSizeType = {
         id: oneC_item.size,
         name: '',
@@ -69,10 +79,15 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
       })
     })
 
-    // console.log('items_from_1C.length', [...items_combined][0])
-    // console.log('items_combined.keys.length', items_combined.get('3522'))
+    const result = [...items_combined].map(([_name, value]) => ({
+      ...value,
+      color_price_size: value.color_price_size
+        .sort((a, b) => SIZES_ORDER.indexOf(a.size.name) - SIZES_ORDER.indexOf(b.size.name))
+    }))
 
-    return [...items_combined].map(([_name, value]) => value)
+    storage.write('combined.json', result)
+
+    return result
 
   } catch (err) {
     console.log(err)

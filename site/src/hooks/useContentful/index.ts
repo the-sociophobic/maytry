@@ -27,9 +27,25 @@ export type ContentfulDataType = {
   pages: PageType[]
 }
 
+export const emptyContentful = {
+  sites: [],
+  items: [],
+  images: [],
+  itemColorPrices: [],
+  colors: [],
+  categorys: [],
+  sizes: [],
+  links: [],
+  pages: [],
+}
+
 
 const getContentfulDataWithoutBadItems = async () => {
-  const data = await get<ContentfulDataType>('/data')
+  const data = await get<ContentfulDataType | undefined>('/data')
+
+  if (!data?.items)
+    return emptyContentful
+
   const badItemsIds = data.items
     .filter(item =>
       !item.color_price_size ||

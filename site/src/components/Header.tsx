@@ -75,18 +75,21 @@ const Header: FC<HeaderProps> = ({ }) => {
               <LogoImg className='Header__logo' />
             </LinkWrapper>
 
-            {/* <div
-              className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
-              onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
-            /> */}
-            <LinkWrapper
-              to='/cart'
-              className='ms-auto mobile-only'
-            >
-              <Button black>
-                КОРЗИНА ({numberOfItemsInCart})
-              </Button>
-            </LinkWrapper>
+            {is_main_page ?
+              <div
+                className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
+                onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
+              />
+              :
+              <LinkWrapper
+                to='/cart'
+                className='ms-auto mobile-only'
+              >
+                <Button black>
+                  КОРЗИНА ({numberOfItemsInCart})
+                </Button>
+              </LinkWrapper>
+            }
 
             <div className='Header__desktop'>
               {is_main_page ?
@@ -223,7 +226,7 @@ const HeaderControls = () => {
   const { setPriceTo } = useStore()
 
   const { data: contentful } = useContentful()
-  const header_filter_categories = contentful?.sites[0].header_filter_categories || []
+  const header_filter_categories = contentful?.sites[0]?.header_filter_categories || []
 
   return (
     <div className='d-flex'>
