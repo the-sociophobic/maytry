@@ -34,7 +34,9 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
     || userEmail.length < 7
     || userCity.length < 5
     // || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || userZIP.length !== 6 || deliveryPrice === -1))
-    || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || deliveryPrice === -1))
+    || (deliveryType === 'Доставка до двери' && userAddress.length < 5)
+
+  const showFreeDeliveryOption = deliveryPrice > 0
 
   return (
     <>
@@ -58,11 +60,12 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
         className='d-flex flex-row mt-3'
       >
         <div className=''>
-          Доставка.
+          Доставка. {!showFreeDeliveryOption ? '' : '(Бесплатно при заказе от 6000)'}
         </div>
         <div className='ms-auto'>
           {deliveryType === 'Доставка до двери' ?
-            deliveryPrice !== -1 ? printPrice(deliveryPrice) : 'Неверный почтовый индекс'
+            // deliveryPrice !== -1 ? printPrice(deliveryPrice) : 'Неверный почтовый индекс'
+            printPrice(deliveryPrice)
             :
             boxberryData ? printPrice(deliveryPrice) : 'Выберите пункт выдачи'
           }
