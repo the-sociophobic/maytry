@@ -27,13 +27,14 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
   const { userEmail } = useStore()
   const { deliveryType } = useStore()
   const { userAddress } = useStore()
-  const { userZIP } = useStore()
+  // const { userZIP } = useStore()
   const { userCity } = useStore()
   const data_not_filled = userFullName.length < 5
     || userPhone.length < 7
     || userEmail.length < 7
     || userCity.length < 5
-    || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || userZIP.length !== 6 || deliveryPrice === -1))
+    // || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || userZIP.length !== 6 || deliveryPrice === -1))
+    || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || deliveryPrice === -1))
 
   return (
     <>

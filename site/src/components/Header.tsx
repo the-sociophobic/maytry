@@ -102,7 +102,7 @@ const Header: FC<HeaderProps> = ({ }) => {
                 </LinkWrapper>
               }
               <div className='d-flex flex-row ms-auto'>
-                {user ?
+                {false && (user ?
                   <>
                     <div className='Header__section d-flex justify-content-end'>
                       <LinkWrapper
@@ -161,7 +161,7 @@ const Header: FC<HeaderProps> = ({ }) => {
                     }}>
                       АККАУНТ
                     </Button>
-                }
+                )}
 
                 <div className='Header__section d-flex justify-content-end'>
                   <LinkWrapper

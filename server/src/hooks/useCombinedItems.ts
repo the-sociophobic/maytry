@@ -40,27 +40,9 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
         name: oneC_item.color + ' нет в contentful'
       }
       const size = contentfulSizes.find(size => size.name === oneC_item.size) || emptySize
-      const contentfulColorPriceSize = contentfulColorPriceSizes
-        .find(c_p_s =>
-          c_p_s.color.name === oneC_item.color &&
-          c_p_s.size.name === oneC_item.size &&
-          c_p_s.item_number === item_number
-        )
       
-      const color_price_size: ContentfulColorPriceSizeType = {
-        id: oneC_item.code,
-        name: '',
-        item_number,
-        ...contentfulColorPriceSize,
-        color,
-        price: oneC_item.price,
-        size,
-        max_available: oneC_item.count,
-      }
-
       if (!item_in_map) {
         const contentfulItem = contentfulItems
-          // .find(item => [item_number, item_numberInverted].includes(item.name)) || emptyContentfulItem
           .find(item => item.name.includes(item_number)) || emptyContentfulItem
 
         item_in_map = {
@@ -70,6 +52,17 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
           color_price_size: [],
           oneC_item
         }
+      }
+
+      const color_price_size: ContentfulColorPriceSizeType = {
+        id: oneC_item.code,
+        name: '',
+        item_number,
+        color,
+        price: item_in_map.defaultPrice || oneC_item.price,
+        salePrice: item_in_map.defaultSalePrice,
+        size,
+        max_available: oneC_item.count,
       }
 
       items_combined.set(item_number, {

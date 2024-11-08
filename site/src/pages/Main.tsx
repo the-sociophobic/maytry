@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef } from 'react'
 
+import { isMobile } from 'react-device-detect'
+
 import useContentful from '../hooks/useContentful'
 import ItemCard from '../components/ItemCard'
 import useStore from '../hooks/useStore'
@@ -51,14 +53,59 @@ const Main: FC<MainProps> = ({ }) => {
       setFilterBy([])
   }, [showFilter])
 
+  const use_extendedFilter = showExtendedFilter || isMobile
+
   useEffect(() => {
-    if (!showExtendedFilter) {
+    if (!use_extendedFilter) {
       setPriceFrom(undefined)
       setPriceTo(undefined)
       setSelectedColorIds([])
       setSelectedSizesIds([])
     }
   }, [showExtendedFilter])
+
+  const filteredItems = (contentful?.items || [])
+    .filter(item =>
+      !showSearch || searchString.length === 0 ||
+      item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
+    )
+    .filter(item =>
+      (!(showFilter || use_extendedFilter) || filterBy.length === 0) ||
+      item.categories?.map(itemCategory => itemCategory.name)
+        .some(itemCategoryName => filterBy.includes(itemCategoryName))
+    )
+    .filter(item => {
+      if (!use_extendedFilter || priceFrom === undefined)
+        return true
+      return getCurrentPrice(item) >= priceFrom
+    })
+    .filter(item => {
+      if (!use_extendedFilter || priceTo === undefined)
+        return true
+      return getCurrentPrice(item) <= priceTo
+    })
+    .filter(item => {
+      if (!use_extendedFilter || selectedColorIds.length === 0)
+        return true
+      return item.color_price_size
+        ?.find(c_p_s =>
+          selectedColorIds.includes(c_p_s.color?.id || ''))
+    })
+    .filter(item => {
+      if (!use_extendedFilter || selectedSizesIds.length === 0)
+        return true
+      return item.color_price_size
+        ?.find(c_p_s =>
+          selectedSizesIds.includes(c_p_s.size?.id || ''))
+    })
+    .sort((a, b) => {
+      if (!use_extendedFilter)
+        return 0
+      return sortOrder === 'asc' ?
+        getCurrentPrice(a) - getCurrentPrice(b)
+        :
+        getCurrentPrice(b) - getCurrentPrice(a)
+    })
 
   return (
     <ScrollToConsumer>
@@ -87,48 +134,7 @@ const Main: FC<MainProps> = ({ }) => {
               justify-content-between
             `}
           >
-            {contentful?.items
-              .filter(item =>
-                !showSearch || searchString.length === 0 ||
-                item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
-              )
-              .filter(item =>
-                (!(showFilter || showExtendedFilter) || filterBy.length === 0) ||
-                item.categories?.map(itemCategory => itemCategory.name)
-                  .some(itemCategoryName => filterBy.includes(itemCategoryName))
-              )
-              .filter(item => {
-                if (!showExtendedFilter || priceFrom === undefined)
-                  return true
-                return getCurrentPrice(item) >= priceFrom
-              })
-              .filter(item => {
-                if (!showExtendedFilter || priceTo === undefined)
-                  return true
-                return getCurrentPrice(item) <= priceTo
-              })
-              .filter(item => {
-                if (!showExtendedFilter || selectedColorIds.length === 0)
-                  return true
-                return item.color_price_size
-                  ?.find(c_p_s =>
-                    selectedColorIds.includes(c_p_s.color?.id || ''))
-              })
-              .filter(item => {
-                if (!showExtendedFilter || selectedSizesIds.length === 0)
-                  return true
-                return item.color_price_size
-                  ?.find(c_p_s =>
-                    selectedSizesIds.includes(c_p_s.size?.id || ''))
-              })
-              .sort((a, b) => {
-                if (!showExtendedFilter)
-                  return 0
-                return sortOrder === 'asc' ?
-                  getCurrentPrice(a) - getCurrentPrice(b)
-                  :
-                  getCurrentPrice(b) - getCurrentPrice(a)
-              })
+            {filteredItems
               .map((item, itemIndex) =>
                 mainPageView === 'IMG' ?
                   <ItemCard

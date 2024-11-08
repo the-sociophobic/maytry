@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
-import { pick } from 'lodash'
 
 import useStore from '../hooks/useStore'
 import Color from './Color'
@@ -102,14 +101,10 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
             <div className='me-3'>
               Цена:
             </div>
-            <Price {...(currentSize ?
-              pick(currentSize, 'price', 'salePrice')
-              :
-              {
-                price: item.defaultPrice || 0,
-                salePrice: item.defaultSalePrice,
-              }
-            )} />
+            <Price
+              price={currentSize?.price || item.defaultPrice || 0}
+              salePrice={currentSize?.salePrice || item.defaultSalePrice}
+            />
           </div>
 
           {currentItemInCart.quantity > 0 ?

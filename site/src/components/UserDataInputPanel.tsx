@@ -30,8 +30,8 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
   const { setUserCity } = useStore()
   const { userAddress } = useStore()
   const { setUserAddress } = useStore()
-  const { userZIP } = useStore()
-  const { setUserZIP } = useStore()
+  // const { userZIP } = useStore()
+  // const { setUserZIP } = useStore()
   const deliveryPeriod = useDeliveryPeriod()
 
   return (
@@ -56,13 +56,13 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
       </h4>
       {deliveryType === 'Доставка до двери' ?
         <>
-          <Input
+          {/* <Input
             label='Почтовый индекс'
             type='number'
             value={userZIP}
             onChange={setUserZIP}
             className='mb-2'
-          />
+          /> */}
           <Input
             label='Город'
             value={userCity}
