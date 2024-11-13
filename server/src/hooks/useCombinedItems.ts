@@ -39,8 +39,27 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
         ...emptyColor,
         name: oneC_item.color + ' нет в contentful'
       }
-      const size = contentfulSizes.find(size => size.name === oneC_item.size) || emptySize
-      
+
+      let size = emptySize
+
+      if (oneC_item.size) {
+        const size_in_contentful = contentfulSizes
+          .find(size => size.name === oneC_item.size)
+
+        if (size_in_contentful) {
+          size = size_in_contentful
+        }
+      } else {
+        if (oneC_item.name.includes('ONE SIZE')) {
+          const size_in_contentful = contentfulSizes
+            .find(size => size.name === 'ONE SIZE')
+
+          if (size_in_contentful) {
+            size = size_in_contentful
+          }
+        }
+      }
+
       if (!item_in_map) {
         const contentfulItem = contentfulItems
           .find(item => item.name.includes(item_number)) || emptyContentfulItem
