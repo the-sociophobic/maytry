@@ -1,35 +1,30 @@
-import useContentful from '../hooks/useContentful'
-import use1C from '../hooks/use1C'
-import { getItemNumberFrom1C } from '../utils/getItemNameFrom1C'
+import { getItemNumberFrom1C } from '../../utils/getItemNameFrom1C'
 import {
   ContentfulColorPriceSizeType,
-} from '../types/contentful.type'
-import { CombinedItemType } from '../types/combined.type'
-import storage from '../utils/storage'
+  ContentfulDataTypeBE
+} from '../../types/contentful.type'
+import { CombinedItemType } from '../../types/combined.type'
+import { OneCItemType } from 'types/oneC.type'
 import {
   emptyContentfulItem,
   emptyColor,
   emptySize
-} from '../utils/defaultValues'
+} from '../../utils/defaultValues'
 
 
 const SIZES_ORDER = ['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 
-const useCombinedItems = async (): Promise<CombinedItemType[]> => {
-  const local_combined_items = storage.read<CombinedItemType[]>('combined.json')
-
-  if (local_combined_items)
-    return local_combined_items
-
+const combineItems = async (
+  contentful: ContentfulDataTypeBE,
+  items_from_1C: OneCItemType[]
+): Promise<CombinedItemType[]> => {
   try {
     const {
       items: contentfulItems,
       colors: contentfulColors,
       sizes: contentfulSizes,
-      itemColorPrices: contentfulColorPriceSizes
-    } = await useContentful()
-    const { items_from_1C } = await use1C()
+    } = contentful
     const items_combined = new Map<string, CombinedItemType>()
 
     items_from_1C.forEach(oneC_item => {
@@ -99,7 +94,6 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
         .sort((a, b) => SIZES_ORDER.indexOf(a.size.name) - SIZES_ORDER.indexOf(b.size.name))
     }))
 
-    storage.write('combined.json', result)
 
     return result
 
@@ -109,4 +103,4 @@ const useCombinedItems = async (): Promise<CombinedItemType[]> => {
 }
 
 
-export default useCombinedItems
+export default combineItems

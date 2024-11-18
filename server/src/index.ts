@@ -36,6 +36,15 @@ app.get('/update-data', async (request: Request, response: Response) => {
   }, 150)
 })
 
+app.get('/update-combined-data', async (request: Request, response: Response) => {
+  storage.delete('combined.json')
+  setTimeout(async () => {
+    await useCombinedData()
+
+    response.send(true)
+  }, 150)
+})
+
 app.post('/parsel-create', async (
   request: Request<{}, {}, ParselCreateRequestTypeFE>,
   response

@@ -10,9 +10,9 @@ export const getItemNameFrom1C = (item: OneCItemType) => {
 export const getItemNumberFrom1C = (item: OneCItemType) => {
   let item_number = ''
 
-  item_number = item.article.match(/\d{5} \d{2}/gm)?.[0]
+  item_number = item.article.match(/\d{5} ХУДИ, \d{2}/gm)?.[0]
   if (item_number)
-    return item_number
+    return item_number.replace('ХУДИ, ', '')
 
   item_number = item.article.match(/\d{5}/gm)?.[0]
   if (item_number)
