@@ -15,6 +15,12 @@ const Admin: FC = ({
     setDataState('loaded')
     return data
   }
+  const updateCombinedData = async () => {
+    setDataState('loading')
+    const data = await get('/update-combined-data')
+    setDataState('loaded')
+    return data
+  }
 
   return (
     <div className='container-2'>
@@ -22,11 +28,19 @@ const Admin: FC = ({
         <div className='col'>
           <Button
             black
-            className='d-inline-block'
+            className='d-inline-block me-3'
             onClick={updateData}
             disabled={dataState === 'loading'}
           >
             {dataState === 'loading' ? 'обновление...' : 'Обновить данные с 1С и contentful'}
+          </Button>
+          <Button
+            black
+            className='d-inline-block'
+            onClick={updateCombinedData}
+            disabled={dataState === 'loading'}
+          >
+            {dataState === 'loading' ? 'обновление...' : 'Обновить формат данных'}
           </Button>
         </div>
       </div>

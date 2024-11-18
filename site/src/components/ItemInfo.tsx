@@ -11,6 +11,7 @@ import QuantitySelector from './QuantitySelector'
 import parseColors from '../utils/parseColors'
 import { CombinedItemType } from '../types/contentful.type'
 import { ItemInCartType } from '../types/site.type'
+import AddNewLines from './AddNewLines'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -54,7 +55,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
 
   return (
     <div className={className}>
-      <div className='position-sticky pe-4' style={{ top: '100px' }}>
+      <div className='position-sticky pe-4' style={{ top: '0px' }}>
         <h3 className='h3 mb-5'>
           {item.name}
         </h3>
@@ -132,7 +133,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
         </div>
 
         <div className='ItemPage__description'>
-          {item.description}
+          <AddNewLines string={item.description} />
         </div>
 
       </div>

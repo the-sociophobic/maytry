@@ -1,8 +1,8 @@
 import useContentful from '../useContentful'
 import combineItems from './combineItems'
 import storage from '../../utils/storage'
-import { CombinedItemType } from 'types/combined.type'
-import use1C from 'hooks/use1C'
+import { CombinedItemType } from '../../types/combined.type'
+import use1C from '../../hooks/use1C'
 
 
 const useCombinedData = async () => {
@@ -17,7 +17,7 @@ const useCombinedData = async () => {
   
   const { items_from_1C } = await use1C()
   const items = await combineItems(contentful, items_from_1C)
-  
+
   storage.write('combined.json', items)
 
   return ({

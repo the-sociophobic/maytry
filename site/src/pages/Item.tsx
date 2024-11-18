@@ -138,7 +138,7 @@ const Item: FC<ItemProps> = (item) => {
             </div>
           </div>
           <div className='col-3'>
-            <div className='position-sticky' style={{ top: '100px' }}>
+            <div className='position-sticky' style={{ top: '0px' }}>
               {item.images.map((image, imageIndex) =>
                 <Button
                   key={image.id + '_anchor'}

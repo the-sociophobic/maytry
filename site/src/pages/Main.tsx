@@ -10,14 +10,13 @@ import { FiberScene } from '../components/Fiber/FiberScene'
 import Button from '../components/Button'
 import { ScrollToConsumer } from '../App'
 import { getCurrentPrice } from '../utils/price'
+import sortMap from '../utils/sortMap'
 
 
 export type MainProps = {}
 
 
 const Main: FC<MainProps> = ({ }) => {
-  const { data: contentful } = useContentful()
-
   const { showStartBanner } = useStore()
 
   const { showSearch } = useStore()
@@ -64,7 +63,10 @@ const Main: FC<MainProps> = ({ }) => {
     }
   }, [showExtendedFilter])
 
+  const { data: contentful } = useContentful()
+  const sortFn = sortMap(contentful?.sites?.[0]?.main_page_items || [])
   const filteredItems = (contentful?.items || [])
+    .sort(sortFn)
     .filter(item =>
       !showSearch || searchString.length === 0 ||
       item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())

@@ -30,7 +30,7 @@ class storage {
       filePath,
       JSON.stringify(dataToSave),
       { flag: 'w+' },
-      err => console.log(err)
+      err => err && console.log(err)
     )
   }
 
@@ -40,7 +40,7 @@ class storage {
     if (fs.existsSync(filePath))
       fs.unlink(
         filePath,
-        err => console.log(err)
+        err => err && console.log(err)
       )
   }
 

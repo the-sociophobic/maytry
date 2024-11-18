@@ -17,7 +17,7 @@ const ImgDummy: FC<ImgDummyProps> = ({
   className,
   onClick
 }) => {
-  const realImage = img?.small.file.url
+  const realImage = img?.small?.file?.url
   const blankImage = useBlankImage()
 
   return (
