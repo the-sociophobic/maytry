@@ -14,6 +14,14 @@ export const getItemNumberFrom1C = (item: OneCItemType) => {
   if (item_number)
     return item_number.replace('ХУДИ, ', '')
 
+  item_number = item.name.match(/\d{5} Футболка, \d{2}/gm)?.[0]
+  if (item_number)
+    return item_number.replace('Футболка, ', '')
+
+  item_number = item.name.match(/\d{5} Толстовка на молнии, \d{2}/gm)?.[0]
+  if (item_number)
+    return item_number.replace('Толстовка на молнии, ', '')
+
   item_number = item.article.match(/\d{5}/gm)?.[0]
   if (item_number)
     return item_number
