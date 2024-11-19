@@ -12,6 +12,8 @@ import parseColors from '../utils/parseColors'
 import { CombinedItemType } from '../types/contentful.type'
 import { ItemInCartType } from '../types/site.type'
 import AddNewLines from './AddNewLines'
+import yandexGoal from '../utils/yandex/goal'
+import { YANDEX_GOAL } from '../utils/yandex/consts'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -52,6 +54,8 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
   const { setItemInCart } = useStore()
 
   const navigate = useNavigate()
+
+  const currentPrice = currentSize?.salePrice || item.defaultSalePrice || currentSize?.price || item.defaultPrice || 0
 
   return (
     <div className={className}>
@@ -121,6 +125,10 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
                 className={``}
                 onClick={() => {
                   setItemInCart(currentItemInCart, 1)
+                  yandexGoal({
+                    goalId: YANDEX_GOAL.ADD_TO_CART,
+                    order_price: currentPrice
+                  })
                   navigate('/cart')
                 }}
               >

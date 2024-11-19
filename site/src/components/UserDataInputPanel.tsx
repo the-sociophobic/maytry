@@ -8,6 +8,8 @@ import Button from './Button'
 import useDeliveryPeriod from '../hooks/useDeliveryPeriod'
 import Radio from './Radio'
 import days from '../utils/countable/days'
+import yandexGoal from '../utils/yandex/goal'
+import { YANDEX_GOAL } from '../utils/yandex/consts'
 
 
 export type UserDataInputPanelProps = {}
@@ -33,6 +35,9 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
   // const { userZIP } = useStore()
   // const { setUserZIP } = useStore()
   const deliveryPeriod = useDeliveryPeriod()
+
+  const { startedFormFilling } = useStore()
+  const { setStartedFormFilling } = useStore()
 
   return (
     <>
@@ -96,7 +101,13 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
       <Input
         label='ФИО'
         value={userFullName}
-        onChange={setUserFullName}
+        onChange={value => {
+          if (!startedFormFilling) {
+            yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING })
+            setStartedFormFilling(true)
+          }
+          setUserFullName(value)
+        }}
         className='mb-2'
       />
       <Input

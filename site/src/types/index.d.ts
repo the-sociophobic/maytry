@@ -21,6 +21,15 @@ declare global {
       ) => void
     }
     ymaps3?: any
+    ym?: (
+      YANDEX_METRICA_ID: number,
+      actionName: string,
+      TARGET_NAME: number,
+      options?: {
+        order_price: number,
+        currency: string
+      }
+    ) => void
     cp?: any & {
       CloudPayments: () => any
     }

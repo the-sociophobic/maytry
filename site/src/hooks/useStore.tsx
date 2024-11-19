@@ -91,6 +91,9 @@ export type StateType = {
 
   parselCreateError: undefined | string
   setParselCreateError: (parselCreateError: undefined | string) => void
+
+  startedFormFilling: boolean
+  setStartedFormFilling: (startedFormFilling: boolean) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -199,6 +202,10 @@ const useStore = create(
 
       parselCreateError: undefined,
       setParselCreateError: (parselCreateError: undefined | string) => set({ parselCreateError }),
+
+      startedFormFilling: false,
+      setStartedFormFilling: (startedFormFilling: boolean) => set({ startedFormFilling }),
+      
     }),
     {
       name: 'main-storage',
