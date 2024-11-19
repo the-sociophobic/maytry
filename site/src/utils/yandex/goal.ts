@@ -9,7 +9,7 @@ export type yandexGoalProps = {
 
 const yandexGoal = ({
   goalId,
-  order_price,
+  order_price: _order_price,
 }: yandexGoalProps) => {
   const { ym } = window
 
