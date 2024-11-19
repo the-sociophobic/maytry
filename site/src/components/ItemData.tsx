@@ -11,7 +11,7 @@ export type ItemDataProps = CombinedItemType
 
 
 const ItemData: FC<ItemDataProps> = (item) => {
-  const price = getPrice(item) || 10000
+  const price = getPrice(item)
   const salePrice = getSalePrice(item)
   const {
     name,

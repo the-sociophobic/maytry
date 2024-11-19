@@ -1,14 +1,30 @@
 import { CombinedItemType } from '../types/contentful.type'
 
 
-const getPrice = (item: CombinedItemType) =>
-  item.defaultPrice || item.color_price_size?.[0].price || undefined
+const getPrice = (item: CombinedItemType) => {
+  if (item.defaultPrice !== undefined)
+    return item.defaultPrice
+  if (item.color_price_size?.[0].price !== undefined)
+    return item.color_price_size?.[0].price
+  return -1
+}
 
-const getSalePrice = (item: CombinedItemType) =>
-  item.defaultSalePrice || item.color_price_size?.[0].salePrice || undefined
+const getSalePrice = (item: CombinedItemType) => {
+  if (item.defaultSalePrice !== undefined)
+    return item.defaultPrice
+  if (item.color_price_size?.[0].salePrice !== undefined)
+    return item.color_price_size?.[0].price
+  return undefined
+}
 
-const getCurrentPrice = (item: CombinedItemType) =>
-  getSalePrice(item) || getPrice(item) || 10000
+const getCurrentPrice = (item: CombinedItemType) => {
+  const salePrice = getSalePrice(item)
+  const price = getPrice(item)
+
+  if (salePrice !== -1)
+    return salePrice
+  return price
+}
 
 const printPrice = (price: number) => {
   const priceString = price + ''

@@ -2,13 +2,14 @@ import { FC } from 'react'
 
 import LinkWrapper from './LinkWrapper'
 import { CombinedItemType } from '../types/contentful.type'
+import { getPrice } from '../utils/price'
 
 
 export type ItemLineProps = CombinedItemType
 
 
 const ItemLine: FC<ItemLineProps> = (item) => {
-  const price = item.defaultPrice || item.color_price_size?.[0].price || 10000
+  const price = getPrice(item)
 
   return (
     <LinkWrapper
