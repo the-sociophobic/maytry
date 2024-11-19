@@ -21,7 +21,7 @@ const getCurrentPrice = (item: CombinedItemType) => {
   const salePrice = getSalePrice(item)
   const price = getPrice(item)
 
-  if (salePrice !== -1)
+  if (salePrice !== undefined)
     return salePrice
   return price
 }
