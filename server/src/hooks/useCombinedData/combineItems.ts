@@ -32,6 +32,7 @@ const combineItems = async (
       let item_in_map = items_combined.get(item_number)
       const color = contentfulColors.find(color => color.name === oneC_item.color) || {
         ...emptyColor,
+        id: item_number + '_' + oneC_item.color,
         name: oneC_item.color + ' нет в contentful'
       }
 
@@ -66,6 +67,10 @@ const combineItems = async (
           color_price_size: [],
           oneC_item
         }
+      }
+
+      if (item_number === '6020') {
+        console.log(color)
       }
 
       const color_price_size: ContentfulColorPriceSizeType = {
