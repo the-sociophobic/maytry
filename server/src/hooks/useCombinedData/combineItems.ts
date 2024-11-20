@@ -69,10 +69,6 @@ const combineItems = async (
         }
       }
 
-      if (item_number === '6020') {
-        console.log(color)
-      }
-
       const color_price_size: ContentfulColorPriceSizeType = {
         id: oneC_item.code,
         name: '',
