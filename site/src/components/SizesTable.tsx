@@ -4,13 +4,16 @@ import { SizesTableType } from '../types/contentful.type'
 
 
 export type SizesTableProps = {
-  sizes: SizesTableType
+  sizes?: SizesTableType
 }
 
 
 const SizesTable: FC<SizesTableProps> = ({
   sizes
 }) => {
+  if (!sizes)
+    return <></>
+    
   const rows: string[][] = []
   const columns: string[][] = []
 

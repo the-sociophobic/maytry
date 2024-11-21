@@ -1,8 +1,11 @@
 import { useQuery } from 'react-query'
 
 import { get } from '../../utils/requests'
-import { getContentfulData } from './helpers'
-import { ContentfulDataTypeFE, ContentfulSiteType } from '../../types/contentful.type'
+// import { getContentfulData } from './helpers'
+import {
+  ContentfulDataTypeFE,
+  // ContentfulSiteType
+} from '../../types/contentful.type'
 
 
 export const emptyContentful = {
@@ -50,17 +53,17 @@ const useContentful = () => {
   return useQuery<ContentfulDataTypeFE>('contentful', getContentfulDataWithoutBadItems)
 }
 
-const useMainPage = () => {
-  return useQuery<ContentfulSiteType>('contentful', async () => {
-    const data = await getContentfulData<ContentfulDataTypeFE>()
+// const useMainPage = () => {
+//   return useQuery<ContentfulSiteType>('contentful', async () => {
+//     const data = await getContentfulData<ContentfulDataTypeFE>()
   
-    return data.sites[0]
-  })
-}
+//     return data.sites[0]
+//   })
+// }
 
 
 export default useContentful
 
-export {
-  useMainPage
-}
+// export {
+//   useMainPage
+// }

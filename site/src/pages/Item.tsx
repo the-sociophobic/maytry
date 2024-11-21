@@ -11,7 +11,7 @@ import { CombinedItemType } from '../types/contentful.type'
 export type ItemProps = CombinedItemType
 
 
-const HEADER_HEIGHT = 80
+const HEADER_HEIGHT = 70
 
 
 const Item: FC<ItemProps> = (item) => {
@@ -87,14 +87,14 @@ const Item: FC<ItemProps> = (item) => {
 
     const progress = (touch.pageY - touchScroller.getBoundingClientRect().top) / touchScroller.clientHeight
     const numberOfPhoto = Math.floor(progress * item.images.length)
-    
+
     scrollToImageMobile(numberOfPhoto)
     setCurrentMobileImage(numberOfPhoto)
   }
   const onTouchEnd = () => {
     setCurrentMobileImage(-1)
   }
-  
+
   return (
     <div
       ref={scrollAreaRef}
@@ -118,7 +118,7 @@ const Item: FC<ItemProps> = (item) => {
                 <Img
                   key={image.id}
                   file={zoomed ? (image.large || image.small) : image.small}
-                  className={`mb-2 cursor-zoom-${zoomed ? 'out' : 'in'}`}
+                  className={`ItemPage__Img mb-2 mx-auto cursor-zoom-${zoomed ? 'out' : 'in'}`}
                   onClick={() => {
                     setZoomed(!zoomed)
                     setTimeout(() => scrollToImage(imageIndex), 25)
@@ -138,11 +138,20 @@ const Item: FC<ItemProps> = (item) => {
             </div>
           </div>
           <div className='col-3'>
-            <div className='position-sticky' style={{ top: '0px' }}>
+            <div
+              className='position-sticky'
+              style={{
+                top: '0px',
+                overflowX: 'hidden',
+                paddingLeft: '10px',          
+                overflowY: 'scroll',
+                maxHeight: 'calc(100vh - 70px)'
+              }}
+            >
               {item.images.map((image, imageIndex) =>
                 <Button
                   key={image.id + '_anchor'}
-                  className={`text-truncate ${imageIndex === currentImage && 'text-underline'}`}
+                  className={`ImgTooltipDesktop ${imageIndex === currentImage && 'text-underline'}`}
                   onMouseOver={() => scrollToImage(imageIndex)}
                 >
                   {image.title}

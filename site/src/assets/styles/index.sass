@@ -29,7 +29,7 @@ body
       *
         font-size: 10px
       background-color: $main-background
-      @extend .mb-3
+      // @extend .mb-3
       &--relative
         position: relative
       &--fixed
@@ -41,7 +41,7 @@ body
         left: 0
         width: 100vw
       &__top
-        height: 80px
+        height: 70px
         @extend .d-flex
         @extend .flex-row
         @extend .align-items-center
@@ -59,7 +59,7 @@ body
         @extend .d-flex
         @extend .flex-column
       &__logo
-        width: 70px
+        width: 60px
         // height: 80%
         margin-right: 80px
       &__section
@@ -67,7 +67,7 @@ body
       &__burger
         width: rem(48)
         height: rem(48)
-        @extend .d-lg-none
+        @extend .d-md-none
         @include media-breakpoint-down(md)
           width: rem(40)
           height: rem(40)

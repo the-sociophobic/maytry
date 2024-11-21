@@ -45,7 +45,7 @@ export interface ContentfulItemType extends ContentfulItemClass {
   link: string
   name: string
   description: string
-  sizes: SizesTableType,
+  sizes?: SizesTableType
   categories: ContentfulCategoryType[]
   images: ContentfulImageType[]
   color_price_size?: ContentfulColorPriceSizeType[]

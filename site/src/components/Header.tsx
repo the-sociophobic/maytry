@@ -13,7 +13,7 @@ import useContentful from '../hooks/useContentful'
 
 import LogoImg from '../assets/images/logo.svg'
 import { toggleInSet } from '../utils/sets'
-import ColorSelector from './ColorSelector'
+// import ColorSelector from './ColorSelector'
 import SizeSelector from './SizeSelector'
 
 
@@ -61,7 +61,7 @@ const Header: FC<HeaderProps> = ({ }) => {
       <div
         className={`Header Header--relative`}
         style={headerRef.current?.clientHeight ? {
-          minHeight: (!showExtendedFilter ? 80 : headerRef.current?.clientHeight) + 'px'
+          minHeight: (!showExtendedFilter ? 70 : headerRef.current?.clientHeight) + 'px'
         } : {}}
       />
       <div
@@ -336,8 +336,8 @@ const ExtendedFilter = () => {
   const { setPriceTo } = useStore()
   const { sortOrder } = useStore()
   const { setSortOrder } = useStore()
-  const { selectedColorIds } = useStore()
-  const { setSelectedColorIds } = useStore()
+  // const { selectedColorIds } = useStore()
+  // const { setSelectedColorIds } = useStore()
   const { selectedSizesIds } = useStore()
   const { setSelectedSizesIds } = useStore()
 
@@ -388,12 +388,12 @@ const ExtendedFilter = () => {
             Цене {sortOrder === 'asc' ? '↑' : '↓'}
           </p>
         </div>
-        <ColorSelector
+        {/* <ColorSelector
           colors={contentful?.colors || []}
           selectedColorIds={selectedColorIds}
           onChange={setSelectedColorIds}
           className='my-3'
-        />
+        /> */}
         <SizeSelector
           sizes={(contentful?.sizes || []).map(size => ({
             ...size,

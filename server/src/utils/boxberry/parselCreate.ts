@@ -25,7 +25,8 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
   orders = { last_order_id }
   storage.write('boxberry-order-id.json', orders)
   
-  const order_id = 'lev-order-' + last_order_id
+  // const order_id = 'lev-order-' + last_order_id
+  const order_id = '' + last_order_id
   const parselCreatePropsBE = {
     ...props,
     items: props.items.map(item => ({
