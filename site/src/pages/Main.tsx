@@ -11,6 +11,7 @@ import Button from '../components/Button'
 import { ScrollToConsumer } from '../App'
 import { getCurrentPrice } from '../utils/price'
 import sortMap from '../utils/sortMap'
+import { CombinedItemType } from '../types/contentful.type'
 
 
 export type MainProps = {}
@@ -64,9 +65,14 @@ const Main: FC<MainProps> = ({ }) => {
   }, [showExtendedFilter])
 
   const { data: contentful } = useContentful()
-  const sortFn = sortMap(contentful?.sites?.[0]?.main_page_items || [])
+  const orderSortFn = sortMap(contentful?.sites?.[0]?.main_page_items || [])
+  const priceSortFn = (a: CombinedItemType, b: CombinedItemType) =>
+    sortOrder === 'asc' ?
+      getCurrentPrice(a) - getCurrentPrice(b)
+      :
+      getCurrentPrice(b) - getCurrentPrice(a)
+
   const filteredItems = (contentful?.items || [])
-    .sort(sortFn)
     .filter(item =>
       !showSearch || searchString.length === 0 ||
       item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
@@ -100,14 +106,7 @@ const Main: FC<MainProps> = ({ }) => {
         ?.find(c_p_s =>
           selectedSizesIds.includes(c_p_s.size?.id || ''))
     })
-    .sort((a, b) => {
-      if (!use_extendedFilter)
-        return 0
-      return sortOrder === 'asc' ?
-        getCurrentPrice(a) - getCurrentPrice(b)
-        :
-        getCurrentPrice(b) - getCurrentPrice(a)
-    })
+    .sort(!use_extendedFilter ? orderSortFn : priceSortFn)
 
   return (
     <ScrollToConsumer>
