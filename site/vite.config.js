@@ -17,5 +17,5 @@ export default defineConfig({
       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
     }
   },
-  base: '/maytry'
+  // base: '/maytry'
 })

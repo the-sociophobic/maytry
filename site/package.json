@@ -1,6 +1,6 @@
 {
   "name": "maytry",
-  "homepage": "https://the-sociophobic.github.io/maytry/",
+  "homepage": "https://maytry.ru/",
   "private": true,
   "scripts": {
     "dev": "vite",
