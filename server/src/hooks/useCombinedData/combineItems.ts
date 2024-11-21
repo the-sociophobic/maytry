@@ -1,9 +1,9 @@
 import { getItemNumberFrom1C } from '../../utils/getItemNameFrom1C'
 import {
   ContentfulColorPriceSizeType,
-  ContentfulDataTypeBE
+  ContentfulDataTypeBE,
+  CombinedItemType
 } from '../../types/contentful.type'
-import { CombinedItemType } from '../../types/combined.type'
 import { OneCItemType } from 'types/oneC.type'
 import {
   emptyContentfulItem,

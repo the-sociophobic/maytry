@@ -1,7 +1,7 @@
 import useContentful from '../useContentful'
 import combineItems from './combineItems'
 import storage from '../../utils/storage'
-import { CombinedItemType } from '../../types/combined.type'
+import { CombinedItemType } from '../../types/contentful.type'
 import use1C from '../../hooks/use1C'
 
 

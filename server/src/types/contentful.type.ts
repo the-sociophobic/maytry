@@ -45,12 +45,15 @@ export interface ContentfulItemType extends ContentfulItemClass {
   link: string
   name: string
   description: string
+  sizes: SizesTableType,
   categories: ContentfulCategoryType[]
   images: ContentfulImageType[]
   color_price_size?: ContentfulColorPriceSizeType[]
   defaultPrice?: number
   defaultSalePrice?: number
 }
+
+export type SizesTableType = { [key: string]: string[] }
 
 export interface ContentfulColorType extends ContentfulItemClass {
   name: string

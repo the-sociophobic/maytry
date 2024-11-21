@@ -14,6 +14,7 @@ import { ItemInCartType } from '../types/site.type'
 import AddNewLines from './AddNewLines'
 import yandexGoal from '../utils/yandex/goal'
 import { YANDEX_GOAL } from '../utils/yandex/consts'
+import SizesTable from './SizesTable'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -59,7 +60,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
 
   return (
     <div className={className}>
-      <div className='position-sticky pe-4' style={{ top: '0px' }}>
+      <div className='position-sticky' style={{ top: '0px' }}>
         <h3 className='h3 mb-5'>
           {item.name}
         </h3>
@@ -142,6 +143,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
 
         <div className='ItemPage__description'>
           <AddNewLines string={item.description} />
+          <SizesTable sizes={item.sizes} />
         </div>
 
       </div>

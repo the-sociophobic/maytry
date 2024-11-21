@@ -263,24 +263,31 @@ $color-square-size: 12px
   height: 100vh
   overflow-x: hidden
   &__description
-    width: 70%
-  &__ImgSelectorMobile
-    width: 50%
-    height: 8px
-    border-top: 1px solid $black
-    margin-left: 45%
-    margin-bottom: 4px
-    position: relative
-    &__tooltip
-      position: absolute
-      top: 50%
-      left: -10px
-      transform: translate(-100%, -50%)
-      background-color: white
-      border: 1px solid black
-      line-height: 1.5
-      padding: 0 7px
-      white-space: nowrap
+    width: 100%
+  .ImgScrollerMobile
+    position: fixed
+    top: 110px
+    right: 10px
+    width: 15px
+    padding: 0
+    touchAction: none
+    &__line
+      width: 100%
+      height: 8px
+      border-top: 1px solid $black
+      margin-left: 5%
+      margin-bottom: 4px
+      position: relative
+      &__tooltip
+        position: absolute
+        top: 50%
+        left: -10px
+        transform: translate(-100%, -50%)
+        background-color: white
+        border: 1px solid black
+        line-height: 1.5
+        padding: 0 7px
+        white-space: nowrap
 
 .Cart
   @extend .flex-grow-1

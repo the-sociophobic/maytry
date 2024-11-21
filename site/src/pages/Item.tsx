@@ -142,7 +142,7 @@ const Item: FC<ItemProps> = (item) => {
               {item.images.map((image, imageIndex) =>
                 <Button
                   key={image.id + '_anchor'}
-                  className={imageIndex === currentImage && 'text-underline'}
+                  className={`text-truncate ${imageIndex === currentImage && 'text-underline'}`}
                   onMouseOver={() => scrollToImage(imageIndex)}
                 >
                   {image.title}
@@ -154,7 +154,7 @@ const Item: FC<ItemProps> = (item) => {
 
         <div className='row mobile-only'>
           <div
-            className='col'
+            className='col pe-4'
             ref={imagesAreaMobileRef}
           >
             <ImgDummy
@@ -173,32 +173,28 @@ const Item: FC<ItemProps> = (item) => {
               />
             )}
           </div>
-          <div className='col-1'>
-            <div
-              ref={touchScrollerRef}
-              className='position-sticky'
-              style={{
-                top: '30px',
-                touchAction: 'none'
-              }}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-            >
-              {item.images.map((image, imageIndex) =>
-                <div
-                  key={image.id}
-                  className='ItemPage__ImgSelectorMobile'
-                  onClick={() => scrollToImageMobile(imageIndex)}
-                >
-                  {currentMobileImage === imageIndex &&
-                    <div className='ItemPage__ImgSelectorMobile__tooltip'>
-                      {image.title}
-                    </div>
-                  }
-                </div>
-              )}
-            </div>
+
+          <div
+            ref={touchScrollerRef}
+            className='ImgScrollerMobile'
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            {item.images.map((image, imageIndex) =>
+              <div
+                key={image.id}
+                className='ImgScrollerMobile__line'
+                onClick={() => scrollToImageMobile(imageIndex)}
+              >
+                {currentMobileImage === imageIndex &&
+                  <div className='ImgScrollerMobile__line__tooltip'>
+                    {image.title}
+                  </div>
+                }
+              </div>
+            )}
           </div>
+
         </div>
 
       </div>

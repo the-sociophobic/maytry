@@ -6,6 +6,7 @@ export const emptyContentfulItem = {
   link: '',
   name: '',
   description: '',
+  sizes: {},
   categories: [],
   images: []
 }
