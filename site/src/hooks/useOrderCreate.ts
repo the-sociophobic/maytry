@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from 'react-query'
 
 import useStore from '../hooks/useStore'
 import useTotalPrice from '../hooks/useTotalPrice'
@@ -31,6 +32,8 @@ const useOrderCreate = () => {
   const { userEmail } = useStore()
   const { setParselCreateError } = useStore()
 
+  const queryClient = useQueryClient()
+
   const orderCreate = async () => {
     const res = await parselCreate({
       price: totalPrice,
@@ -55,6 +58,8 @@ const useOrderCreate = () => {
       navigate('/fail')
     } else {
       emptyCart()
+      queryClient.invalidateQueries({ queryKey: 'contentful' })
+      queryClient.invalidateQueries({ queryKey: 'orders' })
       // setBoxberryData(undefined)
       navigate('/success')
     }
