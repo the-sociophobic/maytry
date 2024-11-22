@@ -9,6 +9,7 @@ import Plane from './units/Plane'
 // import { useMainPage } from '../../hooks/useContentful'
 
 import HeroImg from '../../assets/images/hero-image.jpg'
+import useContentful from '../../hooks/useContentful'
 
 
 export type FiberSceneProps = {
@@ -19,9 +20,10 @@ export type FiberSceneProps = {
 export const FiberScene: React.FC<FiberSceneProps> = ({
   children
 }) => {
-  // const { data: { } } = useMainPage()
+  const { data: contentful, isLoading } = useContentful()
+  const contentfulHeroImg = contentful?.sites?.[0]?.main_image?.file?.url
 
-  return (
+  return isLoading ? <></> : (
     <div className='Fiber'>
       <Canvas
         style={{ width: '100%', height: '100%' }}
@@ -36,7 +38,7 @@ export const FiberScene: React.FC<FiberSceneProps> = ({
             ratio={0.85} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
           />
         </EffectComposer>
-        <Plane img={HeroImg} />
+        <Plane img={contentfulHeroImg || HeroImg} />
         <ambientLight intensity={1} />
       </Canvas>
       {children &&

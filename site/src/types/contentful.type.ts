@@ -76,7 +76,7 @@ export interface ContentfulColorPriceSizeType extends ContentfulItemClass {
 
 export interface ContentfulSiteType extends ContentfulItemClass {
   title: string
-  main_image: string
+  main_image: ContentfulFile
   header_filter_categories: ContentfulCategoryType[]
   extended_filter_categories: ContentfulCategoryType[]
   main_page_items: CombinedItemType[]
