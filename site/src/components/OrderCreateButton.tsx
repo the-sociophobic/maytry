@@ -15,18 +15,16 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
   disabled
 }) => {
   const { paymentType } = useStore()
-  const { boxberryData } = useStore()
-  const _disabled= !boxberryData || disabled
   const orderCreate = useOrderCreate()
   
   return paymentType === 'Оплата онлайн' ?
     <CloudPaymentsButton
-      disabled={_disabled}
+      disabled={disabled}
     />
     :
     <Button
       black
-      disabled={_disabled}
+      disabled={disabled}
       onClick={orderCreate}
     >
       ЗАКАЗАТЬ

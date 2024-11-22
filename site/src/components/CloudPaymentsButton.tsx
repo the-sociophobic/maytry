@@ -1,9 +1,7 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import useStore from '../hooks/useStore'
 import Button from '../components/Button'
-// import openCloudpayments from '../utils/openCloudpayments'
 import useTotalPrice from '../hooks/useTotalPrice'
 import { printPrice } from '../utils/price'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
@@ -19,8 +17,6 @@ export type CloudPaymentsButtonProps = {
 const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
   disabled
 }) => {
-  const { boxberryData } = useStore()
-
   const totalPrice = useTotalPrice()
   const deliveryPrice = useDeliveryPrice()
   const totalPriceWithBoxberry = totalPrice + deliveryPrice
@@ -34,7 +30,7 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
   return (
     <Button
       black
-      disabled={!boxberryData || disabled}
+      disabled={disabled}
       onClick={() =>
         openCloudpayments({
           amount: totalPriceWithBoxberry,

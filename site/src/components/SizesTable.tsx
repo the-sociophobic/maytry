@@ -32,7 +32,10 @@ const SizesTable: FC<SizesTableProps> = ({
           className='col font-small'
         >
           {column.map(item =>
-            <div className={`text-nowrap ${columnIndex !== 0 && 'text-center'}`}>
+            <div
+              key={item}
+              className={`text-nowrap ${columnIndex !== 0 && 'text-center'}`}
+            >
               {item}
             </div>
           )}

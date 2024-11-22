@@ -32,10 +32,12 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
   const data_not_filled = userFullName.length < 5
     || userPhone.length < 7
     || userEmail.length < 7
-    || userCity.length < 5
     // || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || userZIP.length !== 6 || deliveryPrice === -1))
-    || (deliveryType === 'Доставка до двери' && userAddress.length < 5)
-
+    || (deliveryType === 'Доставка до двери' ?
+      (userAddress.length < 5 || userCity.length < 5)
+      :
+      !boxberryData
+    )
   const showFreeDeliveryOption = deliveryPrice > 0
 
   return (

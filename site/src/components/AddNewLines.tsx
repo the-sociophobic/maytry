@@ -9,10 +9,10 @@ export type AddNewLinesProps = {
 const AddNewLines: FC<AddNewLinesProps> = ({
   string
 }) => {
-  return string.split('\n').map(line => (
-    <>
+  return string.split('\n').map((line, lineIndex) => (
+    <div key={lineIndex}>
       {line}<br />
-    </>
+    </div>
   ))
 }
 

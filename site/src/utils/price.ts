@@ -11,9 +11,9 @@ const getPrice = (item: CombinedItemType) => {
 
 const getSalePrice = (item: CombinedItemType) => {
   if (item.defaultSalePrice !== undefined)
-    return item.defaultPrice
+    return item.defaultSalePrice
   if (item.color_price_size?.[0].salePrice !== undefined)
-    return item.color_price_size?.[0].price
+    return item.color_price_size?.[0].salePrice
   return undefined
 }
 

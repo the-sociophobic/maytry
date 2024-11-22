@@ -2,8 +2,9 @@ import { FC } from 'react'
 
 import CheckoutPanel from '../components/CheckoutPanel'
 import UserDataInputPanel from '../components/UserDataInputPanel'
-import useStore from '../hooks/useStore'
+import useStore, { DeliveryTypeType } from '../hooks/useStore'
 import BoxberryPanel from '../components/BoxberryPanel'
+import Radio from '../components/Radio'
 
 
 export type CheckoutProps = {}
@@ -14,6 +15,7 @@ const Checkout: FC<CheckoutProps> = ({
 }) => {
   const { deliveryType } = useStore()
   const { boxberryData } = useStore()
+  const { setDeliveryType } = useStore()
 
   return (
     <div className='container-2'>
@@ -21,7 +23,19 @@ const Checkout: FC<CheckoutProps> = ({
 
         <div className='col-9 col-md-5 pe-md-5'>
           {deliveryType === 'Пункт выдачи Boxberry' && !boxberryData ?
-            <BoxberryPanel />
+            <>
+              <h4 className='h4 mt-5 mb-4 font-bold'>
+                Доставка
+              </h4>
+
+              <Radio
+                selected={deliveryType}
+                options={['Пункт выдачи Boxberry', 'Доставка до двери']}
+                onChange={(option: string) => setDeliveryType(option as DeliveryTypeType)}
+                className='mb-2'
+              />
+              <BoxberryPanel />
+            </>
             :
             <UserDataInputPanel />
           }
