@@ -119,11 +119,6 @@ const Main: FC<MainProps> = ({ }) => {
       orderSortFn
     )
 
-  const { setShowStartBanner } = useStore()
-  useEffect(() => {
-    setShowStartBanner(true)
-  }, [])
-  
   return (
     <ScrollToConsumer>
       {({ scrollTo }) =>

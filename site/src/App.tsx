@@ -1,4 +1,4 @@
-import { useRef, createContext } from 'react'
+import { useRef, createContext, useEffect } from 'react'
 
 import ProtectedRoutes from './components/ProtectedRoutes'
 import QueryWrapper from './components/QueryWrapper'
@@ -37,6 +37,10 @@ function App() {
     requestAnimationFrame(scrollFrame)
   }
   
+  useEffect(() => {
+    setShowStartBanner(true)
+  }, [])
+
   return (
     <QueryWrapper>
       <div className='App'>
