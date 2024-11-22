@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 
 import { isMobile } from 'react-device-detect'
 
@@ -53,6 +53,12 @@ const Main: FC<MainProps> = ({ }) => {
       setFilterBy([])
   }, [showFilter])
 
+  const [sortNeverClicked, setSortNeverClicked] = useState(true)
+  useEffect(() => {
+    if (sortNeverClicked && sortOrder === 'asc')
+      setSortNeverClicked(false)
+  }, [sortOrder])
+
   const use_extendedFilter = showExtendedFilter || isMobile
 
   useEffect(() => {
@@ -106,7 +112,11 @@ const Main: FC<MainProps> = ({ }) => {
         ?.find(c_p_s =>
           selectedSizesIds.includes(c_p_s.size?.id || ''))
     })
-    .sort(!use_extendedFilter ? orderSortFn : priceSortFn)
+    .sort(use_extendedFilter && !sortNeverClicked ?
+      priceSortFn
+      :
+      orderSortFn
+    )
 
   return (
     <ScrollToConsumer>
