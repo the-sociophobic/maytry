@@ -54,8 +54,9 @@ const Main: FC<MainProps> = ({ }) => {
   }, [showFilter])
 
   const [sortNeverClicked, setSortNeverClicked] = useState(true)
+  const [initialSortOrder] = useState(sortOrder)
   useEffect(() => {
-    if (sortNeverClicked && sortOrder === 'asc')
+    if (sortNeverClicked && sortOrder !== initialSortOrder)
       setSortNeverClicked(false)
   }, [sortOrder])
 
