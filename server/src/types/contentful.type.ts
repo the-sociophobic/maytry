@@ -104,6 +104,7 @@ export interface ContentfulLinkType extends ContentfulItemClass {
 export interface ContentfulPageType extends ContentfulItemClass {
   link: ContentfulLinkType
   title: string
+  image?: ContentfulFile
   text: string
   items: CombinedItemType[]
 }
