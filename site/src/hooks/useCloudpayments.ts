@@ -40,7 +40,7 @@ const useCloudpayments = () => {
       onComplete
     } = props
     const widget = new cp.CloudPayments()
-    widget.pay('auth', // или 'charge'
+    widget.pay('charge', // или 'auth'
       { //options
         publicId: import.meta.env.VITE_CLOUDPAYMENTS_TOKEN, //id из личного кабинета
         description: 'Оплата товаров maytry', //назначение
