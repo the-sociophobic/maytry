@@ -13,6 +13,9 @@ export type StateType = {
   user: null | WebAppAuthObject
   setUser: (user: null | WebAppAuthObject) => void
 
+  adminPassword: string
+  setAdminPassword: (adminPassword: string) => void
+
   hoveredItem: CombinedItemType | undefined
   setHoveredItem: (hoveredItem: CombinedItemType | undefined) => void
 
@@ -106,6 +109,9 @@ const useStore = create(
     set => ({
       user: null,
       setUser: (user: null | WebAppAuthObject) => set({ user }),
+
+      adminPassword: '',
+      setAdminPassword: (adminPassword: string) => set({ adminPassword }),
 
       hoveredItem: undefined,
       setHoveredItem: (hoveredItem: CombinedItemType | undefined) => set({ hoveredItem }),

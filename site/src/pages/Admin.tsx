@@ -3,11 +3,24 @@ import { FC, useState } from 'react'
 import Button from '../components/Button'
 import Orders from '../components/Orders'
 import { get } from '../utils/requests'
+import useStore from '../hooks/useStore'
+import Input from '../components/Input'
 
 
-const Admin: FC = ({
+const Admin: FC = () => {
+  const { adminPassword } = useStore()
 
-}) => {
+  return adminPassword === 'parol' ?
+    <Authotized />
+    :
+    <Unauthotized />
+}
+
+
+export default Admin
+
+
+const Authotized: FC = () => {
   const [dataState, setDataState] = useState('loaded')
   const updateData = async () => {
     setDataState('loading')
@@ -53,5 +66,19 @@ const Admin: FC = ({
   )
 }
 
+const Unauthotized: FC = () => {
+  const { adminPassword } = useStore()
+  const { setAdminPassword } = useStore()
 
-export default Admin
+  return (
+    <div className='container-2'>
+      <div className='row'>
+        <Input
+          label='Админский пароль'
+          value={adminPassword}
+          onChange={setAdminPassword}
+        />
+      </div>
+    </div>
+  )
+}
