@@ -346,7 +346,7 @@ const ExtendedFilter = () => {
       <div className='d-flex flex-column'>
         <p className='m-0 mt-3'>Категории:</p>
         <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
-          {contentful?.categorys
+          {contentful?.sites[0]?.extended_filter_categories
             .map((category, index) =>
               <Button
                 key={index}

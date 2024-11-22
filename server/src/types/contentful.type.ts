@@ -78,6 +78,7 @@ export interface ContentfulSiteType extends ContentfulItemClass {
   title: string
   main_image: string
   header_filter_categories: ContentfulCategoryType[]
+  extended_filter_categories: ContentfulCategoryType[]
   main_page_items: CombinedItemType[]
   footer_links: ContentfulLinkType[]
   pages: ContentfulPageType[]
