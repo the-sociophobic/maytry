@@ -9,6 +9,8 @@ import QuantitySelector from '../components/QuantitySelector'
 import Button from '../components/Button'
 import useTotalPrice from '../hooks/useTotalPrice'
 import ImgDummy from '../components/ImgDummy'
+import yandexGoal from '../utils/yandex/goal'
+import { YANDEX_GOAL } from '../utils/yandex/consts'
 
 
 export type CartProps = {}
@@ -127,6 +129,7 @@ const Cart: FC<CartProps> = ({ }) => {
               <div className='d-flex flex-row justify-content-between py-3'>
                 <LinkWrapper
                   to='/checkout'
+                  onClick={() => yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING_ITEM })}
                 // className='d-inline-block'
                 >
                   <Button black>

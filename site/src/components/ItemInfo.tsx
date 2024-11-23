@@ -112,6 +112,10 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
                       goalId: YANDEX_GOAL.ADD_TO_CART,
                       order_price: currentPrice
                     })
+                    yandexGoal({
+                      goalId: YANDEX_GOAL.ADD_TO_CART_ECOMMERCE,
+                      order_price: currentPrice
+                    })
                     navigate('/cart')
                   }}
                 >

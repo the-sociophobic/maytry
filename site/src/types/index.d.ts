@@ -24,7 +24,7 @@ declare global {
     ym?: (
       YANDEX_METRICA_ID: number,
       actionName: string,
-      TARGET_NAME: number,
+      TARGET_NAME: string,
       options?: {
         order_price: number,
         currency: string

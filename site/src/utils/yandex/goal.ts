@@ -1,4 +1,4 @@
-const YANDEX_METRICA_ID = 95223283
+import { YANDEX_METRICA_ID } from './consts'
 
 
 export type yandexGoalProps = {
@@ -13,7 +13,10 @@ const yandexGoal = ({
 }: yandexGoalProps) => {
   const { ym } = window
 
-  console.log(ym?.(YANDEX_METRICA_ID, 'reachGoal', goalId))
+  if (ym) {
+    ym(YANDEX_METRICA_ID, 'reachGoal', goalId + '')
+    console.log(`Яндекс Метрика ${goalId}`)
+  }
 }
 
 

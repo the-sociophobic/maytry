@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import useStore, { DeliveryTypeType } from '../hooks/useStore'
 import Input from '../components/Input'
@@ -36,8 +36,7 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
   // const { setUserZIP } = useStore()
   const deliveryPeriod = useDeliveryPeriod()
 
-  const { startedFormFilling } = useStore()
-  const { setStartedFormFilling } = useStore()
+  const [startedFormFilling, setStartedFormFilling] = useState(false)
 
   return (
     <>
@@ -103,7 +102,7 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
         value={userFullName}
         onChange={value => {
           if (!startedFormFilling) {
-            yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING })
+            yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING_ORDER })
             setStartedFormFilling(true)
           }
           setUserFullName(value)
