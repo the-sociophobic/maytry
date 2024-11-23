@@ -2,7 +2,7 @@ import { YANDEX_METRICA_ID } from './consts'
 
 
 export type yandexGoalProps = {
-  goalId: number
+  goalId: string
   order_price?: number
 }
 
@@ -14,7 +14,7 @@ const yandexGoal = ({
   const { ym } = window
 
   if (ym) {
-    ym(YANDEX_METRICA_ID, 'reachGoal', goalId + '')
+    ym(YANDEX_METRICA_ID, 'reachGoal', goalId)
     console.log(`Яндекс Метрика ${goalId}`)
   }
 }
