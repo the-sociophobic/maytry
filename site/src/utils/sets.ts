@@ -24,11 +24,17 @@ const toggleInSet = <SetItem>(set: SetItem[], element: SetItem) =>
     :
     [...set, element]
 
+const setsAreEqual = <SetItem>(setA: SetItem[], setB: SetItem[]) =>
+  setA.filter(item => !setB.includes(item)).length === 0
+  &&
+  setB.filter(item => !setA.includes(item)).length === 0
     
+  
 export {
   unionSets,
   intersectionSets,
   relativeComplementSets,
   symmetricDifferenceSets,
   toggleInSet,
+  setsAreEqual
 }

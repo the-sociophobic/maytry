@@ -11,6 +11,7 @@ import {
   ParselCreateRequestTypeFE
 } from './types/boxberry.type'
 import useOrders from './hooks/useOrders'
+import useOrdersIn1C from './hooks/useOrdersIn1C'
 
 
 
@@ -70,6 +71,27 @@ app.get('/orders', async (request: Request, response: Response) => {
 
   response.send(orders)
 })
+
+
+app.get('/orders-in-1C', async (request: Request, response: Response) => {
+  const ordersIn1C = useOrdersIn1C()
+
+  response.send(ordersIn1C)
+})
+export type RegisterIn1CRequestType = {
+  orders: string[]
+}
+app.post('/register-orders-in-1C', async (
+  request: Request<{}, {}, RegisterIn1CRequestType>,
+  response
+) => {
+  const { body: { orders } } = request
+  storage.write('orders-in-1C.json', { orders })
+  
+  const result = storage.read('orders-in-1C.json')
+  response.send(result)
+})
+
 
 
 const init = () => {

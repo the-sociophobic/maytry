@@ -5,6 +5,7 @@ import combineItems from './combineItems'
 import storage from '../../utils/storage'
 import { CombinedItemType } from '../../types/contentful.type'
 import { OrderType } from '../../types/boxberry.type'
+import useOrdersIn1C from '../../hooks/useOrdersIn1C'
 
 
 const useCombinedData = async () => {
@@ -24,7 +25,9 @@ const useCombinedData = async () => {
   }
 
   const orders = useOrders()
-  const itemsWithOrders = substractOrders(items, orders)
+  const ordesIn1C = useOrdersIn1C()
+  const ordersNotIn1C = orders.filter(order => !ordesIn1C.includes(order.order_id))
+  const itemsWithOrders = substractOrders(items, ordersNotIn1C)
 
   return ({
     ...contentful,

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import _ from 'lodash'
 
 import storage from '../storage'
 import {
@@ -49,7 +50,9 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
 
     storage.push('orders.json', {
       order_id,
+      timestamp: (new Date()).getTime(),
       ...props,
+      items: props.items.map(item => _.omit(item, ['description', 'sizes', 'categories', 'images'])),
       parcel
     } as OrderType)
 
@@ -86,7 +89,7 @@ const createParselCreateRequest = (props: ParselCreateRequestTypeBE) => {
       "payment_sum": props.payment_sum,
       "delivery_sum": props.delivery_sum,
       "vid": kurdost ? 2 : 1,
-      "issue": "1",
+      "issue": "2",
       "kurdost": kurdost ?
         {
           "index": props.zip || "",
@@ -135,16 +138,16 @@ const createParselCreateRequest = (props: ParselCreateRequestTypeBE) => {
       "notice": "",
       "weights":
       {
-        "weight": "3000",
+        "weight": "2000",
         "barcode": "",
-        "x": "20",
+        "x": "30",
         "y": "20",
-        "z": "10",
-        "weight2": "1500",
-        "barcode2": "",
-        "x2": "10",
-        "y2": "15",
-        "z2": "10"
+        "z": "20",
+        // "weight2": "1500",
+        // "barcode2": "",
+        // "x2": "10",
+        // "y2": "15",
+        // "z2": "10"
       }
     }
   })

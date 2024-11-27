@@ -1,8 +1,17 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
+
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
+import { useQueryClient } from 'react-query'
 
 import useOrders from '../hooks/useOrders'
 import { printPrice } from '../utils/price'
 import ColorSizes from './ColorSizes'
+import Checkbox from './Checkbox'
+import Button from './Button'
+import useOrdersIn1C from '../hooks/useOrdersIn1C'
+import { setsAreEqual, toggleInSet } from '../utils/sets'
+import { post } from '../utils/requests'
 
 
 export type OrdersProps = {}
@@ -12,14 +21,46 @@ const Orders: FC<OrdersProps> = ({
 
 }) => {
   const { data: orders } = useOrders()
+  const { data: ordersIn1C } = useOrdersIn1C()
+  const [checkedOrders, setCheckedOrders] = useState<string[]>([])
+
+  useEffect(() => {
+    if (ordersIn1C)
+      setCheckedOrders(ordersIn1C)
+  }, [ordersIn1C])
+
+  const queryClient = useQueryClient()
+  const syncOrdersIn1C = async () => {
+    try {
+      await post('/register-orders-in-1C', { orders: checkedOrders })
+      queryClient.invalidateQueries({ queryKey: 'orders-in-1C' })
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
   return (
     <div className='Orders'>
+      <Button
+        black
+        disabled={setsAreEqual(checkedOrders, ordersIn1C || [])}
+        onClick={syncOrdersIn1C}
+      >
+        Сохранить изменения учитываемого ассортимента
+      </Button>
       {orders?.map(order =>
         <div
           key={order.parcel.label}
           className='Orders__item'
         >
+          <div className='col-1'>
+            <Checkbox
+              value={!!checkedOrders?.includes(order.order_id)}
+              onChange={() => setCheckedOrders(toggleInSet(checkedOrders, order.order_id))}
+              label='Не учитывать'
+              disabled={!ordersIn1C}
+            />
+          </div>
           <div className='col-1 mb-2'>
             order_id:<br />
             {order.order_id}
@@ -42,9 +83,24 @@ const Orders: FC<OrdersProps> = ({
               )
             })}
           </div>
+          <div className='col-1'>
+            time:<br />
+            {!order.timestamp ?
+              'не записан'
+              :
+              format(
+                new Date(order.timestamp),
+                'd MMM yyyy, HH:mm:ss',
+                { locale: ru }
+              )
+            }
+          </div>
+
 
           {Object.entries({
             ...order,
+            timestamp: undefined,
+            registered_in_1C: undefined,
             parcel: undefined,
             ...order.parcel,
           })

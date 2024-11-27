@@ -201,16 +201,16 @@ $member-height-inline: 24px
   //   width: 99%
   display: inline-block
   cursor: pointer
-  margin-bottom: 20px
+  margin-bottom: 5px
   @media (hover: hover) and (pointer: fine)
     &:hover .ItemData
       opacity: 1
   .ItemData
     @media (hover: none)
       opacity: 1 !important
-    // opacity: 0
+    opacity: 0
     @extend .row
-    @extend .my-3
+    @extend .my-2
     @extend .px-2
     @extend .justify-content-between
     &__price
@@ -439,3 +439,32 @@ $color-square-size: 12px
     @extend .flex-wrap
     @extend .mb-3
     border-bottom: 1px solid $black
+
+
+.Checkbox
+  padding-left: 16px
+  position: relative
+  cursor: pointer
+  &::before,
+  &::after
+    content: ''
+    position: absolute
+    top: 50%
+    transform: translateY(-50%)
+  &::before
+    left: 0
+    width: 12px
+    height: 12px
+    border: 1px solid black
+  &--disabled
+    &::after
+      content: unset
+    opacity: .5
+  &--checked
+    &::after
+      left: 6px
+      width: 10px
+      height: 16px
+      border-bottom: 2px solid $lef-color
+      border-right: 2px solid $lef-color
+      transform: translate(-45%, -85%) rotate(45deg)

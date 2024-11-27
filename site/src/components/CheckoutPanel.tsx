@@ -92,7 +92,7 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
         selected={paymentType}
         options={[
           'Оплата онлайн',
-          // 'Оплата долями CloudPayments',
+          'Оплата долями CloudPayments',
           'Оплата при получении'
         ]}
         onChange={(option: string) => setPaymentType(option as PaymentTypeType)}

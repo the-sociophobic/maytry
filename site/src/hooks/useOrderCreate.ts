@@ -37,7 +37,7 @@ const useOrderCreate = () => {
   const orderCreate = async () => {
     const res = await parselCreate({
       price: totalPrice,
-      payment_sum: paymentType === 'Оплата онлайн' ? 0 : totalPriceWithBoxberry,
+      payment_sum: paymentType === 'Оплата при получении' ? totalPriceWithBoxberry : 0,
       delivery_sum: deliveryPrice,
 
       pvz_number: kurdost ? undefined : boxberryData?.id || '',

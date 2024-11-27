@@ -5,27 +5,33 @@ import fs from 'fs'
 class storage {
   static createFilePath = (fileName: string) => {
     const filePath = path.join(__dirname, '../../storage/' + fileName)
-  
+
     return filePath
   }
 
-  static read = <T>(fileName: string): T => {
+  static read = <T>(fileName: string) => {
     const filePath = this.createFilePath(fileName)
-    let file: object | any[] | undefined = undefined
-  
-    if (fs.existsSync(filePath))
-      file = JSON.parse(
-        fs.readFileSync(
-          filePath,
-          'utf8'
-        ))
-  
-    return file as T
+    let data: T | undefined = undefined
+
+    if (fs.existsSync(filePath)) {
+      const file = fs.readFileSync(
+        filePath,
+        'utf8'
+      )
+      if (file)
+        data = JSON.parse(
+          fs.readFileSync(
+            filePath,
+            'utf8'
+          ))
+    }
+
+    return data
   }
-  
+
   static write = (fileName: string, dataToSave: object) => {
     const filePath = this.createFilePath(fileName)
-  
+
     fs.writeFile(
       filePath,
       JSON.stringify(dataToSave),
@@ -44,13 +50,24 @@ class storage {
       )
   }
 
-  static push = (fileName: string, dataToPush: object) => {
-    let array = this.read(fileName) as any[] | undefined
+  static push = <T>(fileName: string, dataToPush: T) => {
+    let array = this.read(fileName) as T[] | undefined
 
     if (array)
       array.push(dataToPush)
     else
       array = [dataToPush]
+
+    this.write(fileName, array)
+  }
+
+  static pushArray = <T>(fileName: string, arrayToPush: T[]) => {
+    let array = this.read(fileName) as T[] | undefined
+
+    if (array)
+      array.push(...arrayToPush)
+    else
+      array = [...arrayToPush]
 
     this.write(fileName, array)
   }

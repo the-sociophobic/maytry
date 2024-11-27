@@ -16,12 +16,8 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
 }) => {
   const { paymentType } = useStore()
   const orderCreate = useOrderCreate()
-  
-  return paymentType === 'Оплата онлайн' ?
-    <CloudPaymentsButton
-      disabled={disabled}
-    />
-    :
+
+  return paymentType === 'Оплата при получении' ?
     <Button
       black
       disabled={disabled}
@@ -29,6 +25,10 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
     >
       ЗАКАЗАТЬ
     </Button>
+    :
+    <CloudPaymentsButton
+      disabled={disabled}
+    />
 }
 
 

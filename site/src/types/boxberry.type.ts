@@ -40,6 +40,8 @@ export type ParselCreateRequestTypeFE = Omit<ParselCreateRequestTypeBE, 'order_i
 export type OrderType = ParselCreateRequestTypeFE & {
   order_id: string
   parcel: ParselCreateResponceType
+  timestamp?: number
+  registered_in_1C?: boolean
 }
 
 export type ParselCreateItemType = {

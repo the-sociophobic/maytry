@@ -6,6 +6,7 @@ import Img from '../components/Img'
 import ItemInfo from '../components/ItemInfo'
 import ImgDummy from '../components/ImgDummy'
 import { CombinedItemType } from '../types/contentful.type'
+import Footer from '../components/Footer'
 
 
 export type ItemProps = CombinedItemType
@@ -209,6 +210,7 @@ const Item: FC<ItemProps> = (item) => {
         </div>
 
       </div>
+      <Footer />
     </div>
   )
 }
