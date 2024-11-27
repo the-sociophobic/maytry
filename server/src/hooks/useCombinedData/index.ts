@@ -48,7 +48,7 @@ const substractOrders = (items: CombinedItemType[], orders: OrderType[]) => {
             :
             0
           )
-      ).reduce((a, b) => a + b)
+      ).reduce((a, b) => a + b, 0)
 
       return ({
         ...c_p_s,

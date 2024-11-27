@@ -128,7 +128,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
                 .map((colorSizes, colorSizesIndex) => {
                   const is_color_available = colorSizes?.sizes
                     .map(colorSize => colorSize.max_available > 0)
-                    .reduce((a, b) => a || b)
+                    .reduce((a, b) => a || b, false)
 
                   return (
                     <div
