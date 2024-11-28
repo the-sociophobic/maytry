@@ -89,7 +89,7 @@ const createParselCreateRequest = (props: ParselCreateRequestTypeBE) => {
       "payment_sum": props.payment_sum,
       "delivery_sum": props.delivery_sum,
       "vid": kurdost ? 2 : 1,
-      "issue": "2",
+      "issue": "1",
       "kurdost": kurdost ?
         {
           "index": props.zip || "",
