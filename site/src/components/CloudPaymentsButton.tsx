@@ -34,11 +34,16 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
       onClick={() =>
         openCloudpayments({
           amount: totalPriceWithBoxberry,
-          onSuccess: orderCreate,
+          // onSuccess: orderCreate,
+          onSuccess: (_options) => console.log('onSuccess', _options),
           onFail: () => {
             navigate('/fail')
           },
-          onComplete: () => { },
+          onComplete: (_paymentResult: any, _options: any) => {
+            if (_paymentResult.success)
+              orderCreate()
+            console.log('onComplete', _paymentResult, _options)
+          },
         })
       }
     >

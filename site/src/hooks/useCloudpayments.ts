@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import useStore from './useStore'
+import isProd from '../utils/isProd'
 
 
 export type openCloudpaymentsProps = {
@@ -42,7 +43,10 @@ const useCloudpayments = () => {
     const widget = new cp.CloudPayments()
     widget.pay('charge', // или 'auth'
       { //options
-        publicId: import.meta.env.VITE_CLOUDPAYMENTS_TOKEN, //id из личного кабинета
+        publicId: isProd() ?
+          import.meta.env.VITE_CLOUDPAYMENTS_TOKEN
+          :
+          import.meta.env.VITE_CLOUDPAYMENTS_TEST_TOKEN,
         description: 'Оплата товаров maytry', //назначение
         amount,
         currency: 'RUB', //валюта
