@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import useStore, { DeliveryTypeType } from '../hooks/useStore'
 import Input from '../components/Input'
@@ -32,11 +32,16 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
   const { setUserCity } = useStore()
   const { userAddress } = useStore()
   const { setUserAddress } = useStore()
-  // const { userZIP } = useStore()
-  // const { setUserZIP } = useStore()
+  const { userZIP } = useStore()
+  const { setUserZIP } = useStore()
   const deliveryPeriod = useDeliveryPeriod()
 
   const [startedFormFilling, setStartedFormFilling] = useState(false)
+
+  useEffect(() => {
+    if (deliveryType === 'Доставка до двери')
+      setUserZIP('')
+  }, [deliveryType])
 
   return (
     <>
@@ -60,13 +65,13 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
       </h4>
       {deliveryType === 'Доставка до двери' ?
         <>
-          {/* <Input
+          <Input
             label='Почтовый индекс'
             type='number'
             value={userZIP}
             onChange={setUserZIP}
             className='mb-2'
-          /> */}
+          />
           <Input
             label='Город'
             value={userCity}

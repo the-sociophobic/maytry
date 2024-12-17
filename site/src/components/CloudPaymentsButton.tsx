@@ -7,6 +7,7 @@ import { printPrice } from '../utils/price'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import useOrderCreate from '../hooks/useOrderCreate'
 import useCloudpayments from '../hooks/useCloudpayments'
+import useProceedAfterAddressCheck from '../hooks/useProceedAfterAddressCheck'
 
 
 export type CloudPaymentsButtonProps = {
@@ -21,31 +22,27 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
   const deliveryPrice = useDeliveryPrice()
   const totalPriceWithBoxberry = totalPrice + deliveryPrice
 
+  const proceedAfterAddressCheck = useProceedAfterAddressCheck()
   const orderCreate = useOrderCreate()
-
   const navigate = useNavigate()
-
   const openCloudpayments = useCloudpayments()
+
+  const onClick = () => proceedAfterAddressCheck(() => openCloudpayments({
+    amount: totalPriceWithBoxberry,
+    onSuccess: (_options) => console.log('onSuccess', _options),
+    onFail: () => navigate('/fail'),
+    onComplete: (_paymentResult: any, _options: any) => {
+      if (_paymentResult.success)
+        orderCreate()
+      console.log('onComplete', _paymentResult, _options)
+    },
+  }))
 
   return (
     <Button
       black
       disabled={disabled}
-      onClick={() =>
-        openCloudpayments({
-          amount: totalPriceWithBoxberry,
-          // onSuccess: orderCreate,
-          onSuccess: (_options) => console.log('onSuccess', _options),
-          onFail: () => {
-            navigate('/fail')
-          },
-          onComplete: (_paymentResult: any, _options: any) => {
-            if (_paymentResult.success)
-              orderCreate()
-            console.log('onComplete', _paymentResult, _options)
-          },
-        })
-      }
+      onClick={onClick}
     >
       ОПЛАТИТЬ {printPrice(totalPriceWithBoxberry)}
     </Button>

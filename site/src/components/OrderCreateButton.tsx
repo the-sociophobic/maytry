@@ -4,6 +4,7 @@ import useStore from '../hooks/useStore'
 import useOrderCreate from '../hooks/useOrderCreate'
 import CloudPaymentsButton from './CloudPaymentsButton'
 import Button from './Button'
+import useProceedAfterAddressCheck from '../hooks/useProceedAfterAddressCheck'
 
 
 export type OrderCreateButtonProps = {
@@ -16,12 +17,13 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
 }) => {
   const { paymentType } = useStore()
   const orderCreate = useOrderCreate()
+  const proceedAfterAddressCheck = useProceedAfterAddressCheck()
 
   return paymentType === 'Оплата при получении' ?
     <Button
       black
       disabled={disabled}
-      onClick={orderCreate}
+      onClick={() => proceedAfterAddressCheck(orderCreate)}
     >
       ЗАКАЗАТЬ
     </Button>

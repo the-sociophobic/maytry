@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import useStore, { PaymentTypeType } from '../hooks/useStore'
 import useTotalPrice from '../hooks/useTotalPrice'
@@ -27,18 +27,28 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
   const { userEmail } = useStore()
   const { deliveryType } = useStore()
   const { userAddress } = useStore()
-  // const { userZIP } = useStore()
+  const { userZIP } = useStore()
   const { userCity } = useStore()
+  const { parselCreateError } = useStore()
+  const { setParselCreateError } = useStore()
+
   const data_not_filled = userFullName.length < 5
     || userPhone.length < 7
     || userEmail.length < 7
     // || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || userZIP.length !== 6 || deliveryPrice === -1))
     || (deliveryType === 'Доставка до двери' ?
-      (userAddress.length < 5 || userCity.length < 5)
+      (userAddress.length < 5 || userCity.length < 5 || userZIP.length !== 6)
       :
       !boxberryData
     )
   const showFreeDeliveryOption = deliveryPrice > 0
+
+  useEffect(() => {
+    setParselCreateError(undefined)
+  }, [])
+  useEffect(() => {
+    setParselCreateError(undefined)
+  }, [deliveryType, userZIP, userCity, userAddress])
 
   return (
     <>
@@ -99,6 +109,11 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
         className='mb-5'
       />
 
+      {parselCreateError &&
+        <div className='d-flex flex-row justify-content-between py-2'>
+          ERR: {parselCreateError}
+        </div>
+      }
       <div className='d-flex flex-row justify-content-between py-3'>
         <OrderCreateButton
           disabled={data_not_filled}
