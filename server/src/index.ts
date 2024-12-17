@@ -8,10 +8,12 @@ import deliveryCalculation from './utils/boxberry/deliveryCalculation'
 import useCombinedData from './hooks/useCombinedData'
 import {
   DeliveryCalculationRequestType,
-  ParselCreateRequestTypeFE
+  ParselCreateRequestTypeFE,
+  ParselCreateResponceType
 } from './types/boxberry.type'
 import useOrders from './hooks/useOrders'
 import useOrdersIn1C from './hooks/useOrdersIn1C'
+import sendEmail from './utils/unisender/sendEmail'
 
 
 
@@ -51,9 +53,36 @@ app.post('/parsel-create', async (
   response
 ) => {
   const { body } = request
-  const result = await parselCreate(body)
 
-  response.send(result)
+  let parselCreateRes = undefined
+  try {
+    parselCreateRes = await parselCreate(body)
+  } catch (err) {
+    console.log(err)
+  }
+
+  if (!parselCreateRes)
+    return
+
+  const {
+    parcel,
+    order_id,
+    timestamp,
+    price,
+    items
+  } = parselCreateRes //TODO типы
+
+  const emailRes = await sendEmail({
+    email: body.email,
+    order_id,
+    timestamp,
+    price,
+    items,
+    parcel
+  })
+  console.log(emailRes)
+
+  response.send(parcel)
 })
 
 app.post('/delivery-calculation', async (

@@ -47,16 +47,23 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
       'https://api.boxberry.ru/json.php',
       createParselCreateRequest(parselCreatePropsBE)
     )).data
+    const timestamp = (new Date()).getTime()
 
     storage.push('orders.json', {
       order_id,
-      timestamp: (new Date()).getTime(),
+      timestamp,
       ...props,
       items: props.items.map(item => _.omit(item, ['description', 'sizes', 'categories', 'images'])),
       parcel
     } as OrderType)
 
-    return parcel
+    return ({
+      parcel,
+      order_id,
+      timestamp,
+      price: props.price,
+      items: props.items
+    })
   } catch (err) {
     console.log('parselCreate() error')
     console.log(err)
