@@ -94,6 +94,9 @@ export type StateType = {
 
   parselCreateError: undefined | string
   setParselCreateError: (parselCreateError: undefined | string) => void
+
+  isLoading: boolean
+  setIsLoading: (isLoading: boolean) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -206,6 +209,8 @@ const useStore = create(
       parselCreateError: undefined,
       setParselCreateError: (parselCreateError: undefined | string) => set({ parselCreateError }),
       
+      isLoading: false,
+      setIsLoading: (isLoading: boolean) => set({ isLoading }),
     }),
     {
       name: 'main-storage',

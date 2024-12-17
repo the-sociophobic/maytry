@@ -17,7 +17,7 @@ const useProceedAfterAddressCheck = () => {
   const addressCheck = useAddressCheck()
 
   const proceedAfterAddressCheck = useCallback(
-    async (fn: () => void) => {
+    async (fn: () => Promise<void>) => {
       if (deliveryType === 'Доставка до двери') {
         const addressCheckRes = await addressCheck(userZIP)
 
@@ -34,7 +34,7 @@ const useProceedAfterAddressCheck = () => {
       }
 
       setParselCreateError(undefined)
-      fn()
+      await fn()
     }
   , [deliveryType, userZIP, addressCheck, setParselCreateError])
 

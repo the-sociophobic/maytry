@@ -8,6 +8,7 @@ import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import useOrderCreate from '../hooks/useOrderCreate'
 import useCloudpayments from '../hooks/useCloudpayments'
 import useProceedAfterAddressCheck from '../hooks/useProceedAfterAddressCheck'
+import useStore from '../hooks/useStore'
 
 
 export type CloudPaymentsButtonProps = {
@@ -26,17 +27,25 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
   const orderCreate = useOrderCreate()
   const navigate = useNavigate()
   const openCloudpayments = useCloudpayments()
+  const { setIsLoading } = useStore()
 
-  const onClick = () => proceedAfterAddressCheck(() => openCloudpayments({
-    amount: totalPriceWithBoxberry,
-    onSuccess: (_options) => console.log('onSuccess', _options),
-    onFail: () => navigate('/fail'),
-    onComplete: (_paymentResult: any, _options: any) => {
-      if (_paymentResult.success)
-        orderCreate()
-      console.log('onComplete', _paymentResult, _options)
-    },
-  }))
+  const onClick = () => {
+    proceedAfterAddressCheck(async () => openCloudpayments({
+      amount: totalPriceWithBoxberry,
+      onSuccess: (_options) => console.log('onSuccess', _options),
+      onFail: () => {
+        setIsLoading(false)
+        navigate('/fail')
+      },
+      onComplete: async (_paymentResult: any, _options: any) => {
+        if (_paymentResult.success) {
+          await orderCreate()
+          setIsLoading(false)
+        }
+        console.log('onComplete', _paymentResult, _options)
+      },
+    }))
+  }
 
   return (
     <Button

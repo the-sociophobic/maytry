@@ -18,12 +18,17 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
   const { paymentType } = useStore()
   const orderCreate = useOrderCreate()
   const proceedAfterAddressCheck = useProceedAfterAddressCheck()
+  const { setIsLoading } = useStore()
 
   return paymentType === 'Оплата при получении' ?
     <Button
       black
       disabled={disabled}
-      onClick={() => proceedAfterAddressCheck(orderCreate)}
+      onClick={async () => {
+        setIsLoading(true)
+        await proceedAfterAddressCheck(orderCreate)
+        setIsLoading(false)
+      }}
     >
       ЗАКАЗАТЬ
     </Button>

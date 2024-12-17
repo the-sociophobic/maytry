@@ -3,6 +3,7 @@ import { useRef, createContext, useEffect } from 'react'
 import ProtectedRoutes from './components/ProtectedRoutes'
 import QueryWrapper from './components/QueryWrapper'
 import useStore from './hooks/useStore'
+import Loader from './components/Loader'
 
 
 const {
@@ -14,6 +15,8 @@ export { ScrollToConsumer }
 
 function App() {
   const { setShowStartBanner } = useStore()
+  const { setIsLoading } = useStore()
+  const { isLoading } = useStore()
   const contentRef = useRef<HTMLDivElement>(null)
   const scrollTo = (y: number) => {
     let scrollFrameCount = 0
@@ -39,6 +42,7 @@ function App() {
   
   useEffect(() => {
     setShowStartBanner(true)
+    setIsLoading(false)
   }, [])
 
   return (
@@ -49,6 +53,7 @@ function App() {
             <ProtectedRoutes contentRef={contentRef} />
           </ScrollToProvider>
         </div>
+        {isLoading && <Loader />}
       </div>
     </QueryWrapper>
   )
