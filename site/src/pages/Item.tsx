@@ -7,6 +7,7 @@ import ItemInfo from '../components/ItemInfo'
 import ImgDummy from '../components/ImgDummy'
 import { CombinedItemType } from '../types/contentful.type'
 import Footer from '../components/Footer'
+import useSyncCart from '../hooks/useSyncCart'
 
 
 export type ItemProps = CombinedItemType
@@ -95,6 +96,9 @@ const Item: FC<ItemProps> = (item) => {
   const onTouchEnd = () => {
     setCurrentMobileImage(-1)
   }
+
+  const syncCart = useSyncCart()
+  syncCart()
 
   return (
     <div

@@ -11,6 +11,7 @@ import useTotalPrice from '../hooks/useTotalPrice'
 import ImgDummy from '../components/ImgDummy'
 import yandexGoal from '../utils/yandex/goal'
 import { YANDEX_GOAL } from '../utils/yandex/consts'
+import useSyncCart from '../hooks/useSyncCart'
 
 
 export type CartProps = {}
@@ -20,6 +21,9 @@ const Cart: FC<CartProps> = ({ }) => {
   const { itemsInCart } = useStore()
   const { setItemInCart } = useStore()
   const totalPrice = useTotalPrice()
+
+  const syncCart = useSyncCart()
+  syncCart()
 
   return (
     <div className='Cart'>
@@ -92,7 +96,7 @@ const Cart: FC<CartProps> = ({ }) => {
                         </div>
                         <div className='d-flex flex-row mb-2'>
                           <div className='Cart__items__item__DETAILS'>
-                            КОЛИЧЕСТВО
+                            КОЛИЧЕСТВО {item.color?.colorCode}
                           </div>
                           <div className='Cart__items__item__NAME'>
                             <QuantitySelector
