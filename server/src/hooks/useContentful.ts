@@ -7,6 +7,7 @@ import {
   ContentfulItemType,
   ContentfulLinkType,
   ContentfulPageType,
+  ContentfulPriceItemColorType,
   ContentfulSiteType,
   ContentfulSizeType,
 } from '../types/contentful.type'
@@ -30,6 +31,7 @@ const useContentful = async (): Promise<ContentfulDataTypeBE> => {
     ...(await getContentfulData<{ sizes: ContentfulSizeType[] }>('size')),
     ...(await getContentfulData<{ links: ContentfulLinkType[] }>('link')),
     ...(await getContentfulData<{ pages: ContentfulPageType[] }>('page')),
+    ...(await getContentfulData<{ priceItemColors: ContentfulPriceItemColorType[] }>('priceItemColor')),
   }
 
   storage.write('contentful.json', contentful_data)

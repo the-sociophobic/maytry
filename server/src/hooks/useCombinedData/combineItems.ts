@@ -24,6 +24,7 @@ const combineItems = async (
       items: contentfulItems,
       colors: contentfulColors,
       sizes: contentfulSizes,
+      priceItemColors,
     } = contentful
     const items_combined = new Map<string, CombinedItemType>()
 
@@ -69,12 +70,17 @@ const combineItems = async (
         }
       }
 
+      const price_item_color = priceItemColors.find(p_i_c =>
+        p_i_c.color.name === color.name &&
+        p_i_c.item.name.includes(item_number)
+      )
+
       const color_price_size: ContentfulColorPriceSizeType = {
         id: oneC_item.code,
         name: '',
         item_number,
         color,
-        price: item_in_map.defaultPrice || oneC_item.price,
+        price: price_item_color?.price || item_in_map.defaultPrice || oneC_item.price,
         salePrice: item_in_map.defaultSalePrice,
         size,
         max_available: oneC_item.count,

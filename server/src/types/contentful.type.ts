@@ -31,6 +31,7 @@ export type ContentfulDataTypeBE = {
   sizes: ContentfulSizeType[]
   links: ContentfulLinkType[]
   pages: ContentfulPageType[]
+  priceItemColors: ContentfulPriceItemColorType[]
 }
 
 export type ContentfulDataTypeFE = Omit<ContentfulDataTypeBE, 'items'> & {
@@ -107,4 +108,11 @@ export interface ContentfulPageType extends ContentfulItemClass {
   image?: ContentfulFile
   text: string
   items: CombinedItemType[]
+}
+
+export interface ContentfulPriceItemColorType extends ContentfulItemClass {
+  name?: string
+  item: ContentfulItemType
+  color: ContentfulColorType
+  price: number
 }
