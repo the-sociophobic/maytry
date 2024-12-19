@@ -37,20 +37,17 @@ const sendEmail = async ({
 
   const order_details = items
     .map((item, itemIndex) =>
-      `${itemIndex + 1}. ${item.name} – ${item.quantity} × ${printPrice(item.salePrice || item.price)} = ${printPrice((item.salePrice || item.price) * item.quantity)}`)
+      `${itemIndex + 1}. ${item.name} ${item.color?.name} ${item.size.name} – ${item.quantity} × ${printPrice(item.salePrice || item.price)} = ${printPrice((item.salePrice || item.price) * item.quantity)}`)
     .join('<br>')
 
   const body = `
-Вы успешно оформили заказ #${parcel.track} от ${order_date} на сумму ${price} рублей.
+Вы успешно оформили заказ #${order_id} от ${order_date} на сумму ${price} рублей:
 <br><br>
 ${order_details}
 <br><br>
-В ближайшее время заказ будет передан службе доставки Boxberry. Номер заказа ${parcel.track} - ваш трек-номер. Информацию обо всех перемещениях посылки можно найти на сайте службы доставки: https://boxberry.ru/tracking-page Как только посылка поступит в пункт выдачи (курьеру), вам придёт СМС-уведомление на указанный вами номер. 
+Трек-номер вашего заказа: ${parcel.track}. В ближайшее время мы передадим его службе доставки Boxberry. Информацию обо всех перемещениях посылки можно найти на сайте службы доставки: https://boxberry.ru/tracking-page. Как только посылка поступит в пункт выдачи / курьеру, вам придёт СМС-уведомление на указанный при оформлении номер.
 <br><br>
-При возникновении каких-либо вопросов свяжитесь с нами любым удобным для вас способом: https://maytry.ru/faq#contacts
-<br><br>
-С уважением,<br>
-Команда Maytry
+При возникновении каких-либо вопросов свяжитесь с нами любым удобным для вас способом: https://maytry.ru/#/contacts
 `
 
   let res
@@ -63,7 +60,7 @@ ${order_details}
         email,
         sender_name: 'maytry',
         sender_email: 'order@maytry.ru',
-        subject: 'Заказ оформлен',
+        subject: `Ваш заказ Maytry #${order_id} успешно оформлен`,
         body,
         list_id: 9 // получен из getLists
       })
