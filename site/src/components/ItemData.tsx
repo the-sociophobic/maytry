@@ -3,7 +3,7 @@ import { FC } from 'react'
 import ColorSizes from './ColorSizes'
 import parseColors from '../utils/parseColors'
 import Price from './Price'
-import { getPrice, getSalePrice } from '../utils/price'
+import { getInterval } from '../utils/price'
 import { CombinedItemType } from '../types/contentful.type'
 
 
@@ -11,8 +11,7 @@ export type ItemDataProps = CombinedItemType
 
 
 const ItemData: FC<ItemDataProps> = (item) => {
-  const price = getPrice(item)
-  const salePrice = getSalePrice(item)
+  const interval = getInterval(item)
   const {
     name,
     color_price_size,
@@ -28,8 +27,7 @@ const ItemData: FC<ItemDataProps> = (item) => {
           </div>
           <Price
             className='mb-3'
-            price={price}
-            salePrice={salePrice}
+            interval={interval}
           />
         </div>
       </div>

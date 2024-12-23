@@ -38,10 +38,22 @@ const printPrice = (price: number) => {
   ).join('') + ' RUB'
 }
 
+const getInterval = (item: CombinedItemType) => {
+  if (!item.color_price_size)
+    return [0, 0] as [number, number]
+
+  const prices = item.color_price_size
+    .map(c_p_s => c_p_s.price)
+    .sort((a, b) => a - b)
+  
+  return [prices[0], prices[prices.length - 1]] as [number, number]
+}
+
 
 export {
   getPrice,
   getSalePrice,
   getCurrentPrice,
-  printPrice
+  printPrice,
+  getInterval
 }
