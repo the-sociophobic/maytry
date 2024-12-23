@@ -44,9 +44,14 @@ const getInterval = (item: CombinedItemType) => {
 
   const prices = item.color_price_size
     .map(c_p_s => c_p_s.price)
+  const salePrice = getSalePrice(item)
+  const pricesWithSalePrice = (salePrice ? [...prices, salePrice] : prices)
     .sort((a, b) => a - b)
-  
-  return [prices[0], prices[prices.length - 1]] as [number, number]
+
+  return [
+    pricesWithSalePrice[0],
+    pricesWithSalePrice[pricesWithSalePrice.length - 1]
+  ] as [number, number]
 }
 
 

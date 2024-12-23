@@ -30,7 +30,7 @@ const Price: FC<PriceProps> = ({
     </div>
     :
     <div className='className'>
-      {`${interval[0]} ${interval[0] !== interval[1] ? ` - ${interval[1]}` : ''}`}
+      {`${printPrice(interval[0])} ${interval[0] !== interval[1] ? ` - ${printPrice(interval[1])}` : ''}`}
     </div>
 }
 
