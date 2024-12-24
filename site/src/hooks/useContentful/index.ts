@@ -1,23 +1,32 @@
 import { useQuery } from 'react-query'
 
 import { get } from '../../utils/requests'
-// import { getContentfulData } from './helpers'
 import {
+  ContentfulCategoryType,
+  ContentfulColorPriceSizeType,
+  ContentfulColorType,
   ContentfulDataTypeFE,
-  // ContentfulSiteType
+  ContentfulImageType,
+  ContentfulItemType,
+  ContentfulLinkType,
+  ContentfulPageType,
+  ContentfulPriceItemColorType,
+  ContentfulSiteType,
+  ContentfulSizeType,
 } from '../../types/contentful.type'
 
 
 export const emptyContentful = {
-  sites: [],
-  items: [],
-  images: [],
-  itemColorPrices: [],
-  colors: [],
-  categorys: [],
-  sizes: [],
-  links: [],
-  pages: [],
+  sites: [] as ContentfulSiteType[],
+  items: [] as ContentfulItemType[],
+  images: [] as ContentfulImageType[],
+  itemColorPrices: [] as ContentfulColorPriceSizeType[],
+  colors: [] as ContentfulColorType[],
+  categorys: [] as ContentfulCategoryType[],
+  sizes: [] as ContentfulSizeType[],
+  links: [] as ContentfulLinkType[],
+  pages: [] as ContentfulPageType[],
+  priceItemColors: [] as ContentfulPriceItemColorType[]
 }
 
 

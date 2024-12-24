@@ -14,10 +14,7 @@ import sortMap from '../utils/sortMap'
 import { CombinedItemType } from '../types/contentful.type'
 
 
-export type MainProps = {}
-
-
-const Main: FC<MainProps> = ({ }) => {
+const Main: FC = () => {
   const { showStartBanner } = useStore()
 
   const { showSearch } = useStore()

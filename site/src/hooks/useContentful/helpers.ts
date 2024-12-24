@@ -18,7 +18,7 @@ const getContentfulItems = async <T>(client: any, options?: object): Promise<T> 
       const parsedItem: any = parseItem(item)
       const type = parsedItem.type + 's'
 
-      itemsByType.hasOwnProperty(type) ?
+      itemsByType.prototype.hasOwnProperty.call(type) ?
         itemsByType[type].push(parsedItem)
         :
         itemsByType[type] = [parsedItem]
