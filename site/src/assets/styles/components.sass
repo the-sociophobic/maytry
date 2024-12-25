@@ -212,8 +212,9 @@ $member-height-inline: 24px
       opacity: 1 !important
     opacity: 0
     @extend .row
-    @extend .my-2
-    @extend .px-2
+    @extend .mt-2
+    @extend .mb-3
+    // @extend .px-2
     @extend .justify-content-between
     &__price
       min-width: 75px
@@ -470,3 +471,33 @@ $color-square-size: 12px
       border-bottom: 2px solid $lef-color
       border-right: 2px solid $lef-color
       transform: translate(-45%, -85%) rotate(45deg)
+
+
+.Dropdown
+  border-top: 1px solid $delimeter-gray
+  border-bottom: 1px solid $delimeter-gray
+  margin-right: 10px
+  &--opened
+  &__header
+    font-size: 14px
+    font-weight: bold
+    padding: 10px 0 10px 0
+    position: relative
+    &::after
+      position: absolute
+      content: ''
+      top: 30%
+      right: 0
+      width: 10px
+      height: 10px
+      border-right: 1px solid $black
+      border-bottom: 1px solid $black
+      transition: transform .15s
+      transform: translate(-50%) rotate(45deg)
+      .Dropdown--opened &
+        transform: translate(-50%) rotate(-135deg)
+  &__body
+    transition: height .25s
+    overflow: hidden
+    &__wrapper
+      padding: 10px 0 10px 0

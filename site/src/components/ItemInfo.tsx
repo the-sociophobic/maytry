@@ -15,6 +15,7 @@ import AddNewLines from './AddNewLines'
 import yandexGoal from '../utils/yandex/goal'
 import { YANDEX_GOAL } from '../utils/yandex/consts'
 import SizesTable from './SizesTable'
+import Dropdown from './Dropdown'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -154,9 +155,19 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
 
         </div>
 
-        <div className='ItemPage__description'>
+        <SizesTable
+          className='mt-4 mb-5'
+          sizes={item.sizes}
+        />
+
+        <div className='ItemPage__description desktop-only'>
           <AddNewLines string={item.description} />
-          <SizesTable sizes={item.sizes} />
+        </div>
+
+        <div className='ItemPage__description mobile-only'>
+          <Dropdown header={`Описание ${item.name}`}>
+            <AddNewLines string={item.description} />
+          </Dropdown>
         </div>
 
       </div>

@@ -5,11 +5,13 @@ import { SizesTableType } from '../types/contentful.type'
 
 export type SizesTableProps = {
   sizes?: SizesTableType
+  className?: string
 }
 
 
 const SizesTable: FC<SizesTableProps> = ({
-  sizes
+  sizes,
+  className
 }) => {
   if (!sizes)
     return <></>
@@ -25,7 +27,7 @@ const SizesTable: FC<SizesTableProps> = ({
   }
 
   return (
-    <div className='row mt-5 mb-2'>
+    <div className={`row ${className}`}>
       {columns.map((column, columnIndex) =>
         <div
           key={columnIndex}

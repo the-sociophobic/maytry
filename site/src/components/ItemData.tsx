@@ -22,7 +22,7 @@ const ItemData: FC<ItemDataProps> = (item) => {
     <div className='ItemData'>
       <div className='col-sm-9 col-md-4'>
         <div className='ItemData__price'>
-          <div className='mb-3'>
+          <div className='mb-2'>
             {name}
           </div>
           <Price
