@@ -12,14 +12,10 @@ import Button from './Button'
 import useOrdersIn1C from '../hooks/useOrdersIn1C'
 import { setsAreEqual, toggleInSet } from '../utils/sets'
 import { post } from '../utils/requests'
+import useStore from '../hooks/useStore'
 
 
-export type OrdersProps = {}
-
-
-const Orders: FC<OrdersProps> = ({
-
-}) => {
+const Orders: FC = () => {
   const { data: orders } = useOrders()
   const { data: ordersIn1C } = useOrdersIn1C()
   const [checkedOrders, setCheckedOrders] = useState<string[]>([])
@@ -39,16 +35,31 @@ const Orders: FC<OrdersProps> = ({
     }
   }
 
+  const { hideCheckedOrders } = useStore()
+  const { setHideCheckedOrders } = useStore()
+
   return (
     <div className='Orders'>
-      <Button
-        black
-        disabled={setsAreEqual(checkedOrders, ordersIn1C || [])}
-        onClick={syncOrdersIn1C}
-      >
-        Сохранить изменения учитываемого ассортимента
-      </Button>
-      {orders?.map(order =>
+      <div className='d-flex flex-row'>
+        <Button
+          black
+          disabled={setsAreEqual(checkedOrders, ordersIn1C || [])}
+          onClick={syncOrdersIn1C}
+          className='me-3'
+        >
+          Сохранить изменения учитываемого ассортимента
+        </Button>
+        <Button
+          black
+          onClick={() => setHideCheckedOrders(!hideCheckedOrders)}
+        >
+          {`${hideCheckedOrders ? 'Отображать' : 'Скрывать'} учитываемый ассортимент`}
+        </Button>
+      </div>
+      {orders
+      ?.filter(order =>
+        hideCheckedOrders && !!checkedOrders?.includes(order.order_id) ? false : true)
+      ?.map(order =>
         <div
           key={order.parcel.label}
           className='Orders__item'

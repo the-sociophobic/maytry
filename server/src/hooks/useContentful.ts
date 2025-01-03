@@ -34,7 +34,7 @@ const useContentful = async (): Promise<ContentfulDataTypeBE> => {
     ...(await getContentfulData<{ priceItemColors: ContentfulPriceItemColorType[] }>('priceItemColor')),
   }
 
-  storage.write('contentful.json', contentful_data)
+  await storage.write('contentful.json', contentful_data)
 
   return contentful_data
 }

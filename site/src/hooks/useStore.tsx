@@ -97,6 +97,9 @@ export type StateType = {
 
   isLoading: boolean
   setIsLoading: (isLoading: boolean) => void
+
+  hideCheckedOrders: boolean
+  setHideCheckedOrders: (hideCheckedOrders: boolean) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -211,6 +214,10 @@ const useStore = create(
       
       isLoading: false,
       setIsLoading: (isLoading: boolean) => set({ isLoading }),
+
+      hideCheckedOrders: true,
+      setHideCheckedOrders: (hideCheckedOrders: boolean) => set({ hideCheckedOrders }),
+      
     }),
     {
       name: 'main-storage',

@@ -9,11 +9,11 @@ import useCombinedData from './hooks/useCombinedData'
 import {
   DeliveryCalculationRequestType,
   ParselCreateRequestTypeFE,
-  ParselCreateResponceType
 } from './types/boxberry.type'
 import useOrders from './hooks/useOrders'
 import useOrdersIn1C from './hooks/useOrdersIn1C'
 import sendEmail from './utils/unisender/sendEmail'
+import { incrementLastOrderId } from './hooks/useLastOrderId'
 
 
 
@@ -29,9 +29,9 @@ app.get('/data', async (request: Request, response: Response) => {
 })
 
 app.get('/update-data', async (request: Request, response: Response) => {
-  storage.delete('combined.json')
-  storage.delete('contentful.json')
-  storage.delete('1C.json')
+  await storage.delete('combined.json')
+  await storage.delete('contentful.json')
+  await storage.delete('1C.json')
   setTimeout(async () => {
     await useCombinedData()
 
@@ -40,7 +40,7 @@ app.get('/update-data', async (request: Request, response: Response) => {
 })
 
 app.get('/update-combined-data', async (request: Request, response: Response) => {
-  storage.delete('combined.json')
+  await storage.delete('combined.json')
   setTimeout(async () => {
     await useCombinedData()
 
@@ -55,14 +55,31 @@ app.post('/parsel-create', async (
   const { body } = request
 
   let parselCreateRes = undefined
-  try {
-    parselCreateRes = await parselCreate(body)
-  } catch (err) {
-    console.log(err)
+  let numberOfTries = 5
+  let parselCreateError
+
+  while (numberOfTries-- > 0) {
+    try {
+      parselCreateRes = await parselCreate(body)
+      break
+    } catch (err) {
+      parselCreateError = err
+      if (err instanceof Error && err.message.match(/Значение «.*» для «Номер заказа в ИМ» уже занято\./)) {
+        console.log(parselCreateError)
+        await incrementLastOrderId(55)
+        continue
+      } else {
+        break
+      }
+    }
   }
 
-  if (!parselCreateRes)
+  console.log(parselCreateRes)
+  console.log(parselCreateError)
+  if (!parselCreateRes) {
+    response.send(parselCreateError)
     return
+  }
 
   const {
     parcel,
@@ -71,6 +88,7 @@ app.post('/parsel-create', async (
     price,
     items
   } = parselCreateRes //TODO типы
+  console.log(parselCreateRes)
 
   const emailRes = await sendEmail({
     email: body.email,
@@ -80,7 +98,6 @@ app.post('/parsel-create', async (
     items,
     parcel
   })
-  console.log(emailRes)
 
   response.send(parcel)
 })
@@ -115,7 +132,7 @@ app.post('/register-orders-in-1C', async (
   response
 ) => {
   const { body: { orders } } = request
-  storage.write('orders-in-1C.json', { orders })
+  await storage.write('orders-in-1C.json', { orders })
   
   const result = storage.read('orders-in-1C.json')
   response.send(result)

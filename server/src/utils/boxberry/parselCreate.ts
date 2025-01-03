@@ -7,26 +7,17 @@ import {
   ParselCreateRequestTypeBE,
   ParselCreateResponceType,
   ParselCreateErrorType,
-  OrderType
+  OrderType,
+  ParselCreateResponceTypeBE
 } from '../../types/boxberry.type'
+import useLastOrderId, { incrementLastOrderId } from '../../hooks/useLastOrderId'
 
 
-const { BOXBERRY_INITIAL_ORDER_ID } = process.env
-
-
-const parselCreate = async (props: ParselCreateRequestTypeFE) => {
-  let orders = storage.read('boxberry-order-id.json') as { last_order_id: number } | undefined
-  let last_order_id: string | number | undefined
-
-  if (!orders) {
-    last_order_id = parseInt(BOXBERRY_INITIAL_ORDER_ID)
-  } else {
-    last_order_id = parseInt(orders.last_order_id + '') + 1
-  }
-  orders = { last_order_id }
-  storage.write('boxberry-order-id.json', orders)
-  
-  // const order_id = 'lev-order-' + last_order_id
+const parselCreate = async (
+  props: ParselCreateRequestTypeFE
+): Promise<ParselCreateResponceTypeBE> => {
+  await incrementLastOrderId()
+  const last_order_id = await useLastOrderId()
   const order_id = '' + last_order_id
   const parselCreatePropsBE = {
     ...props,
@@ -47,9 +38,13 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
       'https://api.boxberry.ru/json.php',
       createParselCreateRequest(parselCreatePropsBE)
     )).data
+
+    if ((parcel as ParselCreateErrorType).err)
+      throw new Error((parcel as ParselCreateErrorType).err)
+    
     const timestamp = (new Date()).getTime()
 
-    storage.push('orders.json', {
+    await storage.push('orders.json', {
       order_id,
       timestamp,
       ...props,
@@ -58,15 +53,14 @@ const parselCreate = async (props: ParselCreateRequestTypeFE) => {
     } as OrderType)
 
     return ({
-      parcel,
+      parcel: parcel as ParselCreateResponceType,
       order_id,
       timestamp,
       price: props.price,
       items: props.items
     })
   } catch (err) {
-    console.log('parselCreate() error')
-    console.log(err)
+    throw new Error(err)
   }
 }
 

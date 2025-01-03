@@ -1,6 +1,8 @@
 import path from 'path'
 import fs from 'fs'
 
+import delay from './delay'
+
 
 class storage {
   static createFilePath = (fileName: string) => {
@@ -29,7 +31,7 @@ class storage {
     return data
   }
 
-  static write = (fileName: string, dataToSave: object) => {
+  static write = async (fileName: string, dataToSave: object) => {
     const filePath = this.createFilePath(fileName)
 
     fs.writeFile(
@@ -38,9 +40,11 @@ class storage {
       { flag: 'w+' },
       err => err && console.log(err)
     )
+    
+    await delay()
   }
 
-  static delete = (fileName: string) => {
+  static delete = async (fileName: string) => {
     const filePath = this.createFilePath(fileName)
 
     if (fs.existsSync(filePath))
@@ -48,9 +52,11 @@ class storage {
         filePath,
         err => err && console.log(err)
       )
+
+    await delay()
   }
 
-  static push = <T>(fileName: string, dataToPush: T) => {
+  static push = async <T>(fileName: string, dataToPush: T) => {
     let array = this.read(fileName) as T[] | undefined
 
     if (array)
@@ -59,9 +65,11 @@ class storage {
       array = [dataToPush]
 
     this.write(fileName, array)
+
+    await delay()
   }
 
-  static pushArray = <T>(fileName: string, arrayToPush: T[]) => {
+  static pushArray = async <T>(fileName: string, arrayToPush: T[]) => {
     let array = this.read(fileName) as T[] | undefined
 
     if (array)
@@ -70,6 +78,8 @@ class storage {
       array = [...arrayToPush]
 
     this.write(fileName, array)
+
+    await delay()
   }
 }
 

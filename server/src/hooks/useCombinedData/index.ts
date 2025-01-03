@@ -19,7 +19,7 @@ const useCombinedData = async () => {
     const { items_from_1C } = await use1C()
     const downloaded_items = await combineItems(contentful, items_from_1C)
   
-    storage.write('combined.json', downloaded_items)
+    await storage.write('combined.json', downloaded_items)
 
     items = downloaded_items
   }

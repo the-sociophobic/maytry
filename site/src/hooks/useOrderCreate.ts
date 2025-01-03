@@ -51,7 +51,7 @@ const useOrderCreate = () => {
 
       items: itemsInCart,
     })
-    console.log(res)
+    console.log('parselCreate', res)
 
     if ((res as ParselCreateErrorType).err) {
       setParselCreateError((res as ParselCreateErrorType).err)

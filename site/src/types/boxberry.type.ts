@@ -59,6 +59,14 @@ export type ParselCreateResponceType = {
   label: string
 }
 
+export type ParselCreateResponceTypeBE = {
+  parcel: ParselCreateResponceType
+  order_id: string
+  timestamp: number
+  price: number,
+  items: ItemInCartType[]
+}
+
 export type ParselCreateErrorType = {
   err: string
 }

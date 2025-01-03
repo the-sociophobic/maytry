@@ -22,7 +22,7 @@ const use1C = async () => {
 
   const items_from_1C = await get1C()
 
-  storage.write('1C.json', { items_from_1C })
+  await storage.write('1C.json', { items_from_1C })
 
   return ({
     items_from_1C
