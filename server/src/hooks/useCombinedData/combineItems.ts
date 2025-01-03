@@ -70,7 +70,7 @@ const combineItems = async (
         }
       }
 
-      const price_item_color = priceItemColors.find(p_i_c =>
+      const price_item_color = priceItemColors?.find(p_i_c =>
         p_i_c.color.name === color.name &&
         p_i_c.item.name.includes(item_number)
       )
