@@ -13,7 +13,9 @@ import {
 import useOrders from './hooks/useOrders'
 import useOrdersIn1C from './hooks/useOrdersIn1C'
 import sendEmail from './utils/unisender/sendEmail'
+import listMessages from './utils/unisender/listMessages'
 import { incrementLastOrderId } from './hooks/useLastOrderId'
+import checkEmail from './utils/unisender/checkEmail'
 
 
 
@@ -99,6 +101,8 @@ app.post('/parsel-create', async (
     parcel
   })
 
+  console.log(emailRes)
+
   response.send(parcel)
 })
 
@@ -138,7 +142,13 @@ app.post('/register-orders-in-1C', async (
   response.send(result)
 })
 
+app.get('/testt', async (request: Request, response: Response) => {
+  // const res = await listMessages('2024-12-25 00:00', '2025-01-01 00:00')
+  const res = await checkEmail([35242423201, 35242423202])
+  console.log(res)
 
+  response.send(res)
+})
 
 const init = () => {
   app.listen(SERVER_PORT, () => console.log(`Running on port ${SERVER_PORT}`))
