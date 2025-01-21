@@ -43,13 +43,14 @@ const parselCreate = async (
       throw new Error((parcel as ParselCreateErrorType).err)
     
     const timestamp = (new Date()).getTime()
-
+    const { promocode } = props
     await storage.push('orders.json', {
       order_id,
       timestamp,
       ...props,
       items: props.items.map(item => _.omit(item, ['description', 'sizes', 'categories', 'images'])),
-      parcel
+      parcel,
+      promocode
     } as OrderType)
 
     return ({

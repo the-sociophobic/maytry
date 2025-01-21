@@ -6,6 +6,7 @@ import useTotalPrice from '../hooks/useTotalPrice'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import parselCreate from '../utils/boxberry/parselCreate'
 import { ParselCreateErrorType } from '../types/boxberry.type'
+import useTotalPriceWithPromocode from './useTotalPriceWithPromocode'
 
 
 const useOrderCreate = () => {
@@ -21,9 +22,9 @@ const useOrderCreate = () => {
   const { emptyCart } = useStore()
   const { itemsInCart } = useStore()
 
-  const totalPrice = useTotalPrice()
   const deliveryPrice = useDeliveryPrice()
-  const totalPriceWithBoxberry = totalPrice + deliveryPrice
+  const totalPriceWithPromocode = useTotalPriceWithPromocode()
+  const totalPriceWithPromocodeAndBoxberry = totalPriceWithPromocode + deliveryPrice
 
   const navigate = useNavigate()
 
@@ -31,13 +32,14 @@ const useOrderCreate = () => {
   const { userPhone } = useStore()
   const { userEmail } = useStore()
   const { setParselCreateError } = useStore()
+  const { currentPromocode } = useStore()
 
   const queryClient = useQueryClient()
 
   const orderCreate = async () => {
     const res = await parselCreate({
-      price: totalPrice,
-      payment_sum: paymentType === 'Оплата при получении' ? totalPriceWithBoxberry : 0,
+      price: totalPriceWithPromocode,
+      payment_sum: paymentType === 'Оплата при получении' ? totalPriceWithPromocodeAndBoxberry : 0,
       delivery_sum: deliveryPrice,
 
       pvz_number: kurdost ? undefined : boxberryData?.id || '',
@@ -50,6 +52,7 @@ const useOrderCreate = () => {
       email: userEmail,
 
       items: itemsInCart,
+      promocode: currentPromocode
     })
     console.log('parselCreate', res)
 

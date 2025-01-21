@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 
 import { WebAppAuthObject } from '../utils/auth'
 import { BoxberryDataType } from '../types/boxberry.type'
-import { CombinedItemType } from '../types/contentful.type'
+import { CombinedItemType, ContentfulPromocodeType } from '../types/contentful.type'
 import { ItemInCartType } from '../types/site.type'
 
 
@@ -100,6 +100,9 @@ export type StateType = {
 
   hideCheckedOrders: boolean
   setHideCheckedOrders: (hideCheckedOrders: boolean) => void
+
+  currentPromocode: ContentfulPromocodeType | undefined
+  setCurrentPromocode: (currentPromocode: ContentfulPromocodeType | undefined) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -218,6 +221,8 @@ const useStore = create(
       hideCheckedOrders: true,
       setHideCheckedOrders: (hideCheckedOrders: boolean) => set({ hideCheckedOrders }),
       
+      currentPromocode: undefined,
+      setCurrentPromocode: (currentPromocode: ContentfulPromocodeType | undefined) => set({ currentPromocode }),
     }),
     {
       name: 'main-storage',

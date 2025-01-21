@@ -32,6 +32,7 @@ export type ContentfulDataTypeBE = {
   links: ContentfulLinkType[]
   pages: ContentfulPageType[]
   priceItemColors: ContentfulPriceItemColorType[]
+  promocodes: ContentfulPromocodeType[]
 }
 
 export type ContentfulDataTypeFE = Omit<ContentfulDataTypeBE, 'items'> & {
@@ -115,4 +116,10 @@ export interface ContentfulPriceItemColorType extends ContentfulItemClass {
   item: ContentfulItemType
   color: ContentfulColorType
   price: number
+}
+
+export interface ContentfulPromocodeType extends ContentfulItemClass {
+  name: string
+  amount: number
+  type: boolean
 }

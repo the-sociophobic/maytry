@@ -27,7 +27,7 @@ const getCurrentPrice = (item: CombinedItemType) => {
 }
 
 const printPrice = (price: number) => {
-  const priceString = price + ''
+  const priceString = price.toFixed(0) + ''
   const priceStringOffset = priceString.length % 3 - 1
 
   return [...priceString].map((char, charIndex) =>

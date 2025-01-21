@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import useStore, { PaymentTypeType } from '../hooks/useStore'
 import useTotalPrice from '../hooks/useTotalPrice'
@@ -6,21 +6,19 @@ import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import { printPrice } from '../utils/price'
 import OrderCreateButton from './OrderCreateButton'
 import Radio from './Radio'
+import Input from './Input'
+import Button from './Button'
+import useContentful from '../hooks/useContentful'
+import useTotalPriceWithPromocode from '../hooks/useTotalPriceWithPromocode'
 
 
-export type CheckoutPanelProps = {}
-
-
-const CheckoutPanel: FC<CheckoutPanelProps> = ({
-
-}) => {
+const CheckoutPanel: FC = () => {
   const { paymentType } = useStore()
   const { setPaymentType } = useStore()
   const { itemsInCart } = useStore()
   const { boxberryData } = useStore()
   const totalPrice = useTotalPrice()
   const deliveryPrice = useDeliveryPrice()
-  const totalPriceWithBoxberry = totalPrice + deliveryPrice
 
   const { userFullName } = useStore()
   const { userPhone } = useStore()
@@ -32,7 +30,7 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
   const { parselCreateError } = useStore()
   const { setParselCreateError } = useStore()
 
-  const data_not_filled = userFullName.length < 5
+  const data_not_filled = userFullName.length < 3
     || userPhone.length < 7
     || userEmail.length < 7
     // || (deliveryType === 'Доставка до двери' && (userAddress.length < 5 || userZIP.length !== 6 || deliveryPrice === -1))
@@ -43,6 +41,8 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
     )
   const showFreeDeliveryOption = deliveryPrice > 0
 
+  console.log(data_not_filled)
+  
   useEffect(() => {
     setParselCreateError(undefined)
   }, [])
@@ -50,8 +50,62 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
     setParselCreateError(undefined)
   }, [deliveryType, userZIP, userCity, userAddress])
 
+  const { currentPromocode } = useStore()
+  const { setCurrentPromocode } = useStore()
+  const [promocodeText, setPromocodeText] = useState(currentPromocode ? currentPromocode.name : '')
+  const { data: contentful } = useContentful()
+  const promocodes = contentful?.promocodes
+
+  const [promocodeError, setPromocodeError] = useState('')
+  const updatePromocodeText = (newPromocodeText: string) => {
+    setPromocodeText(newPromocodeText)
+    setPromocodeError('')
+  }
+  const applyPromocode = () => {
+    const promocode = promocodes
+      ?.find(promocode => promocode.name.localeCompare(promocodeText) === 0)
+
+    if (promocode) {
+      setCurrentPromocode(promocode)
+    } else {
+      setPromocodeError(`Промокод "${promocodeText}" не найден`)
+      setCurrentPromocode(undefined)
+    }
+  }
+
+  // const totalPriceWithBoxberry = totalPrice + deliveryPrice
+  const totalPriceWithPromocode = useTotalPriceWithPromocode()
+  const totalPriceWithPromocodeAndBoxberry = totalPriceWithPromocode + deliveryPrice
+  const promocodePrint = currentPromocode && printPrice(
+    currentPromocode.type ? (totalPrice - totalPriceWithPromocode) : currentPromocode.amount
+  )
+
   return (
     <>
+      {promocodeError.length > 0 &&
+        <div className='d-flex flex-row justify-content-between py-2'>
+          ERR: {promocodeError}
+        </div>
+      }
+      <div className='d-flex flex-row align-items-end'>
+        <Input
+          value={promocodeText}
+          onChange={updatePromocodeText}
+          label='ПРОМОКОД'
+        />
+        <Button
+          black
+          onClick={applyPromocode}
+        >
+          ПРИМЕНИТЬ
+        </Button>
+      </div>
+      {currentPromocode &&
+        <div className='d-flex flex-row justify-content-between py-2'>
+          Применён промокод "{currentPromocode.name}" на скидку {currentPromocode.amount}{currentPromocode.type ? '%' : '₽'}
+        </div>
+      }
+
       <h4 className='h4 mt-5 mb-4 font-bold'>
         Товары
       </h4>
@@ -83,6 +137,16 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
           }
         </div>
       </div>
+      {currentPromocode &&
+        <div className='d-flex flex-row mt-3'>
+          <div className=''>
+            Скидка по промокоду {currentPromocode.type && `${currentPromocode.amount}%`}.
+          </div>
+          <div className='ms-auto'>
+            -{promocodePrint}
+          </div>
+        </div>
+      }
       <div
         className='d-flex flex-row mt-3'
       >
@@ -90,7 +154,7 @@ const CheckoutPanel: FC<CheckoutPanelProps> = ({
           Итого.
         </div>
         <div className='ms-auto'>
-          {printPrice(totalPriceWithBoxberry)}
+          {printPrice(totalPriceWithPromocodeAndBoxberry)}
         </div>
       </div>
 

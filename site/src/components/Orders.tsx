@@ -13,6 +13,7 @@ import useOrdersIn1C from '../hooks/useOrdersIn1C'
 import { setsAreEqual, toggleInSet } from '../utils/sets'
 import { post } from '../utils/requests'
 import useStore from '../hooks/useStore'
+import { ContentfulPromocodeType } from '../types/contentful.type'
 
 
 const Orders: FC = () => {
@@ -115,7 +116,7 @@ const Orders: FC = () => {
             parcel: undefined,
             ...order.parcel,
           })
-            .filter(([key]) => !['order_id', 'items'].includes(key))
+            .filter(([key]) => !['order_id', 'items', 'timestamp'].includes(key))
             .map(([key, value]) =>
               <div
                 key={key}
@@ -125,7 +126,10 @@ const Orders: FC = () => {
                 {['price', 'payment_sum', 'delivery_sum'].includes(key) ?
                   printPrice(value as number)
                   :
-                  value as string
+                  key === 'promocode' ?
+                    (value as ContentfulPromocodeType).name
+                    :
+                    value as string
                 }
               </div>
             )}

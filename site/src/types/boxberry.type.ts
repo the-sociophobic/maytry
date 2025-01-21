@@ -1,3 +1,4 @@
+import { ContentfulPromocodeType } from './contentful.type'
 import { ItemInCartType } from './site.type'
 
 
@@ -31,6 +32,8 @@ export type ParselCreateRequestTypeBE = {
   email: string
 
   items: ParselCreateItemType[]
+
+  promocode?: ContentfulPromocodeType
 }
 
 export type ParselCreateRequestTypeFE = Omit<ParselCreateRequestTypeBE, 'order_id' | 'items'> & {
@@ -42,6 +45,7 @@ export type OrderType = ParselCreateRequestTypeFE & {
   parcel: ParselCreateResponceType
   timestamp?: number
   registered_in_1C?: boolean
+  promocode?: ContentfulPromocodeType
 }
 
 export type ParselCreateItemType = {

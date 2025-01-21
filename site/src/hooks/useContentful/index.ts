@@ -11,6 +11,7 @@ import {
   ContentfulLinkType,
   ContentfulPageType,
   ContentfulPriceItemColorType,
+  ContentfulPromocodeType,
   ContentfulSiteType,
   ContentfulSizeType,
 } from '../../types/contentful.type'
@@ -26,7 +27,8 @@ export const emptyContentful = {
   sizes: [] as ContentfulSizeType[],
   links: [] as ContentfulLinkType[],
   pages: [] as ContentfulPageType[],
-  priceItemColors: [] as ContentfulPriceItemColorType[]
+  priceItemColors: [] as ContentfulPriceItemColorType[],
+  promocodes: [] as ContentfulPromocodeType[]
 }
 
 
