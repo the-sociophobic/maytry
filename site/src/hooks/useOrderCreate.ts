@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
 
 import useStore from '../hooks/useStore'
-import useTotalPrice from '../hooks/useTotalPrice'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import parselCreate from '../utils/boxberry/parselCreate'
 import { ParselCreateErrorType } from '../types/boxberry.type'
@@ -33,6 +32,7 @@ const useOrderCreate = () => {
   const { userEmail } = useStore()
   const { setParselCreateError } = useStore()
   const { currentPromocode } = useStore()
+  const { setCurrentPromocode } = useStore()
 
   const queryClient = useQueryClient()
 
@@ -61,6 +61,7 @@ const useOrderCreate = () => {
       navigate('/fail')
     } else {
       emptyCart()
+      setCurrentPromocode(undefined)
       queryClient.invalidateQueries({ queryKey: 'contentful' })
       queryClient.invalidateQueries({ queryKey: 'orders' })
       // setBoxberryData(undefined)
