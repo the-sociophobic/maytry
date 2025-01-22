@@ -65,7 +65,7 @@ const Cart: FC<CartProps> = ({ }) => {
                         to={'/item/' + item.link}
                         className='w-50 d-block'
                       >
-                        <ImgDummy img={item.images[0]} />
+                        <ImgDummy img={item.images?.[0]} />
                       </LinkWrapper>
                     </div>
                     <div className='Cart__items__item__NAME-DETAILS-PRICE'>

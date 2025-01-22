@@ -42,7 +42,8 @@ const getContentfulDataWithoutBadItems = async () => {
     .filter(item =>
       !item.color_price_size ||
       item.color_price_size?.length === 0 ||
-      item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size)
+      item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size) ||
+      !item.images
     )
     .map(item => item.id)
   const filteredData = {

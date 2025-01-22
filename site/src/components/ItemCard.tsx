@@ -21,7 +21,7 @@ const ItemCard: FC<ItemCardProps> = (item) => {
       onMouseLeave={() => setHoveredItem(undefined)}
     >
       <ImgDummy
-        img={item.images[0]}
+        img={item.images?.[0]}
         className='w-100'
       />
       {/* <div className='ItemCard__name'>

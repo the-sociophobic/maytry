@@ -33,7 +33,7 @@ app.get('/data', async (request: Request, response: Response) => {
 app.get('/update-data', async (request: Request, response: Response) => {
   await storage.delete('combined.json')
   await storage.delete('contentful.json')
-  // await storage.delete('1C.json')
+  await storage.delete('1C.json')
   setTimeout(async () => {
     await useCombinedData()
 

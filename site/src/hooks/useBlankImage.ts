@@ -6,7 +6,7 @@ const useBlankImage = () => {
   let image: string | undefined
 
   for (const item of (contentful?.items || [])) {
-    if (item.images[0]?.small?.file?.url)
+    if (item.images?.[0]?.small?.file?.url)
       image = item.images[0].small.file.url
   }
 
