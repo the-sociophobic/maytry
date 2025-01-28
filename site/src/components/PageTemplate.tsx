@@ -30,10 +30,12 @@ const PageTemplate: FC<PageTemplateProps> = ({
       </div>
       <div className='row mb-5'>
         <div className='col'>
-          <AddNewLines
-            string={text}
-            className='h3'
-          />
+          {text &&
+            <AddNewLines
+              string={text}
+              className='h3'
+            />
+          }
         </div>
       </div>
     </div>
