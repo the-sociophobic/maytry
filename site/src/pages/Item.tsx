@@ -14,6 +14,9 @@ export type ItemProps = CombinedItemType
 
 
 const HEADER_HEIGHT = 70
+const IMAGE_WIDTH = 1120
+const IMAGE_HEIGHT = 1680
+const CONTAINER_PADDINGS = 30
 
 
 const Item: FC<ItemProps> = (item) => {
@@ -47,7 +50,7 @@ const Item: FC<ItemProps> = (item) => {
 
       setCurrentImage(currentImageIndex)
     })
-  }, [scrollAreaRef.current])
+  }, [scrollAreaRef])
 
   const scrollToImage = (imageIndex: number) => {
     if (!imagesAreaRef.current || !scrollAreaRef.current)
@@ -100,6 +103,10 @@ const Item: FC<ItemProps> = (item) => {
   const syncCart = useSyncCart()
   syncCart()
 
+  const desiredImageWidth = (document.body.clientHeight - HEADER_HEIGHT) / IMAGE_HEIGHT * IMAGE_WIDTH
+  const containerInnerWidth = document.body.clientWidth - CONTAINER_PADDINGS
+  const desktopImageColWidth = zoomed ? '66.5%' : `${desiredImageWidth / containerInnerWidth * 100}%`
+
   return (
     <div
       ref={scrollAreaRef}
@@ -110,11 +117,14 @@ const Item: FC<ItemProps> = (item) => {
         <div className='row desktop-only'>
           {!zoomed &&
             <ItemInfo
-              className='col-3'
+              className='col pe-5'
               {...item}
             />
           }
-          <div className={`col-${zoomed ? 6 : 3}`}>
+          <div style={{
+            flex: '0 0 auto',
+            width: desktopImageColWidth
+          }}>
             <div
               ref={imagesAreaRef}
               className='d-flex flex-column'
@@ -142,7 +152,7 @@ const Item: FC<ItemProps> = (item) => {
               }
             </div>
           </div>
-          <div className='col-3'>
+          <div className='col'>
             <div
               className='position-sticky'
               style={{
