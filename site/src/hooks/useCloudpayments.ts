@@ -5,6 +5,7 @@ import isProd from '../utils/isProd'
 
 export type openCloudpaymentsProps = {
   amount: number
+  description: string
   onSuccess: (_options: any) => void
   onFail: (_reason: any, _options: any) => void
   onComplete: (_paymentResult: any, _options: any) => void
@@ -36,6 +37,7 @@ const useCloudpayments = () => {
     const { cp } = window
     const {
       amount,
+      description,
       onSuccess,
       onFail,
       onComplete
@@ -47,7 +49,7 @@ const useCloudpayments = () => {
           import.meta.env.VITE_CLOUDPAYMENTS_TOKEN
           :
           import.meta.env.VITE_CLOUDPAYMENTS_TEST_TOKEN,
-        description: 'Оплата товаров maytry', //назначение
+        description,
         amount,
         currency: 'RUB', //валюта
         // accountId: 'user@example.com', //идентификатор плательщика (необязательно)

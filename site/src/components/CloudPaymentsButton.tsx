@@ -28,10 +28,15 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
   const navigate = useNavigate()
   const openCloudpayments = useCloudpayments()
   const { setIsLoading } = useStore()
+  const { itemsInCart } = useStore()
+  const itemsList = itemsInCart
+    .map(item => `${item.name} (${item.color?.name} ${item.size.name}) × ${item.quantity}`)
+    .join(', ')
 
   const onClick = () => {
     proceedAfterAddressCheck(async () => openCloudpayments({
       amount: totalPriceWithBoxberry,
+      description: itemsList,
       onSuccess: (_options) => console.log('onSuccess', _options),
       onFail: () => {
         setIsLoading(false)

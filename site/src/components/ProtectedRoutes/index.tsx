@@ -13,12 +13,7 @@ import Redirect from '../Redirect'
 import { ContentfulDataTypeFE } from '../../types/contentful.type'
 
 
-export type ProtectedRoutesProps = {
-  contentRef: React.RefObject<HTMLDivElement>
-}
-
-
-const ProtectedRoutes: React.FC<ProtectedRoutesProps> = () => {
+const ProtectedRoutes: React.FC = () => {
   const { user } = useStore()
   const { data: contentful } = useContentful()
 

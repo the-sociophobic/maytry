@@ -43,19 +43,30 @@ const Main: FC = () => {
   useEffect(() => {
     if (!showSearch)
       setSearchString('')
-  }, [showSearch])
+  }, [
+    showSearch,
+    setSearchString
+  ])
 
   useEffect(() => {
     if (!showFilter)
       setFilterBy([])
-  }, [showFilter])
+  }, [
+    showFilter,
+    setFilterBy
+  ])
 
   const [sortNeverClicked, setSortNeverClicked] = useState(true)
   const [initialSortOrder] = useState(sortOrder)
   useEffect(() => {
     if (sortNeverClicked && sortOrder !== initialSortOrder)
       setSortNeverClicked(false)
-  }, [sortOrder])
+  }, [
+    sortNeverClicked,
+    sortOrder,
+    initialSortOrder,
+    setSortNeverClicked
+  ])
 
   const use_extendedFilter = showExtendedFilter || isMobile
 
@@ -66,7 +77,13 @@ const Main: FC = () => {
       setSelectedColorIds([])
       setSelectedSizesIds([])
     }
-  }, [showExtendedFilter])
+  }, [
+    use_extendedFilter,
+    setPriceFrom,
+    setPriceTo,
+    setSelectedColorIds,
+    setSelectedSizesIds
+  ])
 
   const { data: contentful } = useContentful()
   const orderSortFn = sortMap(contentful?.sites?.[0]?.main_page_items || [])
@@ -115,13 +132,16 @@ const Main: FC = () => {
       :
       orderSortFn
     )
-
+    
   return (
     <ScrollToConsumer>
-      {({ scrollTo }) =>
+      {({ scrollTo, contentRef }) =>
         <div className='container-2'>
-          {showStartBanner &&
-            <FiberScene>
+          {(showStartBanner && contentRef) &&
+            <FiberScene
+              contentRef={contentRef}
+              catalogRef={catalogRef}
+            >
               <Button
                 transparent
                 medium

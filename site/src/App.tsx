@@ -1,4 +1,4 @@
-import { useRef, createContext, useEffect } from 'react'
+import { useRef, createContext, useEffect, RefObject } from 'react'
 
 import ProtectedRoutes from './components/ProtectedRoutes'
 import QueryWrapper from './components/QueryWrapper'
@@ -6,10 +6,17 @@ import useStore from './hooks/useStore'
 import Loader from './components/Loader'
 
 
+export type ScrollToContextType = {
+  scrollTo: (_y: number) => void
+  contentRef?: RefObject<HTMLDivElement>
+}
 const {
   Provider: ScrollToProvider,
   Consumer: ScrollToConsumer
-} = createContext({ scrollTo: (_y: number) => { } })
+} = createContext<ScrollToContextType>({
+  scrollTo: (_y: number) => { },
+  contentRef: undefined
+})
 
 export { ScrollToConsumer }
 
@@ -43,14 +50,20 @@ function App() {
   useEffect(() => {
     setShowStartBanner(true)
     setIsLoading(false)
-  }, [])
+  }, [
+    setShowStartBanner,
+    setIsLoading
+  ])
 
   return (
     <QueryWrapper>
       <div className='App'>
         <div className='content' ref={contentRef}>
-          <ScrollToProvider value={{ scrollTo }}>
-            <ProtectedRoutes contentRef={contentRef} />
+          <ScrollToProvider value={{
+            scrollTo,
+            contentRef
+          }}>
+            <ProtectedRoutes />
           </ScrollToProvider>
         </div>
         {isLoading && <Loader />}

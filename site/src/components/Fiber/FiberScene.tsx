@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, RefObject, useEffect } from 'react'
 
 import * as THREE from 'three'
 import { Canvas } from '@react-three/fiber'
@@ -10,18 +10,39 @@ import Plane from './units/Plane'
 
 import HeroImg from '../../assets/images/hero-image.jpg'
 import useContentful from '../../hooks/useContentful'
+import useStore from '../../hooks/useStore'
 
 
 export type FiberSceneProps = {
+  contentRef: RefObject<HTMLDivElement>
+  catalogRef: RefObject<HTMLDivElement>
   children?: ReactNode
 }
 
 
 export const FiberScene: React.FC<FiberSceneProps> = ({
+  contentRef,
+  catalogRef,
   children
 }) => {
   const { data: contentful, isLoading } = useContentful()
   const contentfulHeroImg = contentful?.sites?.[0]?.main_image?.file?.url
+
+  const { setShowStartBanner } = useStore()
+
+  useEffect(() => {
+    const scrollEventHandler = () => {
+      if (!contentRef.current || !catalogRef.current)
+        return
+      if (contentRef.current?.scrollTop > catalogRef.current?.offsetTop)
+        setShowStartBanner(false)
+    }
+
+    if (contentRef.current)
+      contentRef.current.addEventListener('scroll', scrollEventHandler)
+
+    return () => window.removeEventListener('scroll', scrollEventHandler)
+  }, [contentRef, catalogRef, setShowStartBanner])
 
   return isLoading ? <></> : (
     <div className='Fiber'>

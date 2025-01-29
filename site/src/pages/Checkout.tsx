@@ -7,12 +7,7 @@ import BoxberryPanel from '../components/BoxberryPanel'
 import Radio from '../components/Radio'
 
 
-export type CheckoutProps = {}
-
-
-const Checkout: FC<CheckoutProps> = ({
-
-}) => {
+const Checkout: FC = () => {
   const { deliveryType } = useStore()
   const { boxberryData } = useStore()
   const { setDeliveryType } = useStore()
