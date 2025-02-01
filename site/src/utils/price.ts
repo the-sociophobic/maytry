@@ -1,4 +1,5 @@
-import { CombinedItemType } from '../types/contentful.type'
+import { CombinedItemType, ContentfulPromocodeType } from '../types/contentful.type'
+import { ItemInCartType } from '../types/site.type'
 
 
 const getPrice = (item: CombinedItemType) => {
@@ -54,11 +55,29 @@ const getInterval = (item: CombinedItemType) => {
   ] as [number, number]
 }
 
+const calculateItemSubtotalPrice = ((item: ItemInCartType) =>
+  (item.salePrice || item.price) * item.quantity
+)
+
+const calculatePromocodePrice = (price: number, promocode: ContentfulPromocodeType) => {
+  let calculatedPrice = price
+
+  if (promocode.type) {
+    calculatedPrice *= (1 - (promocode.amount / 100))
+  } else {
+    calculatedPrice -= promocode.amount
+  }
+
+  return calculatedPrice
+}
+
 
 export {
   getPrice,
   getSalePrice,
   getCurrentPrice,
   printPrice,
-  getInterval
+  getInterval,
+  calculateItemSubtotalPrice,
+  calculatePromocodePrice
 }

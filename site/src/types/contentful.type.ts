@@ -122,4 +122,5 @@ export interface ContentfulPromocodeType extends ContentfulItemClass {
   name: string
   amount: number
   type: boolean
+  items?: ContentfulItemType[]
 }

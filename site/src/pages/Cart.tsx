@@ -14,10 +14,7 @@ import { YANDEX_GOAL } from '../utils/yandex/consts'
 import useSyncCart from '../hooks/useSyncCart'
 
 
-export type CartProps = {}
-
-
-const Cart: FC<CartProps> = ({ }) => {
+const Cart: FC = () => {
   const { itemsInCart } = useStore()
   const { setItemInCart } = useStore()
   const totalPrice = useTotalPrice()
@@ -37,20 +34,20 @@ const Cart: FC<CartProps> = ({ }) => {
             <>
               <div className='Cart__header'>
                 <div className='Cart__header__IMG'>
-                  IMG
+                  ФОТО
                 </div>
                 <div className='Cart__header__DETAILS'>
-                  DETAILS
+                  ИНФО
                 </div>
                 <div className='Cart__header__NAME'>
                 </div>
                 {/* <div className='Cart__header__REMOVE'>
                 </div> */}
                 <div className='Cart__header__PRICE'>
-                  PRICE
+                  ЦЕНА
                 </div>
                 <div className='Cart__header__SUBTOTAL'>
-                  SUBTOTAL
+                  ПОДЦЕНА
                 </div>
               </div>
 
@@ -96,7 +93,7 @@ const Cart: FC<CartProps> = ({ }) => {
                         </div>
                         <div className='d-flex flex-row mb-2'>
                           <div className='Cart__items__item__DETAILS'>
-                            КОЛИЧЕСТВО {item.color?.colorCode}
+                            КОЛИЧЕСТВО
                           </div>
                           <div className='Cart__items__item__NAME'>
                             <QuantitySelector
@@ -123,7 +120,7 @@ const Cart: FC<CartProps> = ({ }) => {
 
               <div className='d-flex flex-row justify-content-between py-3'>
                 <div className=''>
-                  TOTAL
+                  ИТОГО
                 </div>
                 <div className=''>
                   {printPrice(totalPrice)}

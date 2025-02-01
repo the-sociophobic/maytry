@@ -10,6 +10,7 @@ import Input from './Input'
 import Button from './Button'
 import useContentful from '../hooks/useContentful'
 import useTotalPriceWithPromocode from '../hooks/useTotalPriceWithPromocode'
+import countableModels from '../utils/countable/models'
 
 
 const CheckoutPanel: FC = () => {
@@ -41,8 +42,6 @@ const CheckoutPanel: FC = () => {
     )
   const showFreeDeliveryOption = deliveryPrice > 0
 
-  console.log(data_not_filled)
-  
   useEffect(() => {
     setParselCreateError(undefined)
   }, [])
@@ -82,11 +81,6 @@ const CheckoutPanel: FC = () => {
 
   return (
     <>
-      {promocodeError.length > 0 &&
-        <div className='d-flex flex-row justify-content-between py-2'>
-          ERR: {promocodeError}
-        </div>
-      }
       <div className='d-flex flex-row align-items-end'>
         <Input
           value={promocodeText}
@@ -100,9 +94,14 @@ const CheckoutPanel: FC = () => {
           ПРИМЕНИТЬ
         </Button>
       </div>
+      {promocodeError.length > 0 &&
+        <div className='d-flex flex-row justify-content-between py-2'>
+          ERR: {promocodeError}
+        </div>
+      }
       {currentPromocode &&
         <div className='d-flex flex-row justify-content-between py-2'>
-          Применён промокод "{currentPromocode.name}" на скидку {currentPromocode.amount}{currentPromocode.type ? '%' : '₽'}
+          Применён промокод "{currentPromocode.name}" на скидку {currentPromocode.amount}{currentPromocode.type ? '%' : '₽'} {!currentPromocode?.items ? '' : `для ${countableModels(currentPromocode.items.length)} ${currentPromocode.items.map(item => item.link).join(', ')}`}
         </div>
       }
 
