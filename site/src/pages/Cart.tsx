@@ -26,7 +26,7 @@ const Cart: FC = () => {
     <div className='Cart'>
       <div className='container-2'>
         <div className='row'>
-          <div className='col col-lg-6'>
+          <div className='col col-xl-6'>
             <h3 className='h3 mb-5'>
               Корзина
             </h3>
@@ -61,7 +61,7 @@ const Cart: FC = () => {
                       <div className='Cart__items__item__IMG'>
                         <LinkWrapper
                           to={'/item/' + item.link}
-                          className='w-50 d-block'
+                          className='d-block'
                         >
                           <ImgDummy img={item.images?.[0]} />
                         </LinkWrapper>
