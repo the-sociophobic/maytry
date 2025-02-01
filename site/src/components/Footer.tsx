@@ -29,7 +29,11 @@ const Footer: FC<FooterProps> = ({ }) => {
             )}
           </div>
           <div className='col-sm-10 col-md-5'>
-            © 2024 by @the_sociophobic
+            2025 Сайт – <LinkWrapper to='https://Леф.рф' className='text-black'>
+              <Button className='p-0 d-inline'>
+                Леф.рф
+              </Button>
+            </LinkWrapper>
           </div>
         </div>
       </div>

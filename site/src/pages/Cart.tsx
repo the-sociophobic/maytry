@@ -26,122 +26,123 @@ const Cart: FC = () => {
     <div className='Cart'>
       <div className='container-2'>
         <div className='row'>
-          <h3 className='h3 mb-5'>
-            Корзина
-          </h3>
+          <div className='col col-lg-6'>
+            <h3 className='h3 mb-5'>
+              Корзина
+            </h3>
 
-          {itemsInCart.length === 0 ? 'Пусто' :
-            <>
-              <div className='Cart__header'>
-                <div className='Cart__header__IMG'>
-                  ФОТО
-                </div>
-                <div className='Cart__header__DETAILS'>
-                  ИНФО
-                </div>
-                <div className='Cart__header__NAME'>
-                </div>
-                {/* <div className='Cart__header__REMOVE'>
-                </div> */}
-                <div className='Cart__header__PRICE'>
-                  ЦЕНА
-                </div>
-                <div className='Cart__header__SUBTOTAL'>
-                  ПОДЦЕНА
-                </div>
-              </div>
-
-              <div className='Cart__items'>
-                {itemsInCart.map(item =>
-                  <div
-                    key={item.id}
-                    className='Cart__items__item'
-                  >
-                    <div className='Cart__items__item__IMG'>
-                      <LinkWrapper
-                        to={'/item/' + item.link}
-                        className='w-50 d-block'
-                      >
-                        <ImgDummy img={item.images?.[0]} />
-                      </LinkWrapper>
-                    </div>
-                    <div className='Cart__items__item__NAME-DETAILS-PRICE'>
-                      <div className='Cart__items__item__NAME-DETAILS'>
-                        <div className='d-flex flex-row mb-2'>
-                          <div className='Cart__items__item__DETAILS'>
-                            ИМЯ
-                          </div>
-                          <div className='Cart__items__item__NAME'>
-                            {item.name}
-                          </div>
-                          {/* <div className='Cart__items__item__REMOVE'>
-                            <Button onClick={() => setItemInCart(item, 0)}>
-                              УДАЛИТЬ
-                            </Button>
-                          </div> */}
-                        </div>
-                        <div className='d-flex flex-row mb-2'>
-                          <div className='Cart__items__item__DETAILS'>
-                            ЦВЕТ И РАЗМЕР
-                          </div>
-                          <div className='Cart__items__item__NAME'>
-                            <ColorSizes
-                              color={item.color}
-                              sizes={[item.size]}
-                            />
-                          </div>
-                        </div>
-                        <div className='d-flex flex-row mb-2'>
-                          <div className='Cart__items__item__DETAILS'>
-                            КОЛИЧЕСТВО
-                          </div>
-                          <div className='Cart__items__item__NAME'>
-                            <QuantitySelector
-                              value={item.quantity}
-                              onChange={quantity => setItemInCart(item, quantity)}
-                              max={item.max_available}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className='Cart__items__item__PRICE'>
-                        <Price
-                          price={item.price}
-                          salePrice={item.salePrice}
-                        />
-                      </div>
-                    </div>
-                    <div className='Cart__items__item__SUBTOTAL'>
-                      {item.quantity} × {printPrice(item.salePrice || item.price)} = {printPrice((item.salePrice || item.price) * item.quantity)}
-                    </div>
+            {itemsInCart.length === 0 ? 'Пусто' :
+              <>
+                <div className='Cart__header'>
+                  <div className='Cart__header__IMG'>
+                    ФОТО
                   </div>
-                )}
-              </div>
-
-              <div className='d-flex flex-row justify-content-between py-3'>
-                <div className=''>
-                  ИТОГО
+                  <div className='Cart__header__DETAILS'>
+                    ИНФО
+                  </div>
+                  <div className='Cart__header__NAME'>
+                  </div>
+                  {/* <div className='Cart__header__REMOVE'>
+                  </div> */}
+                  <div className='Cart__header__PRICE'>
+                    ЦЕНА
+                  </div>
+                  <div className='Cart__header__SUBTOTAL'>
+                    ПОДИТОГ
+                  </div>
                 </div>
-                <div className=''>
-                  {printPrice(totalPrice)}
+
+                <div className='Cart__items'>
+                  {itemsInCart.map(item =>
+                    <div
+                      key={item.id}
+                      className='Cart__items__item'
+                    >
+                      <div className='Cart__items__item__IMG'>
+                        <LinkWrapper
+                          to={'/item/' + item.link}
+                          className='w-50 d-block'
+                        >
+                          <ImgDummy img={item.images?.[0]} />
+                        </LinkWrapper>
+                      </div>
+                      <div className='Cart__items__item__NAME-DETAILS-PRICE'>
+                        <div className='Cart__items__item__NAME-DETAILS'>
+                          <div className='d-flex flex-row mb-2'>
+                            <div className='Cart__items__item__DETAILS'>
+                              ИМЯ
+                            </div>
+                            <div className='Cart__items__item__NAME'>
+                              {item.name}
+                            </div>
+                            {/* <div className='Cart__items__item__REMOVE'>
+                              <Button onClick={() => setItemInCart(item, 0)}>
+                                УДАЛИТЬ
+                              </Button>
+                            </div> */}
+                          </div>
+                          <div className='d-flex flex-row mb-2'>
+                            <div className='Cart__items__item__DETAILS'>
+                              ЦВЕТ И РАЗМЕР
+                            </div>
+                            <div className='Cart__items__item__NAME'>
+                              <ColorSizes
+                                color={item.color}
+                                sizes={[item.size]}
+                              />
+                            </div>
+                          </div>
+                          <div className='d-flex flex-row mb-2'>
+                            <div className='Cart__items__item__DETAILS'>
+                              КОЛИЧЕСТВО
+                            </div>
+                            <div className='Cart__items__item__NAME'>
+                              <QuantitySelector
+                                value={item.quantity}
+                                onChange={quantity => setItemInCart(item, quantity)}
+                                max={item.max_available}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className='Cart__items__item__PRICE'>
+                          <Price
+                            price={item.price}
+                            salePrice={item.salePrice}
+                          />
+                        </div>
+                      </div>
+                      <div className='Cart__items__item__SUBTOTAL'>
+                        {item.quantity} × {printPrice(item.salePrice || item.price)} = {printPrice((item.salePrice || item.price) * item.quantity)}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              <div className='d-flex flex-row justify-content-between py-3'>
-                <LinkWrapper
-                  to='/checkout'
-                  onClick={() => yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING_ITEM })}
-                // className='d-inline-block'
-                >
-                  <Button black>
-                    ЗАКАЗАТЬ
-                  </Button>
-                </LinkWrapper>
-              </div>
+                <div className='d-flex flex-row justify-content-between py-3'>
+                  <div className=''>
+                    ИТОГО
+                  </div>
+                  <div className=''>
+                    {printPrice(totalPrice)}
+                  </div>
+                </div>
 
-            </>
-          }
+                <div className='d-flex flex-row justify-content-between py-3'>
+                  <LinkWrapper
+                    to='/checkout'
+                    onClick={() => yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING_ITEM })}
+                  // className='d-inline-block'
+                  >
+                    <Button black>
+                      ЗАКАЗАТЬ
+                    </Button>
+                  </LinkWrapper>
+                </div>
 
+              </>
+            }
+          </div>
         </div>
       </div>
     </div>

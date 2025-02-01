@@ -139,7 +139,7 @@ const CheckoutPanel: FC = () => {
       {currentPromocode &&
         <div className='d-flex flex-row mt-3'>
           <div className=''>
-            Скидка по промокоду {currentPromocode.type && `${currentPromocode.amount}%`}.
+            Скидка по промокоду.
           </div>
           <div className='ms-auto'>
             -{promocodePrint}
