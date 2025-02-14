@@ -76,7 +76,7 @@ const CheckoutPanel: FC = () => {
   const totalPriceWithPromocode = useTotalPriceWithPromocode()
   const totalPriceWithPromocodeAndBoxberry = totalPriceWithPromocode + deliveryPrice
   const promocodePrint = currentPromocode && printPrice(
-    currentPromocode.type ? (totalPrice - totalPriceWithPromocode) : currentPromocode.amount
+    currentPromocode.p_type ? (totalPrice - totalPriceWithPromocode) : currentPromocode.amount
   )
 
   return (
@@ -101,7 +101,7 @@ const CheckoutPanel: FC = () => {
       }
       {currentPromocode &&
         <div className='d-flex flex-row justify-content-between py-2'>
-          Применён промокод "{currentPromocode.name}" на скидку {currentPromocode.amount}{currentPromocode.type ? '%' : '₽'} {!currentPromocode?.items ? '' : `для ${countableModels(currentPromocode.items.length)} ${currentPromocode.items.map(item => item.link).join(', ')}`}
+          Применён промокод "{currentPromocode.name}" на скидку {currentPromocode.amount}{currentPromocode.p_type ? '%' : '₽'} {!currentPromocode?.items ? '' : `для ${countableModels(currentPromocode.items.length)} ${currentPromocode.items.map(item => item.link).join(', ')}`}
         </div>
       }
 
