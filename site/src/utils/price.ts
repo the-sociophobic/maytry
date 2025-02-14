@@ -62,7 +62,7 @@ const calculateItemSubtotalPrice = ((item: ItemInCartType) =>
 const calculatePromocodePrice = (price: number, promocode: ContentfulPromocodeType) => {
   let calculatedPrice = price
 
-  if (promocode.type) {
+  if (promocode.p_type) {
     calculatedPrice *= (1 - (promocode.amount / 100))
   } else {
     calculatedPrice -= promocode.amount

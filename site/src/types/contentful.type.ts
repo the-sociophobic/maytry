@@ -121,6 +121,6 @@ export interface ContentfulPriceItemColorType extends ContentfulItemClass {
 export interface ContentfulPromocodeType extends ContentfulItemClass {
   name: string
   amount: number
-  type: boolean
+  p_type: boolean
   items?: ContentfulItemType[]
 }

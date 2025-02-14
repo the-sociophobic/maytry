@@ -21,9 +21,7 @@ const useContentful = async (): Promise<ContentfulDataTypeBE> => {
 
   if (local_contentful_data)
     return local_contentful_data
-
-  const promocodes = (await getContentfulData<{ trues: ContentfulPromocodeType[] }>('promocode')).trues
-
+  
   const contentful_data: ContentfulDataTypeBE = {
     ...(await getContentfulData<{ sites: ContentfulSiteType[] }>('site')),
     ...(await getContentfulData<{ items: ContentfulItemType[] }>('item')),
@@ -35,12 +33,8 @@ const useContentful = async (): Promise<ContentfulDataTypeBE> => {
     ...(await getContentfulData<{ links: ContentfulLinkType[] }>('link')),
     ...(await getContentfulData<{ pages: ContentfulPageType[] }>('page')),
     ...(await getContentfulData<{ priceItemColors: ContentfulPriceItemColorType[] }>('priceItemColor')),
-    // ...(await getContentfulData<{ promocodes: ContentfulPromocodeType[] }>('promocode')),
-    ...({ promocodes })
+    ...(await getContentfulData<{ promocodes: ContentfulPromocodeType[] }>('promocode')),
   }
-
-  // TODO почему-то с contentful приходят trues вместо promocodes
-  console.log(Object.keys(contentful_data))
 
   await storage.write('contentful.json', contentful_data)
 
