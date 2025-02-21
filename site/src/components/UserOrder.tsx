@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import LinkWrapper from '../components/LinkWrapper'
 import ColorSizes from '../components/ColorSizes'
-import { printPrice } from '../utils/price'
+import { calculateItemsPrice, printPrice } from '../utils/price'
 import Price from '../components/Price'
 import QuantitySelector from '../components/QuantitySelector'
 import ImgDummy from '../components/ImgDummy'
@@ -23,6 +23,8 @@ const UserOrder: FC<UserOrderProps> = ({
   inCart
 }) => {
   const { setItemInCart } = useStore()
+  const itemsPrice = calculateItemsPrice(items)
+  const promocodeAmount = itemsPrice - totalPrice
 
   return (
     <>
@@ -118,6 +120,16 @@ const UserOrder: FC<UserOrderProps> = ({
         )}
       </div>
 
+      {promocodeAmount > 0 &&
+        <div className='d-flex flex-row justify-content-between pt-3'>
+          <div className=''>
+            СКИДКА ПО ПРОМОКОДУ
+          </div>
+          <div className=''>
+            -{printPrice(promocodeAmount)}
+          </div>
+        </div>
+      }
       <div className='d-flex flex-row justify-content-between py-3'>
         <div className=''>
           ИТОГО

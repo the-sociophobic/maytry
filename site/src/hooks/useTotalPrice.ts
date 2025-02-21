@@ -1,12 +1,10 @@
-import { calculateItemSubtotalPrice } from '../utils/price'
+import { calculateItemsPrice } from '../utils/price'
 import useStore from './useStore'
 
 
 const useTotalPrice = () => {
   const { itemsInCart } = useStore()
-  const totalPrice = itemsInCart
-    .map(item => calculateItemSubtotalPrice(item))
-    .reduce((a, b) => a + b, 0)
+  const totalPrice = calculateItemsPrice(itemsInCart)
 
   return totalPrice
 }

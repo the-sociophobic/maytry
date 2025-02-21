@@ -59,6 +59,11 @@ const calculateItemSubtotalPrice = ((item: ItemInCartType) =>
   (item.salePrice || item.price) * item.quantity
 )
 
+const calculateItemsPrice = (items: ItemInCartType[]) =>
+  items
+    .map(item => calculateItemSubtotalPrice(item))
+    .reduce((a, b) => a + b, 0)
+
 const calculatePromocodePrice = (price: number, promocode: ContentfulPromocodeType) => {
   let calculatedPrice = price
 
@@ -79,5 +84,6 @@ export {
   printPrice,
   getInterval,
   calculateItemSubtotalPrice,
+  calculateItemsPrice,
   calculatePromocodePrice
 }

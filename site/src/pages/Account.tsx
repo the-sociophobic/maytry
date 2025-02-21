@@ -47,14 +47,16 @@ const Account: FC = () => {
             })
 
             return (
-              <div className='col col-xl-6 mt-5'>
-                <h3 className='h3 mb-2 mt-5'>
-                  Заказ #{order.order_id} {order.timestamp ? `от ${printTimestamp(order.timestamp)}` : ''}
-                </h3>
-                <UserOrder
-                  items={orderItemsWithImages}
-                  totalPrice={order.price}
-                />
+              <div className='row mt-5'>
+                <div className='col col-xl-6 mt-5'>
+                  <h3 className='h3 mb-2 mt-5'>
+                    Заказ #{order.order_id} {order.timestamp ? ` (${printTimestamp(order.timestamp)})` : ''}
+                  </h3>
+                  <UserOrder
+                    items={orderItemsWithImages}
+                    totalPrice={order.price}
+                  />
+                </div>
               </div>
             )
           }
