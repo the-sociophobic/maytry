@@ -16,8 +16,20 @@ const useUser = () => {
 
 const getUser = async (
   props: UserRequestType
-) =>
-  post<UserResponseType>('/user', props)
+) => {
+  let res: UserResponseType | undefined
+
+  if (!props.token)
+    return res
+  
+  try {
+    res = await post<UserResponseType>('/user', props)
+  } catch(err) {
+    console.log(err)
+  }
+
+  return res
+}
 
 
 export default useUser
