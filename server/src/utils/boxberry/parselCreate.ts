@@ -5,17 +5,17 @@ import storage from '../storage'
 import {
   ParselCreateRequestTypeFE,
   ParselCreateRequestTypeBE,
-  ParselCreateResponceType,
-  ParselCreateErrorType,
+  ParselCreateResponseType,
   OrderType,
-  ParselCreateResponceTypeBE
+  ParselCreateResponseTypeBE,
+  ParselCreateResponseErrorType
 } from '../../types/boxberry.type'
 import useLastOrderId, { incrementLastOrderId } from '../../hooks/useLastOrderId'
 
 
 const parselCreate = async (
   props: ParselCreateRequestTypeFE
-): Promise<ParselCreateResponceTypeBE> => {
+): Promise<ParselCreateResponseTypeBE> => {
   await incrementLastOrderId()
   const last_order_id = await useLastOrderId()
   const order_id = '' + last_order_id
@@ -34,13 +34,13 @@ const parselCreate = async (
   }
 
   try {
-    const parcel = (await axios.post<ParselCreateResponceType | ParselCreateErrorType>(
+    const parcel = (await axios.post<ParselCreateResponseType | ParselCreateResponseErrorType>(
       'https://api.boxberry.ru/json.php',
       createParselCreateRequest(parselCreatePropsBE)
     )).data
 
-    if ((parcel as ParselCreateErrorType).err)
-      throw new Error((parcel as ParselCreateErrorType).err)
+    if ((parcel as ParselCreateResponseErrorType).err)
+      throw new Error((parcel as ParselCreateResponseErrorType).err)
     
     const timestamp = (new Date()).getTime()
     const { promocode } = props
@@ -54,7 +54,7 @@ const parselCreate = async (
     } as OrderType)
 
     return ({
-      parcel: parcel as ParselCreateResponceType,
+      parcel: parcel as ParselCreateResponseType,
       order_id,
       timestamp,
       price: props.price,

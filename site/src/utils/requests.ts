@@ -1,6 +1,7 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 import isProd from './isProd'
+import { ResponseErrorType } from '../types/requests.type'
 
 
 export const get = async <T>(path: string, params = {}) => {
@@ -10,8 +11,10 @@ export const get = async <T>(path: string, params = {}) => {
     return res.data
   } catch(error: any) {
     console.log(error)
-    // throw new Error(error)
-    return ({}) as T
+    if (axios.isAxiosError(error))
+      throw (error as AxiosError<ResponseErrorType>).response?.data?.error
+    else
+      throw error
   }
 }
 
@@ -22,8 +25,10 @@ export const post = async <T>(path: string, data: object) => {
     return res.data
   } catch(error: any) {
     console.log(error)
-    // throw new Error(error)
-    return ({}) as T
+    if (axios.isAxiosError(error))
+      throw (error as AxiosError<ResponseErrorType>).response?.data?.error
+    else
+      throw error
   }
 }
 
@@ -34,8 +39,10 @@ export const put = async <T>(path: string, data: object) => {
     return res.data
   } catch(error: any) {
     console.log(error)
-    // throw new Error(error)
-    return ({}) as T
+    if (axios.isAxiosError(error))
+      throw (error as AxiosError<ResponseErrorType>).response?.data?.error
+    else
+      throw error
   }
 }
 
@@ -46,8 +53,10 @@ export const deleteReq = async <T>(path: string) => {
     return res.data
   } catch(error: any) {
     console.log(error)
-    // throw new Error(error)
-    return ({}) as T
+    if (axios.isAxiosError(error))
+      throw (error as AxiosError<ResponseErrorType>).response?.data?.error
+    else
+      throw error
   }
 }
 
@@ -69,7 +78,6 @@ export const generateURL = (path: string, params?: object): string =>
 
 export const getAuthHeader = () => ({
   headers: {
-    // telegramData: encodeURIComponent(getAuthStringFromWebApp() || getAuthStringFromBrowser())
     userId: getUserId()
   }
 })

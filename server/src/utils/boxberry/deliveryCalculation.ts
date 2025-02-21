@@ -2,12 +2,12 @@ import axios from 'axios'
 
 import {
   DeliveryCalculationRequestType,
-  DeliveryCalculationResponceType
+  DeliveryCalculationResponseType
 } from '../../types/boxberry.type'
 
 
 const deliveryCalculation = async (props: DeliveryCalculationRequestType) => {
-  const res = (await axios.post<DeliveryCalculationResponceType>(
+  const res = (await axios.post<DeliveryCalculationResponseType>(
     'https://api.boxberry.ru/json.php',
     createDeliveryCalculationRequest(props)
   )).data

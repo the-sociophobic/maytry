@@ -1,13 +1,16 @@
-import {
-  ParselCreateErrorType,
-  ParselCreateRequestTypeFE,
-  ParselCreateResponceType
-} from '../../types/boxberry.type'
 import { post } from '../requests'
+import {
+  ParselCreateRequestTypeFE,
+  ParselCreateResponseErrorType,
+  ParselCreateResponseType
+} from '../../types/boxberry.type'
 
 
 const parselCreate = async (props: ParselCreateRequestTypeFE) =>
-  post<ParselCreateResponceType | ParselCreateErrorType>('/parsel-create', props)
+  post<ParselCreateResponseType | ParselCreateResponseErrorType>(
+    '/parsel-create',
+    props
+  )
 
 
 export default parselCreate

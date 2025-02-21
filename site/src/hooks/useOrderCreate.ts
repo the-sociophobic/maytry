@@ -1,11 +1,13 @@
+import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
 
 import useStore from '../hooks/useStore'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import parselCreate from '../utils/boxberry/parselCreate'
-import { ParselCreateErrorType } from '../types/boxberry.type'
 import useTotalPriceWithPromocode from './useTotalPriceWithPromocode'
+import { ParselCreateResponseErrorType } from '../types/boxberry.type'
+import useLoginAfterOrder from './user/useLoginAfterOrder'
 
 
 const useOrderCreate = () => {
@@ -35,8 +37,10 @@ const useOrderCreate = () => {
   const { setCurrentPromocode } = useStore()
 
   const queryClient = useQueryClient()
+  
+  const loginAfterOrder = useLoginAfterOrder()
 
-  const orderCreate = async () => {
+  const orderCreate = useCallback(async () => {
     const res = await parselCreate({
       price: totalPriceWithPromocode,
       payment_sum: paymentType === 'Оплата при получении' ? totalPriceWithPromocodeAndBoxberry : 0,
@@ -56,18 +60,40 @@ const useOrderCreate = () => {
     })
     console.log('parselCreate', res)
 
-    if ((res as ParselCreateErrorType).err) {
-      setParselCreateError((res as ParselCreateErrorType).err)
+    if ((res as ParselCreateResponseErrorType).err) {
+      setParselCreateError((res as ParselCreateResponseErrorType).err)
       navigate('/fail')
     } else {
       emptyCart()
       setCurrentPromocode(undefined)
       queryClient.invalidateQueries({ queryKey: 'contentful' })
       queryClient.invalidateQueries({ queryKey: 'orders' })
+      loginAfterOrder({ email: userEmail })
       // setBoxberryData(undefined)
       navigate('/success')
     }
-  }
+  }, [
+    totalPriceWithPromocode,
+    paymentType,
+    totalPriceWithPromocodeAndBoxberry,
+    deliveryPrice,
+    kurdost,
+    boxberryData,
+    currentPromocode,
+    emptyCart,
+    itemsInCart,
+    loginAfterOrder,
+    navigate,
+    queryClient,
+    setCurrentPromocode,
+    setParselCreateError,
+    userAddress,
+    userCity,
+    userEmail,
+    userFullName,
+    userPhone,
+    userZIP
+  ])
 
 
   return orderCreate

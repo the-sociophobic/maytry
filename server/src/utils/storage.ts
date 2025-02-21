@@ -2,6 +2,7 @@ import path from 'path'
 import fs from 'fs'
 
 import delay from './delay'
+import isObject from './isObject'
 
 
 class storage {
@@ -81,6 +82,52 @@ class storage {
 
     await delay()
   }
+
+
+  static get = async <T extends ItemInStorageType>(
+    fileName: string,
+    itemProps: { [key: string]: string | number }
+  ) => {
+    let array = this.read(fileName) as T[] | undefined
+    const itemInArray = array
+      ?.find(item =>
+        Object.keys(itemProps)
+        .every(key => isObject(item) && itemProps[key] === item[key])
+      )
+
+    return itemInArray
+  }
+  
+  static update = async <T extends ItemInStorageType>(
+    fileName: string,
+    itemToUpdate: T
+  ) => {
+    let array = this.read(fileName) as T[] | undefined
+
+    if (!array)
+      array = []
+
+    const itemIndex = array
+      ?.map(item => item.id)
+      ?.indexOf(itemToUpdate.id)
+
+    if (itemIndex)
+      array = [
+        ...array.slice(0, itemIndex),
+        itemToUpdate,
+        ...array.slice(itemIndex + 1),
+      ]
+    else
+      array = [...array, itemToUpdate]
+
+    this.write(fileName, array)
+
+    await delay()
+  }
+}
+
+interface ItemInStorageType {
+  id: string
 }
 
 

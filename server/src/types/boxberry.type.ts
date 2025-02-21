@@ -42,7 +42,7 @@ export type ParselCreateRequestTypeFE = Omit<ParselCreateRequestTypeBE, 'order_i
 
 export type OrderType = ParselCreateRequestTypeFE & {
   order_id: string
-  parcel: ParselCreateResponceType
+  parcel: ParselCreateResponseType
   timestamp?: number
   registered_in_1C?: boolean
   promocode?: ContentfulPromocodeType
@@ -58,21 +58,20 @@ export type ParselCreateItemType = {
   marking_crpt?: string
 }
 
-export type ParselCreateResponceType = {
+export type ParselCreateResponseType = {
   track: string
   label: string
 }
+export type ParselCreateResponseErrorType = {
+  err: string
+}
 
-export type ParselCreateResponceTypeBE = {
-  parcel: ParselCreateResponceType
+export type ParselCreateResponseTypeBE = {
+  parcel: ParselCreateResponseType
   order_id: string
   timestamp: number
   price: number,
   items: ItemInCartType[]
-}
-
-export type ParselCreateErrorType = {
-  err: string
 }
 
 
@@ -84,7 +83,7 @@ export type DeliveryCalculationRequestType = {
   Zip: string
 }
 
-export type DeliveryCalculationResponceType = {
+export type DeliveryCalculationResponseType = {
   error: boolean
   message?: string
   result: {

@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
+import _ from 'lodash'
 import 'dotenv/config'
 
 import storage from './utils/storage'
@@ -12,10 +13,26 @@ import {
 } from './types/boxberry.type'
 import useOrders from './hooks/useOrders'
 import useOrdersIn1C from './hooks/useOrdersIn1C'
-import sendEmail from './utils/unisender/sendEmail'
-import listMessages from './utils/unisender/listMessages'
+import sendEmailWithOrderDetails from './utils/unisender/sendEmailWithOrderDetails'
 import { incrementLastOrderId } from './hooks/useLastOrderId'
 import checkEmail from './utils/unisender/checkEmail'
+import { UserType } from './types/user.type'
+import generateToken from './utils/generateToken'
+import generatePassword from './utils/generatePassword'
+import sendEmailWithRegistration from './utils/unisender/sendEmailWithRegistration'
+import {
+  LoginAfterOrderRequestType,
+  LoginAfterOrderResponseType,
+  LoginRequestType,
+  LoginResponseType,
+  RegisterIn1CRequestType,
+  RegisterRequestType,
+  RegisterResponseType,
+  ResponseErrorType,
+  UserOrdersRequestType,
+  UserOrdersResponseType,
+  UserResponseType
+} from './types/requests.type'
 
 
 
@@ -92,7 +109,7 @@ app.post('/parsel-create', async (
   } = parselCreateRes //TODO типы
   console.log(parselCreateRes)
 
-  const emailRes = await sendEmail({
+  const emailRes = await sendEmailWithOrderDetails({
     email: body.email,
     order_id,
     timestamp,
@@ -103,7 +120,7 @@ app.post('/parsel-create', async (
 
   console.log(emailRes)
 
-  response.send(parcel)
+  response.send({ parcel })
 })
 
 app.post('/delivery-calculation', async (
@@ -128,9 +145,7 @@ app.get('/orders-in-1C', async (request: Request, response: Response) => {
 
   response.send(ordersIn1C)
 })
-export type RegisterIn1CRequestType = {
-  orders: string[]
-}
+
 app.post('/register-orders-in-1C', async (
   request: Request<{}, {}, RegisterIn1CRequestType>,
   response
@@ -149,6 +164,126 @@ app.get('/testt', async (request: Request, response: Response) => {
 
   response.send(res)
 })
+
+// AUTHORIZATION START
+app.post('/login', async (
+  request: Request<{}, {}, LoginRequestType>,
+  response: Response<LoginResponseType | ResponseErrorType>
+) => {
+  const { body: { email, password } } = request
+  let user = await storage.get<UserType>('users.json', { email }) // TODO использовать id вместо email
+
+  if (!user) {
+    response.status(401)
+      .send({ error: 'Нет пользователя с таким email' })
+  } else {
+    if (user.password !== password) {
+      response.status(401)
+        .send({ error: 'Неверный пароль' })
+    } else {
+      if (!user.token) {
+        const token = generateToken(email)
+        user.token = token
+        await storage.update('users.json', user)
+      }
+      response.send({ token: user.token })
+    }
+  }
+})
+
+app.post('/login-after-order', async (
+  request: Request<{}, {}, LoginAfterOrderRequestType>,
+  response: Response<LoginAfterOrderResponseType | ResponseErrorType>
+) => {
+  const { body: { email } } = request
+  let user = await storage.get<UserType>('users.json', { email }) // TODO использовать id вместо email
+
+  if (user) {
+    response.status(401)
+      .send({ error: 'Пользователь уже зарегестрирован в системе. Надо входить по паролю' })
+  } else {
+    const password = generatePassword(email)
+    const token = generateToken(email)
+    user = {
+      id: email,
+      email,
+      password,
+      token,
+      registrationDate: (new Date()).getTime()
+    }
+    await storage.update('users.json', user)
+    await sendEmailWithRegistration({ email, password })
+    response.send({ token })
+  }
+})
+
+app.post('/register', async (
+  request: Request<{}, {}, RegisterRequestType>,
+  response: Response<RegisterResponseType | ResponseErrorType>
+) => {
+  const { body: { email, password } } = request
+  let user = await storage.get<UserType>('users.json', { email }) // TODO использовать id вместо email
+
+  if (user) {
+    response.status(401)
+      .send({ error: 'Пользователь с таким email уже существует'})
+  } else {
+    const token = generateToken(email)
+    user = {
+      id: email,
+      email,
+      password,
+      token,
+      registrationDate: (new Date()).getTime()
+    }
+    await storage.update('users.json', user)
+    await sendEmailWithRegistration({ email, password })
+    response.send({ token })
+  }
+})
+
+app.post('/user', async (
+  request: Request<{}, {}, UserOrdersRequestType>,
+  response: Response<UserResponseType | ResponseErrorType>
+) => {
+  const { body: { token } } = request
+  let user = await storage.get<UserType>('users.json', { token }) // TODO использовать id вместо email
+
+  if (!user) {
+    response.status(401)
+      .send({ error: 'Неверный token'})
+  } else {
+    if (!token || !user.token || user.token !== token) {
+      response.status(401)
+        .send({ error: 'Неверный token пользователя' })
+    } else {
+      response.send(_.pick(user, ['id', 'email', 'registrationDate']))
+    }
+  }
+})
+
+app.post('/user-orders', async (
+  request: Request<{}, {}, UserOrdersRequestType>,
+  response: Response<UserOrdersResponseType | ResponseErrorType>
+) => {
+  const { body: { token } } = request
+  let user = await storage.get<UserType>('users.json', { token }) // TODO использовать id вместо email
+
+  if (!user) {
+    response.status(401)
+      .send({ error: 'Неверный token' })
+  } else {
+    if (user.token !== token) {
+      response.status(401)
+        .send({ error: 'Неверный token пользователя' })
+    } else {
+      const orders = useOrders()
+      const userOrders = orders.filter(order => order.email === user.email)
+      response.send({ orders: userOrders })
+    }
+  }
+})
+// AUTHORIZATION END
 
 const init = () => {
   app.listen(SERVER_PORT, () => console.log(`Running on port ${SERVER_PORT}`))

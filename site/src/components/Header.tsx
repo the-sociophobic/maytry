@@ -1,7 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react'
 
-import { useQueryClient } from 'react-query'
-
 import useStore from '../hooks/useStore'
 // import { ItemType } from '../hooks/useContentful/types'
 import LinkWrapper from './LinkWrapper'
@@ -9,18 +7,16 @@ import Button from './Button'
 import Input from './Input'
 import useRoute from '../hooks/useRoute'
 import useContentful from '../hooks/useContentful'
-// import useUser from '../hooks/useUser'
-
-import LogoImg from '../assets/images/logo.svg'
+import useUser from '../hooks/user/useUser'
 import { toggleInSet } from '../utils/sets'
 // import ColorSelector from './ColorSelector'
 import SizeSelector from './SizeSelector'
+import useLogout from '../hooks/user/useLogout'
+
+import LogoImg from '../assets/images/logo.svg'
 
 
-export type HeaderProps = {}
-
-
-const Header: FC<HeaderProps> = ({ }) => {
+const Header: FC = () => {
   // const { hoveredItem } = useStore()
   const { itemsInCart } = useStore()
   const numberOfItemsInCart = itemsInCart
@@ -29,22 +25,17 @@ const Header: FC<HeaderProps> = ({ }) => {
   const route = useRoute()
   const is_main_page = route?.to === '/'
   const is_cart_page = route?.to === '/cart'
-  // const { data: user } = useUser()
-  const { user } = useStore()
-  const { showAccount } = useStore()
-  const { setShowAccount } = useStore()
   const { setShowSearch } = useStore()
   const { setShowFilter } = useStore()
   const { showExtendedFilter } = useStore()
   const { setShowExtendedFilter } = useStore()
-  const { setUser } = useStore()
-  const queryClient = useQueryClient()
   const headerRef = useRef<HTMLDivElement>(null)
   const [mobileHeaderOpened, setMobileHeaderOpened] = useState(false)
 
   useEffect(() =>
     setShowExtendedFilter(is_main_page && mobileHeaderOpened)
-    , [is_main_page, mobileHeaderOpened])
+    , [setShowExtendedFilter, is_main_page, mobileHeaderOpened]
+  )
 
   const closeMobileHeader = () => {
     setShowExtendedFilter(false)
@@ -102,66 +93,7 @@ const Header: FC<HeaderProps> = ({ }) => {
                 </LinkWrapper>
               }
               <div className='d-flex flex-row ms-auto'>
-                {false && (user ?
-                  <>
-                    <div className='Header__section d-flex justify-content-end'>
-                      <LinkWrapper
-                        to='/account'
-                        className='d-inline-block'
-                      >
-                        <Button hoverable>
-                          АККАУНТ
-                        </Button>
-                      </LinkWrapper>
-                    </div>
-                    <div className='Header__section d-flex justify-content-end'>
-                      <Button
-                        hoverable
-                        onClick={() => {
-                          setUser(null)
-                          setTimeout(() => queryClient.invalidateQueries({ queryKey: ['user'] }), 25)
-                        }}
-                      >
-                        ВЫЙТИ
-                      </Button>
-                    </div>
-                  </>
-                  :
-                  showAccount ?
-                    <>
-                      <div className='Header__section d-flex justify-content-end'>
-                        <LinkWrapper
-                          to='/login'
-                          className='d-inline-block'
-                        >
-                          <Button hoverable>
-                            ВХОД
-                          </Button>
-                        </LinkWrapper>
-                      </div>
-                      <div className='Header__section d-flex justify-content-end'>
-                        <LinkWrapper
-                          to='/register'
-                          className='d-inline-block'
-                        >
-                          <Button hoverable>
-                            РЕГИСТРАЦИЯ
-                          </Button>
-                        </LinkWrapper>
-                      </div>
-                      <Button onClick={() => setShowAccount(false)}>
-                        ЗАКРЫТЬ
-                      </Button>
-                    </>
-                    :
-                    <Button onClick={() => {
-                      setShowAccount(true)
-                      setShowSearch(false)
-                      setShowFilter(false)
-                    }}>
-                      АККАУНТ
-                    </Button>
-                )}
+                <AccountControls />
 
                 <div className='Header__section d-flex justify-content-end'>
                   <LinkWrapper
@@ -186,6 +118,7 @@ const Header: FC<HeaderProps> = ({ }) => {
                   </Button>
                 </LinkWrapper>
               }
+              <AccountControls />
               <LinkWrapper
                 to='/cart'
                 className='d-inline-block ms-auto'
@@ -207,6 +140,71 @@ const Header: FC<HeaderProps> = ({ }) => {
   )
 }
 
+const AccountControls = () => {
+  const { data: user } = useUser()
+  const { showAccount } = useStore()
+  const { setShowAccount } = useStore()
+  const { setShowSearch } = useStore()
+  const { setShowFilter } = useStore()
+  const logout = useLogout()
+
+  return user ?
+    <>
+      <div className='Header__section d-flex justify-content-end'>
+        <LinkWrapper
+          to='/account'
+          className='d-inline-block'
+        >
+          <Button hoverable>
+            АККАУНТ
+          </Button>
+        </LinkWrapper>
+      </div>
+      <div className='Header__section d-flex justify-content-end'>
+        <Button
+          hoverable
+          onClick={logout}
+        >
+          ВЫЙТИ
+        </Button>
+      </div>
+    </>
+    :
+    showAccount ?
+      <>
+        <div className='Header__section d-flex justify-content-end'>
+          <LinkWrapper
+            to='/login'
+            className='d-inline-block'
+          >
+            <Button hoverable>
+              ВХОД
+            </Button>
+          </LinkWrapper>
+        </div>
+        <div className='Header__section d-flex justify-content-end'>
+          <LinkWrapper
+            to='/register'
+            className='d-inline-block'
+          >
+            <Button hoverable>
+              РЕГИСТРАЦИЯ
+            </Button>
+          </LinkWrapper>
+        </div>
+        {/* <Button onClick={() => setShowAccount(false)}>
+          ЗАКРЫТЬ
+        </Button> */}
+      </>
+      :
+      <Button onClick={() => {
+        setShowAccount(true)
+        setShowSearch(false)
+        setShowFilter(false)
+      }}>
+        АККАУНТ
+      </Button>
+}
 
 const HeaderControls = () => {
   // const { mainPageView } = useStore()

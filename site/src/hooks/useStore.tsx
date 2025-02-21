@@ -13,6 +13,15 @@ export type StateType = {
   user: null | WebAppAuthObject
   setUser: (user: null | WebAppAuthObject) => void
 
+  loginEmail: string
+  setLoginEmail: (loginEmail: string) => void
+
+  loginPassword: string
+  setLoginPassword: (loginPassword: string) => void
+
+  authError: string
+  setAuthError: (authError: string) => void
+
   adminPassword: string
   setAdminPassword: (adminPassword: string) => void
 
@@ -103,6 +112,12 @@ export type StateType = {
 
   currentPromocode: ContentfulPromocodeType | undefined
   setCurrentPromocode: (currentPromocode: ContentfulPromocodeType | undefined) => void
+
+  token: string | undefined
+  setToken: (token: string | undefined) => void
+
+  logged: boolean
+  setLogged: (logged: boolean) => void
 }
 
 export type MainPageViewType = 'IMG' | 'TXT'
@@ -116,6 +131,15 @@ const useStore = create(
       user: null,
       setUser: (user: null | WebAppAuthObject) => set({ user }),
 
+      loginEmail: '',
+      setLoginEmail: (loginEmail: string) => set({ loginEmail }),
+    
+      loginPassword: '',
+      setLoginPassword: (loginPassword: string) => set({ loginPassword }),
+    
+      authError: '',
+      setAuthError: (authError: string) => set({ authError }),
+    
       adminPassword: '',
       setAdminPassword: (adminPassword: string) => set({ adminPassword }),
 
@@ -140,7 +164,7 @@ const useStore = create(
       showExtendedFilter: false,
       setShowExtendedFilter: (showExtendedFilter: boolean) => set({ showExtendedFilter }),
 
-      showAccount: false,
+      showAccount: true,
       setShowAccount: (showAccount: boolean) => set({ showAccount }),
 
       itemsInCart: [],
@@ -223,6 +247,13 @@ const useStore = create(
       
       currentPromocode: undefined,
       setCurrentPromocode: (currentPromocode: ContentfulPromocodeType | undefined) => set({ currentPromocode }),
+
+      token: undefined,
+      setToken: (token: string | undefined) => set({ token }),
+    
+      logged: false,
+      setLogged: (logged: boolean) => set({ logged }),
+    
     }),
     {
       name: 'main-storage',

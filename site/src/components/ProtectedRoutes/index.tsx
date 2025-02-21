@@ -2,7 +2,6 @@ import React, { useEffect, useMemo } from 'react'
 
 import { RouterProvider, createHashRouter } from 'react-router-dom'
 
-import useStore from '../../hooks/useStore'
 import Loader from '../Loader'
 import routes, { RouteType } from './routes'
 import Layout from '../Layout'
@@ -11,26 +10,32 @@ import Item from '../../pages/Item'
 import PageTemplate from '../PageTemplate'
 import Redirect from '../Redirect'
 import { ContentfulDataTypeFE } from '../../types/contentful.type'
+import useUser from '../../hooks/user/useUser'
+import useStore from '../../hooks/useStore'
 
 
 const ProtectedRoutes: React.FC = () => {
-  const { user } = useStore()
+  const { data: user, isLoading: userIsLoading } = useUser()
   const { data: contentful } = useContentful()
+  const { logged } = useStore()
+  const { setLogged } = useStore()
 
-  useEffect(() => useStore.setState({ user }), [user])
-  
+  useEffect(() => {
+    if (userIsLoading)
+      return
+
+    if (logged !== !!user)
+      setLogged(!!user)
+  }, [logged, setLogged, user, userIsLoading])
+
   const router = useMemo(
     () => createHashRouter(
       mapRoutes([
-        ...(user ?
-          routes.slice(2)
-          :
-          routes.filter(route => route.to !== '/account')
-        ),
+        ...routes,
         ...(!contentful ? [] : mapContentfulRoutes(contentful))
       ])
     )
-    , [contentful, user]
+    , [contentful]
   )
 
   if (!contentful)
