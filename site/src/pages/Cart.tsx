@@ -1,22 +1,17 @@
 import { FC } from 'react'
 
 import useStore from '../hooks/useStore'
-import ColorSizes from '../components/ColorSizes'
-import { printPrice } from '../utils/price'
-import Price from '../components/Price'
 import LinkWrapper from '../components/LinkWrapper'
-import QuantitySelector from '../components/QuantitySelector'
 import Button from '../components/Button'
 import useTotalPrice from '../hooks/useTotalPrice'
-import ImgDummy from '../components/ImgDummy'
 import yandexGoal from '../utils/yandex/goal'
 import { YANDEX_GOAL } from '../utils/yandex/consts'
 import useSyncCart from '../hooks/useSyncCart'
+import UserOrder from '../components/UserOrder'
 
 
 const Cart: FC = () => {
   const { itemsInCart } = useStore()
-  const { setItemInCart } = useStore()
   const totalPrice = useTotalPrice()
 
   const syncCart = useSyncCart()
@@ -33,100 +28,11 @@ const Cart: FC = () => {
 
             {itemsInCart.length === 0 ? 'Пусто' :
               <>
-                <div className='Cart__header'>
-                  <div className='Cart__header__IMG'>
-                    ФОТО
-                  </div>
-                  <div className='Cart__header__DETAILS'>
-                    ИНФО
-                  </div>
-                  <div className='Cart__header__NAME'>
-                  </div>
-                  {/* <div className='Cart__header__REMOVE'>
-                  </div> */}
-                  <div className='Cart__header__PRICE'>
-                    ЦЕНА
-                  </div>
-                  <div className='Cart__header__SUBTOTAL'>
-                    ПОДИТОГ
-                  </div>
-                </div>
-
-                <div className='Cart__items'>
-                  {itemsInCart.map(item =>
-                    <div
-                      key={item.id}
-                      className='Cart__items__item'
-                    >
-                      <div className='Cart__items__item__IMG'>
-                        <LinkWrapper
-                          to={'/item/' + item.link}
-                          className='d-block'
-                        >
-                          <ImgDummy img={item.images?.[0]} />
-                        </LinkWrapper>
-                      </div>
-                      <div className='Cart__items__item__NAME-DETAILS-PRICE'>
-                        <div className='Cart__items__item__NAME-DETAILS'>
-                          <div className='d-flex flex-row mb-2'>
-                            <div className='Cart__items__item__DETAILS'>
-                              ИМЯ
-                            </div>
-                            <div className='Cart__items__item__NAME'>
-                              {item.name}
-                            </div>
-                            {/* <div className='Cart__items__item__REMOVE'>
-                              <Button onClick={() => setItemInCart(item, 0)}>
-                                УДАЛИТЬ
-                              </Button>
-                            </div> */}
-                          </div>
-                          <div className='d-flex flex-row mb-2'>
-                            <div className='Cart__items__item__DETAILS'>
-                              ЦВЕТ И РАЗМЕР
-                            </div>
-                            <div className='Cart__items__item__NAME'>
-                              <ColorSizes
-                                color={item.color}
-                                sizes={[item.size]}
-                              />
-                            </div>
-                          </div>
-                          <div className='d-flex flex-row mb-2'>
-                            <div className='Cart__items__item__DETAILS'>
-                              КОЛИЧЕСТВО
-                            </div>
-                            <div className='Cart__items__item__NAME'>
-                              <QuantitySelector
-                                value={item.quantity}
-                                onChange={quantity => setItemInCart(item, quantity)}
-                                max={item.max_available}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div className='Cart__items__item__PRICE'>
-                          <Price
-                            price={item.price}
-                            salePrice={item.salePrice}
-                          />
-                        </div>
-                      </div>
-                      <div className='Cart__items__item__SUBTOTAL'>
-                        {item.quantity} × {printPrice(item.salePrice || item.price)} = {printPrice((item.salePrice || item.price) * item.quantity)}
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                <div className='d-flex flex-row justify-content-between py-3'>
-                  <div className=''>
-                    ИТОГО
-                  </div>
-                  <div className=''>
-                    {printPrice(totalPrice)}
-                  </div>
-                </div>
+                <UserOrder
+                  items={itemsInCart}
+                  totalPrice={totalPrice}
+                  inCart
+                />
 
                 <div className='d-flex flex-row justify-content-between py-3'>
                   <LinkWrapper

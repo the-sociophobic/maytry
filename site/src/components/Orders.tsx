@@ -1,7 +1,5 @@
 import { FC, useEffect, useState } from 'react'
 
-import { format } from 'date-fns'
-import { ru } from 'date-fns/locale'
 import { useQueryClient } from 'react-query'
 
 import useOrders from '../hooks/useOrders'
@@ -14,6 +12,7 @@ import { setsAreEqual, toggleInSet } from '../utils/sets'
 import { post } from '../utils/requests'
 import useStore from '../hooks/useStore'
 import { ContentfulPromocodeType } from '../types/contentful.type'
+import printTimestamp from '../utils/printTimestamp'
 
 
 const Orders: FC = () => {
@@ -97,15 +96,7 @@ const Orders: FC = () => {
           </div>
           <div className='col-1'>
             time:<br />
-            {!order.timestamp ?
-              'не записан'
-              :
-              format(
-                new Date(order.timestamp),
-                'd MMM yyyy, HH:mm:ss',
-                { locale: ru }
-              )
-            }
+            {printTimestamp(order.timestamp)}
           </div>
 
 
