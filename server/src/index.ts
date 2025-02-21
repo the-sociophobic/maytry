@@ -43,11 +43,12 @@ app.use(express.json())
 const { SERVER_PORT } = process.env
 
 
-app.get('/data', async (request: Request, response: Response) => {
+app.get('/data', async (request: Request, response: Response, next) => {
   response.send(await useCombinedData())
+  next()
 })
 
-app.get('/update-data', async (request: Request, response: Response) => {
+app.get('/update-data', async (request: Request, response: Response, next) => {
   await storage.delete('combined.json')
   await storage.delete('contentful.json')
   await storage.delete('1C.json')
@@ -55,21 +56,24 @@ app.get('/update-data', async (request: Request, response: Response) => {
     await useCombinedData()
 
     response.send(true)
+    next()
   }, 150)
 })
 
-app.get('/update-combined-data', async (request: Request, response: Response) => {
+app.get('/update-combined-data', async (request: Request, response: Response, next) => {
   await storage.delete('combined.json')
   setTimeout(async () => {
     await useCombinedData()
 
     response.send(true)
+    next()
   }, 150)
 })
 
 app.post('/parsel-create', async (
   request: Request<{}, {}, ParselCreateRequestTypeFE>,
-  response
+  response,
+  next
 ) => {
   const { body } = request
 
@@ -97,6 +101,7 @@ app.post('/parsel-create', async (
   console.log(parselCreateError)
   if (!parselCreateRes) {
     response.send(parselCreateError)
+    next()
     return
   }
 
@@ -121,54 +126,61 @@ app.post('/parsel-create', async (
   console.log(emailRes)
 
   response.send({ parcel })
+  next()
 })
 
 app.post('/delivery-calculation', async (
   request: Request<{}, {}, DeliveryCalculationRequestType>,
-  response
+  response, next
 ) => {
   const { body } = request
   const result = await deliveryCalculation(body)
 
   response.send(result)
+  next()
 })
 
-app.get('/orders', async (request: Request, response: Response) => {
+app.get('/orders', async (request: Request, response: Response, next) => {
   const orders = useOrders()
 
   response.send(orders)
+  next()
 })
 
 
-app.get('/orders-in-1C', async (request: Request, response: Response) => {
+app.get('/orders-in-1C', async (request: Request, response: Response, next) => {
   const ordersIn1C = useOrdersIn1C()
 
   response.send(ordersIn1C)
+  next()
 })
 
 app.post('/register-orders-in-1C', async (
   request: Request<{}, {}, RegisterIn1CRequestType>,
-  response
+  response, next
 ) => {
   const { body: { orders } } = request
   await storage.write('orders-in-1C.json', { orders })
   
   const result = storage.read('orders-in-1C.json')
   response.send(result)
+  next()
 })
 
-app.get('/testt', async (request: Request, response: Response) => {
+app.get('/testt', async (request: Request, response: Response, next) => {
   // const res = await listMessages('2024-12-25 00:00', '2025-01-01 00:00')
   const res = await checkEmail([35242423201, 35242423202])
   console.log(res)
 
   response.send(res)
+  next()
 })
 
 // AUTHORIZATION START
 app.post('/login', async (
   request: Request<{}, {}, LoginRequestType>,
-  response: Response<LoginResponseType | ResponseErrorType>
+  response: Response<LoginResponseType | ResponseErrorType>,
+  next
 ) => {
   const { body: { email, password } } = request
   let user = await storage.get<UserType>('users.json', { email }) // TODO использовать id вместо email
@@ -189,11 +201,13 @@ app.post('/login', async (
       response.send({ token: user.token })
     }
   }
+  next()
 })
 
 app.post('/login-after-order', async (
   request: Request<{}, {}, LoginAfterOrderRequestType>,
-  response: Response<LoginAfterOrderResponseType | ResponseErrorType>
+  response: Response<LoginAfterOrderResponseType | ResponseErrorType>,
+  next
 ) => {
   const { body: { email } } = request
   let user = await storage.get<UserType>('users.json', { email }) // TODO использовать id вместо email
@@ -215,11 +229,13 @@ app.post('/login-after-order', async (
     await sendEmailWithRegistration({ email, password })
     response.send({ token })
   }
+  next()
 })
 
 app.post('/register', async (
   request: Request<{}, {}, RegisterRequestType>,
-  response: Response<RegisterResponseType | ResponseErrorType>
+  response: Response<RegisterResponseType | ResponseErrorType>,
+  next
 ) => {
   const { body: { email, password } } = request
   let user = await storage.get<UserType>('users.json', { email }) // TODO использовать id вместо email
@@ -240,11 +256,13 @@ app.post('/register', async (
     await sendEmailWithRegistration({ email, password })
     response.send({ token })
   }
+  next()
 })
 
 app.post('/user', async (
   request: Request<{}, {}, UserOrdersRequestType>,
-  response: Response<UserResponseType | ResponseErrorType>
+  response: Response<UserResponseType | ResponseErrorType>,
+  next
 ) => {
   const { body: { token } } = request
   let user = await storage.get<UserType>('users.json', { token }) // TODO использовать id вместо email
@@ -260,11 +278,13 @@ app.post('/user', async (
       response.send(_.pick(user, ['id', 'email', 'registrationDate']))
     }
   }
+  next()
 })
 
 app.post('/user-orders', async (
   request: Request<{}, {}, UserOrdersRequestType>,
-  response: Response<UserOrdersResponseType | ResponseErrorType>
+  response: Response<UserOrdersResponseType | ResponseErrorType>,
+  next
 ) => {
   const { body: { token } } = request
   let user = await storage.get<UserType>('users.json', { token }) // TODO использовать id вместо email
@@ -282,6 +302,7 @@ app.post('/user-orders', async (
       response.send({ orders: userOrders })
     }
   }
+  next()
 })
 // AUTHORIZATION END
 
