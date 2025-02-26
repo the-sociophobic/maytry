@@ -31,7 +31,8 @@ import {
   ResponseErrorType,
   UserOrdersRequestType,
   UserOrdersResponseType,
-  UserResponseType
+  UserRequestType,
+  UserResponseType,
 } from './types/requests.type'
 
 
@@ -243,7 +244,7 @@ app.post('/register', async (
 })
 
 app.post('/user', async (
-  request: Request<{}, {}, UserOrdersRequestType>,
+  request: Request<{}, {}, UserRequestType>,
   response: Response<UserResponseType | ResponseErrorType>
 ) => {
   const { body: { token } } = request

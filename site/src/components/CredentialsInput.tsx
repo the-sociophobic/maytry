@@ -60,35 +60,37 @@ const CredentialsInput: FC<CredentialsInputProps> = ({
   return (
     <div className='container'>
       <div className='row'>
-        <h3 className='h3 mb-5'>
-          {label}
-        </h3>
-        <Input
-          label='email'
-          value={loginEmail}
-          onChange={value => {
-            setAuthError('')
-            setLoginEmail(value)
-          }}
-          className='mb-2'
-        />
-        <Input
-          label='password'
-          value={loginPassword}
-          onChange={value => {
-            setAuthError('')
-            setLoginPassword(value)
-          }}
-          className='mb-2'
-        />
-        <Button
-          black
-          className='mb-2'
-          onClick={onClickWithChecks}
-        >
-          {buttonLabel}
-        </Button>
-        {authError.length > 0 && `ERR: ${authError}`}
+        <div className='col-10 col-md-6 col-lg-4'>
+          <h3 className='h3 mb-5'>
+            {label}
+          </h3>
+          <Input
+            label='email'
+            value={loginEmail}
+            onChange={value => {
+              setAuthError('')
+              setLoginEmail(value)
+            }}
+            className='mb-2'
+          />
+          <Input
+            label='password'
+            value={loginPassword}
+            onChange={value => {
+              setAuthError('')
+              setLoginPassword(value)
+            }}
+            className='mb-2'
+          />
+          <Button
+            black
+            className='mb-2'
+            onClick={onClickWithChecks}
+          >
+            {buttonLabel}
+          </Button>
+          {authError.length > 0 && `ERR: ${authError}`}
+        </div>
       </div>
     </div>
   )
