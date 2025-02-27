@@ -1,4 +1,6 @@
 import { BoxberryDataType } from './boxberry.type'
+import { DataLayerVKProps, DataLayerYandexProps } from '../utils/dataLayer/Types'
+
 
 export {};
 
@@ -30,12 +32,22 @@ declare global {
         currency: string
       }
     ) => void
+    dataLayerYandex: {
+      push: (props: DataLayerYandexProps) => void
+    }
+    // dataLayerVK
+    _tmr: {
+      push: (props: DataLayerVKProps) => void
+    }
+    dataLayerVK: {
+      push: (props: DataLayerVKProps) => void
+    }
     cp?: any & {
       CloudPayments: () => any
     }
     Telegram?: any & {
       WebApp: any & {
-        initData: String
+        initData: string
         sendData: (data: any) => void
         expand: () => void
         close: () => void

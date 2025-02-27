@@ -5,6 +5,7 @@ import { WebAppAuthObject } from '../utils/auth'
 import { BoxberryDataType } from '../types/boxberry.type'
 import { CombinedItemType, ContentfulPromocodeType } from '../types/contentful.type'
 import { ItemInCartType } from '../types/site.type'
+import dataLayer from '../utils/dataLayer'
 
 
 export type SortOrderType = 'asc' | 'desc'
@@ -172,13 +173,25 @@ const useStore = create(
         const itemIndex = state.itemsInCart
           .map(itemInCart => itemInCart.id)
           .indexOf(item.id)
+        const itemInCart = itemIndex ? state.itemsInCart[itemIndex] : undefined
+        const quantityUpdate = quantity - (itemInCart?.quantity || 0)
+
+        if (quantityUpdate !== 0)
+          dataLayer({
+            actionType: quantityUpdate > 0 ? 'add' : 'remove',
+            items: [{
+              ...item,
+              quantity: quantityUpdate
+            }]
+          })
 
         return ({
-          itemsInCart: itemIndex !== -1 ? [
-            ...state.itemsInCart.slice(0, itemIndex),
-            ...(quantity > 0 ? [{ ...item, quantity }] : []),
-            ...state.itemsInCart.slice(itemIndex + 1),
-          ]
+          itemsInCart: itemIndex !== -1 ?
+            [
+              ...state.itemsInCart.slice(0, itemIndex),
+              ...(quantity > 0 ? [{ ...item, quantity }] : []),
+              ...state.itemsInCart.slice(itemIndex + 1),
+            ]
             :
             [
               ...state.itemsInCart,

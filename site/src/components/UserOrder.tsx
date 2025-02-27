@@ -101,7 +101,7 @@ const UserOrder: FC<UserOrderProps> = ({
                       :
                       <div className='mx-3 no-select'>
                         {item.quantity}
-                      </div>            
+                      </div>
                     }
                   </div>
                 </div>

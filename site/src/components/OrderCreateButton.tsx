@@ -5,6 +5,7 @@ import useOrderCreate from '../hooks/useOrderCreate'
 import CloudPaymentsButton from './CloudPaymentsButton'
 import Button from './Button'
 import useProceedAfterAddressCheck from '../hooks/useProceedAfterAddressCheck'
+import dataLayer from '../utils/dataLayer'
 
 
 export type OrderCreateButtonProps = {
@@ -19,6 +20,7 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
   const orderCreate = useOrderCreate()
   const proceedAfterAddressCheck = useProceedAfterAddressCheck()
   const { setIsLoading } = useStore()
+  const { itemsInCart } = useStore()
 
   return paymentType === 'Оплата при получении' ?
     <Button
@@ -28,6 +30,10 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
         setIsLoading(true)
         await proceedAfterAddressCheck(orderCreate)
         setIsLoading(false)
+        dataLayer({
+          actionType: 'purchase',
+          items: itemsInCart
+        })
       }}
     >
       ЗАКАЗАТЬ
