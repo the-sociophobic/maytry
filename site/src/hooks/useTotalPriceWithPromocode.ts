@@ -1,8 +1,7 @@
 import useStore from './useStore'
 import useTotalPrice from './useTotalPrice'
 import {
-  calculateItemSubtotalPrice,
-  calculatePromocodePrice
+  calculateItemSubtotalPriceWithPromocode,
 } from '../utils/price'
 
 
@@ -15,18 +14,8 @@ const useTotalPriceWithPromocode = () => {
   if (currentPromocode) {
     if (currentPromocode.items) {
       totalPriceWithPromocode = itemsInCart
-        .map(itemInCart => {
-          const itemInCartInPromocode = currentPromocode.items!
-            .find(promocodeItem => promocodeItem.link === itemInCart.link)
-          const itemInCartIsOnSale = !!itemInCartInPromocode
-          const itemInCartPrice = calculateItemSubtotalPrice(itemInCart)
-          const itemInCartSalePrice = itemInCartIsOnSale ?
-            calculatePromocodePrice(itemInCartPrice, currentPromocode)
-            :
-            itemInCartPrice
-
-          return itemInCartSalePrice
-        })
+        .map(itemInCart =>
+          calculateItemSubtotalPriceWithPromocode(itemInCart, currentPromocode))
         .reduce((a, b) => a + b)
     }
   }

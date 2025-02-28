@@ -12,6 +12,8 @@ import { ScrollToConsumer } from '../App'
 import { getCurrentPrice } from '../utils/price'
 import sortMap from '../utils/sortMap'
 import { CombinedItemType } from '../types/contentful.type'
+import dataLayer from '../utils/dataLayer'
+import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
 
 
 const Main: FC = () => {
@@ -132,7 +134,15 @@ const Main: FC = () => {
       :
       orderSortFn
     )
-    
+  
+  const itemInCart = useCurrentItemInCartBlank(filteredItems[0], 1)
+  useEffect(() => {
+    dataLayer({
+      actionType: 'impressions',
+      items: [itemInCart]
+    })
+  }, [])
+
   return (
     <ScrollToConsumer>
       {({ scrollTo, contentRef }) =>

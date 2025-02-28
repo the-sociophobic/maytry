@@ -10,12 +10,12 @@ import SizeSelector from './SizeSelector'
 import QuantitySelector from './QuantitySelector'
 import parseColors from '../utils/parseColors'
 import { CombinedItemType } from '../types/contentful.type'
-import { ItemInCartType } from '../types/site.type'
 import AddNewLines from './AddNewLines'
 import yandexGoal from '../utils/yandex/goal'
 import { YANDEX_GOAL } from '../utils/yandex/consts'
 import SizesTable from './SizesTable'
 import Dropdown from './Dropdown'
+import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -38,18 +38,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
   }, [currentColor])
 
   const { itemsInCart } = useStore()
-  const currentItemInCartBlank: ItemInCartType = {
-    ...item,
-    ...(currentSize || {
-      size: { id: '', name: '' },
-      price: 0,
-      max_available: 0,
-    }),
-    color: currentColor?.color,
-    quantity: 0,
-    id: currentSize ? currentSize.id : '',
-    item_number: ''
-  }
+  const currentItemInCartBlank = useCurrentItemInCartBlank(item)
   const currentItemInCart = itemsInCart
     .find(itemInCart => itemInCart.id === currentSize?.id)
     || currentItemInCartBlank

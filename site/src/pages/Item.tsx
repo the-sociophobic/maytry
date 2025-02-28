@@ -8,6 +8,8 @@ import ImgDummy from '../components/ImgDummy'
 import { CombinedItemType } from '../types/contentful.type'
 import Footer from '../components/Footer'
 import useSyncCart from '../hooks/useSyncCart'
+import dataLayer from '../utils/dataLayer'
+import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
 
 
 export type ItemProps = CombinedItemType
@@ -25,6 +27,14 @@ const Item: FC<ItemProps> = (item) => {
   const scrollAreaRef = useRef<HTMLDivElement>(null)
   const imagesAreaRef = useRef<HTMLDivElement>(null)
   const imagesAreaMobileRef = useRef<HTMLDivElement>(null)
+
+  const itemInCart = useCurrentItemInCartBlank(item, 1)
+  useEffect(() => {
+    dataLayer({
+      actionType: 'detail',
+      items: [itemInCart]
+    })
+  }, [])
 
   useEffect(() => {
     if (!scrollAreaRef.current)

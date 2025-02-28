@@ -55,9 +55,24 @@ const getInterval = (item: CombinedItemType) => {
   ] as [number, number]
 }
 
-const calculateItemSubtotalPrice = ((item: ItemInCartType) =>
+const calculateItemSubtotalPrice = (item: ItemInCartType) =>
   (item.salePrice || item.price) * item.quantity
-)
+
+const calculateItemSubtotalPriceWithPromocode = (
+  item: ItemInCartType,
+  promocode: ContentfulPromocodeType
+) => {
+  const itemInCartInPromocode = promocode.items!
+    .find(promocodeItem => promocodeItem.link === item.link)
+  const itemInCartIsOnSale = !!itemInCartInPromocode
+  const itemInCartPrice = calculateItemSubtotalPrice(item)
+  const itemInCartSalePrice = itemInCartIsOnSale ?
+    calculatePromocodePrice(itemInCartPrice, promocode)
+    :
+    itemInCartPrice
+
+  return itemInCartSalePrice
+}
 
 const calculateItemsPrice = (items: ItemInCartType[]) =>
   items
@@ -84,6 +99,7 @@ export {
   printPrice,
   getInterval,
   calculateItemSubtotalPrice,
+  calculateItemSubtotalPriceWithPromocode,
   calculateItemsPrice,
   calculatePromocodePrice
 }

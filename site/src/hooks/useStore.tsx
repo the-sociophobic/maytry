@@ -182,7 +182,8 @@ const useStore = create(
             items: [{
               ...item,
               quantity: quantityUpdate
-            }]
+            }],
+            promocode: state.currentPromocode
           })
 
         return ({

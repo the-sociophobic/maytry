@@ -1,5 +1,6 @@
+import { ContentfulPromocodeType } from '../../types/contentful.type'
 import { ItemInCartType } from '../../types/site.type'
-import { calculateItemsPrice } from '../price'
+import { calculateItemSubtotalPriceWithPromocode } from '../price'
 import {
   DataLayerActionType,
   DataLayerYandexProductFieldObjectType,
@@ -10,11 +11,22 @@ import {
 export type DataLayerProps = {
   actionType: DataLayerActionType
   items: ItemInCartType[]
+  promocode?: ContentfulPromocodeType
 }
 
 const VK_ID = 3609099
 
-const dataLayer = ({ actionType, items }: DataLayerProps) => {
+const dataLayer = ({
+  actionType,
+  items,
+  promocode
+}: DataLayerProps) => {
+  const itemPrice = (item: ItemInCartType) =>
+    (promocode && actionType === 'purchase') ?
+      calculateItemSubtotalPriceWithPromocode(item, promocode) / item.quantity
+      :
+      item.price
+
   // Yandex
   if (!window.dataLayerYandex)
     window.dataLayerYandex = window.dataLayerYandex || []
@@ -24,7 +36,7 @@ const dataLayer = ({ actionType, items }: DataLayerProps) => {
     id: item.link,
     name: item.name,
     category: item.categories[0]?.name || '', // TODO
-    price: item.price,
+    price: itemPrice(item),
     quantity: item.quantity,
     variant: `${item.color ? `${item.color?.name} ` : ''}${item.size.name}`,
   }))
@@ -35,32 +47,25 @@ const dataLayer = ({ actionType, items }: DataLayerProps) => {
       [actionType as string]: {
         actionField: { id: '' },
         products: mappedItems,
-        promotions: []
+        promotions: promocode ? [{ id: promocode.id }] : []
       }
     }
   } as DataLayerYandexProps)
 
 
   // VK
-  if (!window.dataLayerVK)
-    window.dataLayerVK = window.dataLayerVK || []
-
-  const { dataLayerVK } = window
   const { _tmr } = window
 
-  _tmr.push({
-    type: 'reachGoal',
-    id: VK_ID,
-    value: calculateItemsPrice(items),
-    goal: actionType,
-    params: { product_id: items[0].link } // TODO
-  })
-  dataLayerVK.push({
-    type: 'reachGoal',
-    id: VK_ID,
-    value: calculateItemsPrice(items),
-    goal: actionType,
-    params: { product_id: items[0].link } // TODO
+  items.forEach(item => {
+    for (let i = 0; i < item.quantity; i++) {
+      _tmr.push({
+        type: 'reachGoal',
+        id: VK_ID,
+        value: itemPrice(item),
+        goal: actionType,
+        params: { product_id: item.link }
+      })
+    }
   })
 }
 

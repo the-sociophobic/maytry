@@ -5,6 +5,8 @@ import useStore from '../hooks/useStore'
 import ItemData from './ItemData'
 import ImgDummy from './ImgDummy'
 import { CombinedItemType } from '../types/contentful.type'
+import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
+import dataLayer from '../utils/dataLayer'
 
 
 export type ItemCardProps = CombinedItemType
@@ -12,10 +14,15 @@ export type ItemCardProps = CombinedItemType
 
 const ItemCard: FC<ItemCardProps> = (item) => {
   const { setHoveredItem } = useStore()
+  const itemInCart = useCurrentItemInCartBlank(item, 1)
 
   return (
     <LinkWrapper
       to={'/item/' + item.link}
+      onClick={() => dataLayer({
+        actionType: 'click',
+        items: [itemInCart]
+      })}
       className='ItemCard'
       onMouseOver={() => setHoveredItem(item)}
       onMouseLeave={() => setHoveredItem(undefined)}

@@ -21,6 +21,7 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
   const proceedAfterAddressCheck = useProceedAfterAddressCheck()
   const { setIsLoading } = useStore()
   const { itemsInCart } = useStore()
+  const { currentPromocode } = useStore()
 
   return paymentType === 'Оплата при получении' ?
     <Button
@@ -32,7 +33,8 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
         setIsLoading(false)
         dataLayer({
           actionType: 'purchase',
-          items: itemsInCart
+          items: itemsInCart,
+          promocode: currentPromocode
         })
       }}
     >

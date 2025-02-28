@@ -1,9 +1,9 @@
 export type DataLayerActionType =
  | 'add'
  | 'purchase'
-//  | 'impressions'
-//  | 'click'
-//  | 'detail'
+ | 'impressions'
+ | 'click'
+ | 'detail'
  | 'remove'
 //  | 'promoView'
 //  | 'promoClick'
