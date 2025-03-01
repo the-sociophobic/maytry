@@ -11,6 +11,7 @@ import Plane from './units/Plane'
 import HeroImg from '../../assets/images/hero-image.jpg'
 import useContentful from '../../hooks/useContentful'
 import useStore from '../../hooks/useStore'
+import Img from '../Img'
 
 
 export type FiberSceneProps = {
@@ -46,22 +47,29 @@ export const FiberScene: React.FC<FiberSceneProps> = ({
 
   return isLoading ? <></> : (
     <div className='Fiber'>
-      <Canvas
+      {false &&
+        <Canvas
+          style={{ width: '100%', height: '100%' }}
+        >
+          <EffectComposer>
+            <Glitch
+              delay={new THREE.Vector2(.25, 1)} // min and max glitch delay
+              duration={new THREE.Vector2(0.6, 1.0)} // min and max glitch duration
+              strength={new THREE.Vector2(0.3, 1.0)} // min and max glitch strength
+              mode={GlitchMode.SPORADIC} // glitch mode
+              active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
+              ratio={0.85} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
+            />
+          </EffectComposer>
+          <Plane img={contentfulHeroImg || HeroImg} />
+          <ambientLight intensity={1} />
+        </Canvas>
+      }
+      <Img
+        src={contentfulHeroImg}
         style={{ width: '100%', height: '100%' }}
-      >
-        <EffectComposer>
-          <Glitch
-            delay={new THREE.Vector2(.25, 1)} // min and max glitch delay
-            duration={new THREE.Vector2(0.6, 1.0)} // min and max glitch duration
-            strength={new THREE.Vector2(0.3, 1.0)} // min and max glitch strength
-            mode={GlitchMode.SPORADIC} // glitch mode
-            active // turn on/off the effect (switches between "mode" prop and GlitchMode.DISABLED)
-            ratio={0.85} // Threshold for strong glitches, 0 - no weak glitches, 1 - no strong glitches.
-          />
-        </EffectComposer>
-        <Plane img={contentfulHeroImg || HeroImg} />
-        <ambientLight intensity={1} />
-      </Canvas>
+        crop
+      />
       {children &&
         <div className='Fiber__children'>
           {children}

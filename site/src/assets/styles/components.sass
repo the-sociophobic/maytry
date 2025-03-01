@@ -10,6 +10,12 @@
     opacity: 0
   &__img
     width: 100%
+    &--portrait,
+    &--landscape
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
     &--portrait
       width: 100%
       height: auto

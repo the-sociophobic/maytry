@@ -6,10 +6,11 @@ import { ContentfulFile } from '../types/contentful.type'
 
 type Props = {
   src?: string
+  style?: object
   className?: string
   file?: ContentfulFile | undefined
   alt?: string
-  noCrop?: boolean
+  crop?: boolean
   urlParams?: string
   onClick?: () => void
 }
@@ -48,6 +49,7 @@ class Img extends React.Component<Props, State> {
         ${this.props.className}
         ${typeof this.state.portrait === "undefined" && "Img--hidden"}
       `}
+      style={this.props.style}
       onClick={this.props.onClick}
     >
       <img
@@ -56,8 +58,8 @@ class Img extends React.Component<Props, State> {
         src={`${this.props.src || this.props?.file?.file?.url || ''}${this.props.urlParams || ''}`}
         className={`
           Img__img
+          Img__img--${this.props.crop && (this.state.portrait ? "portrait" : "landscape")}
         `}
-        // Img__img--${!this.props.noCrop && (this.state.portrait ? "portrait" : "landscape")}
         onLoad={this.setOrientation}
       />
     </div>
