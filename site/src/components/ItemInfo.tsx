@@ -38,7 +38,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
   }, [currentColor])
 
   const { itemsInCart } = useStore()
-  const currentItemInCartBlank = useCurrentItemInCartBlank(item)
+  const currentItemInCartBlank = useCurrentItemInCartBlank(item, 0, currentSize, currentColor)
   const currentItemInCart = itemsInCart
     .find(itemInCart => itemInCart.id === currentSize?.id)
     || currentItemInCartBlank

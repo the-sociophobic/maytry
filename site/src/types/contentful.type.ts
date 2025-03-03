@@ -66,6 +66,13 @@ export interface ContentfulSizeType extends ContentfulItemClass {
   name: string
 }
 
+export type ParsedColorType = {
+  color?: ContentfulColorType
+  sizes: ParsedSizeType[]
+}
+
+export type ParsedSizeType = Pick<ContentfulColorPriceSizeType, 'id' | 'size' | 'price' | 'salePrice' | 'max_available'>
+
 export interface ContentfulColorPriceSizeType extends ContentfulItemClass {
   name: string
   item_number: string
