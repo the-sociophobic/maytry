@@ -3,6 +3,7 @@ import { ItemInCartType } from '../../types/site.type'
 import { calculateItemSubtotalPriceWithPromocode } from '../price'
 import {
   DataLayerActionType,
+  DataLayerVKProps,
   DataLayerYandexProductFieldObjectType,
   DataLayerYandexProps
 } from './Types'
@@ -69,13 +70,15 @@ const dataLayer = ({
 
   items.forEach(item => {
     for (let i = 0; i < item.quantity; i++) {
-      _tmr.push({
+      const vk_data: DataLayerVKProps = {
         type: 'reachGoal',
         id: VK_ID,
         value: itemPrice(item),
         goal: actionType,
         params: { product_id: item.link }
-      })
+      }
+
+      _tmr.push(vk_data)
     }
   })
 
