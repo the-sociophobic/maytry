@@ -26,11 +26,20 @@ const useLoginAfterOrder = () => {
   return loginAfterOrder
 }
 
-const loginAfterOrderRequest = async (props: LoginAfterOrderRequestType) =>
-  post<LoginAfterOrderResponseType>(
-    '/login-after-order',
-    props
-  )
+const loginAfterOrderRequest = async (props: LoginAfterOrderRequestType) => {
+  let res: LoginAfterOrderResponseType = { token: undefined }
+
+  try {
+    res = await post<LoginAfterOrderResponseType>(
+      '/login-after-order',
+      props
+    )
+  } catch(err) {
+    console.log(err)
+  }
+
+  return res
+}
 
 
 export default useLoginAfterOrder

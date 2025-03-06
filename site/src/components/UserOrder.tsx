@@ -8,6 +8,7 @@ import QuantitySelector from '../components/QuantitySelector'
 import ImgDummy from '../components/ImgDummy'
 import useStore from '../hooks/useStore'
 import { ItemInCartType } from '../types/site.type'
+import dataLayer from '../utils/dataLayer'
 
 
 export type UserOrderProps = {
@@ -57,6 +58,10 @@ const UserOrder: FC<UserOrderProps> = ({
               <LinkWrapper
                 to={'/item/' + item.link}
                 className='d-block'
+                onClick={() => dataLayer({
+                  actionType: 'click',
+                  items: [item]
+                })}
               >
                 <ImgDummy img={item.images?.[0]} />
               </LinkWrapper>

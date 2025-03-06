@@ -173,7 +173,7 @@ const useStore = create(
         const itemIndex = state.itemsInCart
           .map(itemInCart => itemInCart.id)
           .indexOf(item.id)
-        const itemInCart = itemIndex ? state.itemsInCart[itemIndex] : undefined
+        const itemInCart = itemIndex !== -1 ? state.itemsInCart[itemIndex] : undefined
         const quantityUpdate = quantity - (itemInCart?.quantity || 0)
 
         if (quantityUpdate !== 0)
@@ -235,7 +235,7 @@ const useStore = create(
       userEmail: '',
       setUserEmail: (userEmail: string) => set({ userEmail }),
 
-      deliveryType: 'Доставка до двери',
+      deliveryType: 'Доставка до двери' as DeliveryTypeType,
       setDeliveryType: (deliveryType: DeliveryTypeType) => set({ deliveryType }),
 
       userAddress: '',
@@ -247,7 +247,7 @@ const useStore = create(
       userZIP_DeliveryPrice: 0,
       setUserZIP_DeliveryPrice: (userZIP_DeliveryPrice: number) => set({ userZIP_DeliveryPrice }),
 
-      paymentType: 'Оплата онлайн',
+      paymentType: 'Оплата онлайн' as PaymentTypeType,
       setPaymentType: (paymentType: PaymentTypeType) => set({ paymentType }),
 
       parselCreateError: undefined,

@@ -12,6 +12,7 @@ export type DataLayerProps = {
   actionType: DataLayerActionType
   items: ItemInCartType[]
   promocode?: ContentfulPromocodeType
+  orderId?: string
 }
 
 const VK_ID = 3609099
@@ -19,8 +20,20 @@ const VK_ID = 3609099
 const dataLayer = ({
   actionType,
   items,
-  promocode
+  promocode,
+  orderId
 }: DataLayerProps) => {
+  const recent_action = localStorage.getItem('recent_action')
+  const recent_action_timestamp = localStorage.getItem('recent_action_timestamp') || '0'
+  const currentTimestamp = (new Date()).getTime()
+
+  if (recent_action === actionType && currentTimestamp - parseInt(recent_action_timestamp) < 50)
+    return
+
+  localStorage.setItem('recent_action', actionType)
+  localStorage.setItem('recent_action_timestamp', currentTimestamp + '')
+
+
   const itemPrice = (item: ItemInCartType) =>
     (promocode && actionType === 'purchase') ?
       calculateItemSubtotalPriceWithPromocode(item, promocode) / item.quantity
@@ -40,17 +53,15 @@ const dataLayer = ({
     quantity: item.quantity,
     variant: `${item.color ? `${item.color?.name} ` : ''}${item.size.name}`,
   }))
-
-  dataLayerYandex.push({
-    ecommerce: {
-      currencyCode: 'RUB',
-      [actionType as string]: {
-        actionField: { id: '' },
-        products: mappedItems,
-        promotions: promocode ? [{ id: promocode.id }] : []
-      }
+  const ecommerce = {
+    currencyCode: 'RUB',
+    [actionType as string]: {
+      actionField: { id: orderId || '' },
+      products: mappedItems,
+      promotions: promocode ? [{ id: promocode.id }] : []
     }
-  } as DataLayerYandexProps)
+  }
+  dataLayerYandex.push({ ecommerce } as DataLayerYandexProps)
 
 
   // VK
@@ -67,7 +78,19 @@ const dataLayer = ({
       })
     }
   })
+
+  console.log(`Ecommerce метка ${actionType} (${actionTypeVocabulary[actionType]})`, ecommerce)
 }
 
 
 export default dataLayer
+
+
+const actionTypeVocabulary = {
+  'add': 'добавление товара в корзину',
+  'purchase': 'покупка',
+  'impressions': 'просмотр списка товаров',
+  'click': 'клик по товару в списке',
+  'detail': 'просмотр товара',
+  'remove': 'удаление товара из корзины',
+}

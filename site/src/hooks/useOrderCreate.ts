@@ -6,8 +6,9 @@ import useStore from '../hooks/useStore'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import parselCreate from '../utils/boxberry/parselCreate'
 import useTotalPriceWithPromocode from './useTotalPriceWithPromocode'
-import { ParselCreateResponseErrorType } from '../types/boxberry.type'
+import { ParselCreateResponseErrorType, ParselCreateResponseType } from '../types/boxberry.type'
 import useLoginAfterOrder from './user/useLoginAfterOrder'
+import dataLayer from '../utils/dataLayer'
 
 
 const useOrderCreate = () => {
@@ -64,6 +65,12 @@ const useOrderCreate = () => {
       setParselCreateError((res as ParselCreateResponseErrorType).err)
       navigate('/fail')
     } else {
+      dataLayer({
+        actionType: 'purchase',
+        items: itemsInCart,
+        promocode: currentPromocode,
+        orderId: (res as ParselCreateResponseType).track
+      })
       emptyCart()
       setCurrentPromocode(undefined)
       queryClient.invalidateQueries({ queryKey: 'contentful' })
