@@ -69,7 +69,7 @@ const useOrderCreate = () => {
         actionType: 'purchase',
         items: itemsInCart,
         promocode: currentPromocode,
-        orderId: (res as ParselCreateResponseType).track
+        orderId: (res as any as { parcel: ParselCreateResponseType }).parcel.track
       })
       emptyCart()
       setCurrentPromocode(undefined)
