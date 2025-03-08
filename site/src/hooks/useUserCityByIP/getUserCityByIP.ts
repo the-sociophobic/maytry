@@ -2,19 +2,32 @@ import { get } from '../../utils/requests'
 
 
 const LOCATION_PROVIDER_URL = 'https://ipapi.co/'
+const USER_CITY_FALLBACK = 'Санкт-Петербург'
 
+const getUserCityByIP = async (user_ip: string | undefined) => {
+  let userCityByIP: string | undefined
 
-const getUserCityByIP = async () => {
-  let res: GetUserLocationResultType | undefined
-  const user_ip = ''
+  if (user_ip) {
+    let res: GetUserLocationResultType | undefined
   
-  try {
-    res = await get<GetUserLocationResultType>(LOCATION_PROVIDER_URL + user_ip + '/json/')
-  } catch (err: any) {
-    console.log('getUserCityByIPError: ', err)
+    try {
+      res = await get<GetUserLocationResultType>(LOCATION_PROVIDER_URL + user_ip + '/json/')
+    } catch (err: any) {
+      console.log('getUserCityByIPError: ', err)
+    }
+
+    if (res)
+      userCityByIP = res?.city
   }
 
-  return res?.city || 'Санкт-Петербург'
+  if (!userCityByIP) {
+    userCityByIP = USER_CITY_FALLBACK
+    console.log('userCityByIP: undefined. Using fallback: ', userCityByIP)
+  } else {
+    console.log('userCityByIP: ', userCityByIP)
+  }
+
+  return userCityByIP
 }
 
 
