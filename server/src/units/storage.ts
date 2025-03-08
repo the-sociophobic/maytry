@@ -1,8 +1,8 @@
 import path from 'path'
 import fs from 'fs'
 
-import delay from './delay'
-import isObject from './isObject'
+import delay from '../utils/delay'
+import isObject from '../utils/isObject'
 
 
 class storage {

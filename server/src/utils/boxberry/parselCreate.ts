@@ -1,7 +1,7 @@
 import axios from 'axios'
 import _ from 'lodash'
 
-import storage from '../storage'
+import storage from '../../units/storage'
 import {
   ParselCreateRequestTypeFE,
   ParselCreateRequestTypeBE,

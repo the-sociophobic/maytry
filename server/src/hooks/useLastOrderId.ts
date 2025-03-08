@@ -1,5 +1,5 @@
 import delay from '../utils/delay'
-import storage from '../utils/storage'
+import storage from '../units/storage'
 
 
 const { BOXBERRY_INITIAL_ORDER_ID } = process.env

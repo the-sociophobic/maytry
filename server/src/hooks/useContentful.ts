@@ -13,7 +13,7 @@ import {
   ContentfulSizeType,
 } from '../types/contentful.type'
 import { getContentfulData } from '../utils/contentful'
-import storage from '../utils/storage'
+import storage from '../units/storage'
 
 
 const useContentful = async (): Promise<ContentfulDataTypeBE> => {
