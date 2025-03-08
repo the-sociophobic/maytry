@@ -49,7 +49,7 @@ const dataLayer = ({
   const mappedItems = items.map((item): DataLayerYandexProductFieldObjectType => ({
     id: item.link,
     name: item.name,
-    category: item.categories[0]?.name || '', // TODO
+    category: item.categories?.[0]?.name || '', // TODO
     price: itemPrice(item),
     quantity: item.quantity,
     variant: `${item.color ? `${item.color?.name} ` : ''}${item.size.name}`,

@@ -9,6 +9,7 @@ export type ResponseErrorType = {
 export type RegisterIn1CRequestType = {
   orders: string[]
 }
+export type RegisterIn1CResponseType = RegisterIn1CRequestType
 
 export type LoginRequestType = Pick<UserType, 'email' | 'password'>
 export type LoginResponseType = Pick<UserType, 'token'>

@@ -11,6 +11,7 @@ import Login from '../routes/auth/Login'
 import LoginAfterOrder from '../routes/auth/LoginAfterOrder'
 import Register from '../routes/auth/Register'
 import User from '../routes/auth/User'
+import UserOrders from '../routes/auth/UserOrders'
 
 import { RouteType } from '../types/routes.type'
 
@@ -86,7 +87,7 @@ const routes: RouteType[] = [
   {
     type: 'POST',
     path: '/user-orders',
-    fn: User
+    fn: UserOrders
   },
   // AUTHORIZATION END
 ]

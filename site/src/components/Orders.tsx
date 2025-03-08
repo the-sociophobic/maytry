@@ -26,13 +26,16 @@ const Orders: FC = () => {
   }, [ordersIn1C])
 
   const queryClient = useQueryClient()
+  const { setIsLoading } = useStore()
   const syncOrdersIn1C = async () => {
+    setIsLoading(true)
     try {
       await post('/register-orders-in-1C', { orders: checkedOrders })
       queryClient.invalidateQueries({ queryKey: 'orders-in-1C' })
     } catch(err) {
       console.log(err)
     }
+    setIsLoading(false)
   }
 
   const { hideCheckedOrders } = useStore()

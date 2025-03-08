@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 
 import Button from '../components/Button'
 import Orders from '../components/Orders'
@@ -21,18 +21,18 @@ export default Admin
 
 
 const Authotized: FC = () => {
-  const [dataState, setDataState] = useState('loaded')
+  const { isLoading } = useStore()
+  const { setIsLoading } = useStore()
+
   const updateData = async () => {
-    setDataState('loading')
-    const data = await get('/update-data')
-    setDataState('loaded')
-    return data
+    setIsLoading(true)
+    await get('/update-data')
+    setIsLoading(false)
   }
   const updateCombinedData = async () => {
-    setDataState('loading')
-    const data = await get('/update-combined-data')
-    setDataState('loaded')
-    return data
+    setIsLoading(true)
+    await get('/update-combined-data')
+    setIsLoading(false)
   }
 
   return (
@@ -43,17 +43,15 @@ const Authotized: FC = () => {
             black
             className='d-inline-block me-3'
             onClick={updateData}
-            disabled={dataState === 'loading'}
           >
-            {dataState === 'loading' ? 'обновление...' : 'Обновить данные с 1С и contentful'}
+            {isLoading ? 'обновление...' : 'Обновить данные с 1С и contentful'}
           </Button>
           <Button
             black
             className='d-inline-block'
             onClick={updateCombinedData}
-            disabled={dataState === 'loading'}
           >
-            {dataState === 'loading' ? 'обновление...' : 'Обновить формат данных'}
+            {isLoading ? 'обновление...' : 'Обновить формат данных'}
           </Button>
         </div>
       </div>
