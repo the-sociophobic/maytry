@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express'
+import axios from 'axios'
 import cors from 'cors'
 import _ from 'lodash'
 import 'dotenv/config'
@@ -21,6 +22,9 @@ import generateToken from './utils/generateToken'
 import generatePassword from './utils/generatePassword'
 import sendEmailWithRegistration from './utils/unisender/sendEmailWithRegistration'
 import {
+  CityByIPRequestType,
+  CityByIPResponseType,
+  GetUserLocationResultType,
   LoginAfterOrderRequestType,
   LoginAfterOrderResponseType,
   LoginRequestType,
@@ -285,6 +289,32 @@ app.post('/user-orders', async (
   }
 })
 // AUTHORIZATION END
+
+const LOCATION_PROVIDER_URL = 'https://ipapi.co/'
+
+app.post('/city-by-ip', async (
+  request: Request<{}, {}, CityByIPRequestType>,
+  response: Response<CityByIPResponseType | ResponseErrorType>
+) => {
+  const { body: { ip } } = request
+  let userCityByIP: string | undefined
+
+  if (ip) {
+    let res: GetUserLocationResultType | undefined
+  
+    try {
+      res = (await axios.get<GetUserLocationResultType>(LOCATION_PROVIDER_URL + ip + '/json/')).data
+    } catch (err: any) {
+      console.log('getUserCityByIPError: ', err)
+    }
+
+    if (res)
+      userCityByIP = res?.city
+  }
+
+  response.send({ city: userCityByIP })
+})
+
 
 const init = () => {
   app.listen(SERVER_PORT, () => console.log(`Running on port ${SERVER_PORT}`))

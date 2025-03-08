@@ -14,7 +14,6 @@ const BoxberryPanel: FC = () => {
   useEffect(
     () => {
       if (userCity.length === 0 && userCityByIP) {
-        console.log('userCityByIP: ', userCityByIP)
         setUserCity(userCityByIP)
       }
     },
@@ -49,7 +48,7 @@ const BoxberryPanel: FC = () => {
     if (
       boxberry_map_ref.current &&
       boxberry_map_ref.current.children.length === 0 &&
-      userCity
+      userCity.length > 0
     ) {
       const { boxberry } = window
 
@@ -84,6 +83,11 @@ const BoxberryPanel: FC = () => {
 
   return (
     <div className='Boxberry'>
+      {!userCity &&
+        <p className='mt-3'>
+          Определяем город...
+        </p>
+      }
       <div
         id='boxberry_map'
         ref={boxberry_map_ref}

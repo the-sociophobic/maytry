@@ -19,8 +19,6 @@ const getUserIP = async () => {
 
   try {
     const resString = await get<string>('https://api.ipify.org?format=jsonp&callback=?')
-    console.log(typeof resString)
-    console.log(resString)
     const resStringClean = resString.replace(/\?|\(|\)|;/g, '')
     const resObj: getUserIPResponceType = JSON.parse(resStringClean)
     
