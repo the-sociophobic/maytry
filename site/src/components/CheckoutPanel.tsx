@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import useStore, { PaymentTypeType } from '../hooks/useStore'
+import useStore from '../hooks/useStore'
 import useTotalPrice from '../hooks/useTotalPrice'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import { printPrice } from '../utils/price'
@@ -11,6 +11,7 @@ import Button from './Button'
 import useContentful from '../hooks/useContentful'
 import useTotalPriceWithPromocode from '../hooks/useTotalPriceWithPromocode'
 import countableModels from '../utils/countable/models'
+import { PaymentTypeType } from '../types/frontend.type'
 
 
 const CheckoutPanel: FC = () => {

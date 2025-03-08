@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import useStore, { DeliveryTypeType } from '../hooks/useStore'
+import useStore from '../hooks/useStore'
 import Input from '../components/Input'
 import fixPhone from '../utils/fixPhone'
 import fixEmail from '../utils/fixEmail'
@@ -10,14 +10,10 @@ import Radio from './Radio'
 import days from '../utils/countable/days'
 import yandexGoal from '../utils/yandex/goal'
 import { YANDEX_GOAL } from '../utils/yandex/consts'
+import { DeliveryTypeType } from '../types/frontend.type'
 
 
-export type UserDataInputPanelProps = {}
-
-
-const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
-
-}) => {
+const UserDataInputPanel: FC = () => {
   const { userFullName } = useStore()
   const { setUserFullName } = useStore()
   const { userPhone } = useStore()
@@ -41,7 +37,10 @@ const UserDataInputPanel: FC<UserDataInputPanelProps> = ({
   useEffect(() => {
     if (deliveryType === 'Доставка до двери')
       setUserZIP('')
-  }, [deliveryType])
+  }, [
+    deliveryType,
+    setUserZIP
+  ])
 
   return (
     <>

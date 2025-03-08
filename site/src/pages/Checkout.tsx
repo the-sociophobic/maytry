@@ -2,9 +2,10 @@ import { FC } from 'react'
 
 import CheckoutPanel from '../components/CheckoutPanel'
 import UserDataInputPanel from '../components/UserDataInputPanel'
-import useStore, { DeliveryTypeType } from '../hooks/useStore'
+import useStore from '../hooks/useStore'
 import BoxberryPanel from '../components/BoxberryPanel'
 import Radio from '../components/Radio'
+import { DeliveryTypeType } from '../types/frontend.type'
 
 
 const Checkout: FC = () => {

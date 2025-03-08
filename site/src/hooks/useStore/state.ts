@@ -3,13 +3,12 @@ import { BoxberryDataType } from '../../types/boxberry.type'
 import { CombinedItemType, ContentfulPromocodeType } from '../../types/contentful.type'
 import { ItemInCartType } from '../../types/site.type'
 import dataLayer from '../../utils/dataLayer'
-
-
-export type SortOrderType = 'asc' | 'desc'
-export type MainPageViewType = 'IMG' | 'TXT'
-// export type SortByType = 'Default' | 'Category' | 'Style' | 'Season'
-export type DeliveryTypeType = 'Доставка до двери' | 'Пункт выдачи Boxberry'
-export type PaymentTypeType = 'Оплата онлайн' | 'Оплата долями CloudPayments' | 'Оплата при получении'
+import {
+  DeliveryTypeType,
+  MainPageViewType,
+  PaymentTypeType,
+  SortOrderType
+} from '../../types/frontend.type'
 
 
 export type StateType = {
