@@ -1,14 +1,27 @@
-import axios from 'axios'
+import { get } from '../../utils/requests'
 
 
-const getUserLocation = async () =>
-  (await axios.get<getUserLocationResult>('https://ipapi.co/json/')).data
+const LOCATION_PROVIDER_URL = 'https://ipapi.co/'
 
 
-export default getUserLocation
+const getUserCityByIP = async () => {
+  let res: GetUserLocationResultType | undefined
+  const user_ip = ''
+  
+  try {
+    res = await get<GetUserLocationResultType>(LOCATION_PROVIDER_URL + user_ip + '/json/')
+  } catch (err: any) {
+    console.log('getUserCityByIPError: ', err)
+  }
+
+  return res?.city || 'Санкт-Петербург'
+}
 
 
-export type getUserLocationResult = {
+export default getUserCityByIP
+
+
+export type GetUserLocationResultType = {
   asn: string
   city: string
   continent_code: string

@@ -1,41 +1,46 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useCallback, useEffect, useRef } from 'react'
 
 import useStore from '../hooks/useStore'
-import getUserLocation from '../utils/getIP'
 import useTotalPrice from '../hooks/useTotalPrice'
 import { BoxberryDataType } from '../types/boxberry.type'
+import useUserCityByIP from '../hooks/useUserCityByIP'
 
 
-export type BoxberryPanelProps = {}
-
-
-const BoxberryPanel: FC<BoxberryPanelProps> = ({
-
-}) => {
+const BoxberryPanel: FC = () => {
   const { userCity } = useStore()
   const { setUserCity } = useStore()
-  const updateUserCity = async () => {
-    setUserCity((await getUserLocation()).city)
-  }
+  const { data: userCityByIP } = useUserCityByIP()
 
   useEffect(
     () => {
-      if (userCity.length === 0)
-        updateUserCity()
+      if (userCity.length === 0 && userCityByIP) {
+        console.log('userCityByIP: ', userCityByIP)
+        setUserCity(userCityByIP)
+      }
     },
-    [userCity, updateUserCity]
+    [
+      userCity,
+      setUserCity,
+      userCityByIP
+    ]
   )
 
   const { setBoxberryData } = useStore()
   const { setUserZIP } = useStore()
   const { setUserAddress } = useStore()
-  const { boxberry } = window
-  const boxberryCallbackFn = (result: BoxberryDataType) => {
-    setBoxberryData(result)
-    setUserZIP(result.zip)
-    setUserCity(result.name)
-    setUserAddress(result.address.replace(`${result.zip}, ${result.name} г, `, ''))
-  }
+  const boxberryCallbackFn = useCallback(
+    (result: BoxberryDataType) => {
+      setBoxberryData(result)
+      setUserZIP(result.zip)
+      setUserCity(result.name)
+      setUserAddress(result.address.replace(`${result.zip}, ${result.name} г, `, ''))
+    }, [
+      setBoxberryData,
+      setUserZIP,
+      setUserCity,
+      setUserAddress,
+    ]
+  )
 
   const boxberry_map_ref = useRef<HTMLDivElement>(null)
   const totalPrice = useTotalPrice()
@@ -46,6 +51,8 @@ const BoxberryPanel: FC<BoxberryPanelProps> = ({
       boxberry_map_ref.current.children.length === 0 &&
       userCity
     ) {
+      const { boxberry } = window
+
       boxberry.openOnPage('boxberry_map')
       boxberry.open(
         boxberryCallbackFn,
@@ -68,7 +75,12 @@ const BoxberryPanel: FC<BoxberryPanelProps> = ({
       //   'Екатеринбург','010', 574, 5, 0, 200, 200, 200
       // )
     }
-  }, [userCity])
+  }, [
+    boxberry_map_ref,
+    boxberryCallbackFn,
+    userCity,
+    totalPrice
+  ])
 
   return (
     <div className='Boxberry'>
