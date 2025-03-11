@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import useStore from '../hooks/useStore'
 import LinkWrapper from '../components/LinkWrapper'
@@ -16,6 +16,11 @@ const Cart: FC = () => {
 
   const syncCart = useSyncCart()
   syncCart()
+
+  useEffect(() => {
+    if (itemsInCart.length > 0)
+      yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING_ITEM })
+  }, [itemsInCart])
 
   return (
     <div className='Cart'>
@@ -37,7 +42,9 @@ const Cart: FC = () => {
                 <div className='d-flex flex-row justify-content-between py-3'>
                   <LinkWrapper
                     to='/checkout'
-                    onClick={() => yandexGoal({ goalId: YANDEX_GOAL.STARTED_FILLING_ITEM })}
+                    onClick={() => {
+                      yandexGoal({ goalId: YANDEX_GOAL.ORDER })
+                    }}
                   // className='d-inline-block'
                   >
                     <Button black>
