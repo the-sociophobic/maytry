@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import Button from '../components/Button'
 import useTotalPrice from '../hooks/useTotalPrice'

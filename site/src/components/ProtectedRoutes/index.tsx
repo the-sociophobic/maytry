@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 
-import { RouterProvider, createHashRouter } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router/dom'
 
 import Loader from '../Loader'
 import routes, { RouteType } from './routes'
@@ -27,21 +28,40 @@ const ProtectedRoutes: React.FC = () => {
     if (logged !== !!user)
       setLogged(!!user)
   }, [logged, setLogged, user, userIsLoading])
-
+  
   const router = useMemo(
-    () => createHashRouter(
-      mapRoutes([
+    () => {
+      const routesMapped = mapRoutes([
         ...routes,
         ...(!contentful ? [] : mapContentfulRoutes(contentful))
       ])
-    )
+      
+      const router = createBrowserRouter(
+        routesMapped,
+        // Updating to react-router 7 tutorial
+        // { future: {
+        //   v7_relativeSplatPath: true,
+        //   v7_fetcherPersist: true,
+        //   v7_normalizeFormMethod: true,
+        //   v7_partialHydration: true,
+        //   v7_skipActionErrorRevalidation: true,
+        // } },
+      )
+
+      return router
+    }
     , [contentful]
   )
 
   if (!contentful)
     return <Loader />
 
-  return <RouterProvider router={router} />
+  return (
+    <RouterProvider
+      router={router}
+      // future={{ v7_startTransition: true }} // Updating to react-router 7 tutorial
+    />
+  )
 }
 
 
@@ -53,7 +73,9 @@ const mapRoutes = (
 ) =>
   routes.map(route => ({
     key: route.to,
+    // path: '..' + route.to, // Updating to react-router 7 tutorial
     path: route.to,
+    title: 'maytry: ' + (route.title || ''),
     element: (
       <Layout title={route.title} >
         {route.Comp}

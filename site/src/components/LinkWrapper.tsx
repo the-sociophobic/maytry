@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from 'react'
 
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router'
 
 
 export type LinkWrapperProps = {

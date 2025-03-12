@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect } from 'react'
 
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 import useTitle from '../hooks/useTitle'
 import { LinkWrapperProps } from './LinkWrapper'
@@ -28,7 +28,7 @@ const Layout: FC<LayoutProps> = ({
   children,
   // navigations,
 }) => {
-  useTitle(title)
+  // useTitle(title)
   const location = useLocation()
 
   const { setShowExtendedFilter } = useStore()

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 import useStore from '../hooks/useStore'
 import Color from './Color'
