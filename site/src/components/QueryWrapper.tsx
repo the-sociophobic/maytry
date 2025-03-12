@@ -1,6 +1,10 @@
 import React from 'react'
 
-import { QueryClient, QueryClientProvider } from 'react-query'
+import {
+  QueryClient,
+  QueryClientProvider,
+  Hydrate
+} from 'react-query'
 
 
 export type QueryWrapperProps = {
@@ -21,7 +25,9 @@ const QueryWrapper: React.FC<QueryWrapperProps> = ({
   children
 }) =>
   <QueryClientProvider client={queryClient}>
-    {children}
+    <Hydrate state={{}}>
+      {children}
+    </Hydrate>
   </QueryClientProvider>
 
 

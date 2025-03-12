@@ -1,9 +1,10 @@
 import { useRef, createContext, useEffect, RefObject } from 'react'
 
 import ProtectedRoutes from './components/ProtectedRoutes'
-import QueryWrapper from './components/QueryWrapper'
 import useStore from './hooks/useStore'
 import Loader from './components/Loader'
+
+import './assets/styles/index.sass'
 
 
 export type ScrollToContextType = {
@@ -56,19 +57,17 @@ function App() {
   ])
 
   return (
-    <QueryWrapper>
-      <div className='App'>
-        <div className='content' ref={contentRef}>
-          <ScrollToProvider value={{
-            scrollTo,
-            contentRef
-          }}>
-            <ProtectedRoutes />
-          </ScrollToProvider>
-        </div>
-        {isLoading && <Loader />}
+    <div className='App'>
+      <div className='content' ref={contentRef}>
+        <ScrollToProvider value={{
+          scrollTo,
+          contentRef
+        }}>
+          <ProtectedRoutes />
+        </ScrollToProvider>
       </div>
-    </QueryWrapper>
+      {isLoading && <Loader />}
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
-import { isEqual } from 'lodash'
+// import { isEqual } from 'lodash'
 
-import { ContentfulColorPriceSizeType, ParsedColorType } from '../types/contentful.type'
+import { ContentfulColorPriceSizeType, ContentfulColorType, ParsedColorType } from '../types/contentful.type'
 
 
 const parseColors = (color_price_size: ContentfulColorPriceSizeType[] | undefined) => {
@@ -33,3 +33,8 @@ const parseColors = (color_price_size: ContentfulColorPriceSizeType[] | undefine
 
 
 export default parseColors
+
+
+const isEqual = (A: ContentfulColorType | undefined, B: ContentfulColorType | undefined) => {
+  return A?.colorCode === B?.colorCode
+}

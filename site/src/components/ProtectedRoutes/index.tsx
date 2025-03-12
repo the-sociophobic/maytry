@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
@@ -29,32 +29,25 @@ const ProtectedRoutes: React.FC = () => {
       setLogged(!!user)
   }, [logged, setLogged, user, userIsLoading])
   
-  const router = useMemo(
-    () => {
-      const routesMapped = mapRoutes([
-        ...routes,
-        ...(!contentful ? [] : mapContentfulRoutes(contentful))
-      ])
-      
-      const router = createBrowserRouter(
-        routesMapped,
-        // Updating to react-router 7 tutorial
-        // { future: {
-        //   v7_relativeSplatPath: true,
-        //   v7_fetcherPersist: true,
-        //   v7_normalizeFormMethod: true,
-        //   v7_partialHydration: true,
-        //   v7_skipActionErrorRevalidation: true,
-        // } },
-      )
-
-      return router
-    }
-    , [contentful]
-  )
-
   if (!contentful)
     return <Loader />
+
+  const routesMapped = mapRoutes([
+    ...routes,
+    ...mapContentfulRoutes(contentful)
+  ])
+  
+  const router = createBrowserRouter(
+    routesMapped,
+    // Updating to react-router 7 tutorial
+    // { future: {
+    //   v7_relativeSplatPath: true,
+    //   v7_fetcherPersist: true,
+    //   v7_normalizeFormMethod: true,
+    //   v7_partialHydration: true,
+    //   v7_skipActionErrorRevalidation: true,
+    // } },
+  )
 
   return (
     <RouterProvider

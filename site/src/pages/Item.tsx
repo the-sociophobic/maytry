@@ -14,6 +14,13 @@ import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
 
 export type ItemProps = CombinedItemType
 
+export type ItemRouteParams = {
+  params: {
+    productId: string
+  }
+}
+
+
 
 const HEADER_HEIGHT = 70
 const IMAGE_WIDTH = 1120
@@ -241,3 +248,18 @@ const Item: FC<ItemProps> = (item) => {
 
 
 export default Item
+
+
+export function meta({ params: { productId } }: ItemRouteParams) {
+  return [
+    { title: productId },
+    {
+      property: "og:title",
+      content: "Very cool app",
+    },
+    {
+      name: "description",
+      content: "This app is the best",
+    },
+  ]
+}

@@ -1,13 +1,21 @@
 import { FC, ReactNode, useEffect } from 'react'
 
-import { useLocation } from 'react-router'
+import {
+  useLocation,
+  Scripts,
+  ScrollRestoration,
+  Meta,  
+} from 'react-router'
 
-import useTitle from '../hooks/useTitle'
+// import useTitle from '../hooks/useTitle'
 import { LinkWrapperProps } from './LinkWrapper'
 import { ButtonProps } from './Button'
 import Header from './Header'
 import Footer from './Footer'
 import useStore from '../hooks/useStore'
+import QueryWrapper from './QueryWrapper'
+
+// import appStylesHref from "./app.css?url"
 
 
 export type NavigationProps = Pick<LinkWrapperProps, 'disabled' | 'to'> & Pick<ButtonProps, 'title'> & {
@@ -23,7 +31,7 @@ export type LayoutProps = {
 
 
 const Layout: FC<LayoutProps> = ({
-  title,
+  // title,
   // description,
   children,
   // navigations,
@@ -35,16 +43,34 @@ const Layout: FC<LayoutProps> = ({
   useEffect(() => {
     if (location.pathname !== '/')
       setShowExtendedFilter(false)
-  }, [location.pathname])
+  }, [
+    location.pathname,
+    setShowExtendedFilter
+  ])
 
   return (
-    <>
-      <Header />
-      {children}
-      {!location.pathname.includes('/item/') &&
-        <Footer />
-      }
-    </>
+    <html lang="en">
+    <head>
+      <meta charSet="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      {/* <link
+        rel="stylesheet"
+        href={appStylesHref}
+      /> */}
+      <Meta />
+    </head>
+    <body>
+      <QueryWrapper>
+        <Header />
+        {children}
+        {!location.pathname.includes('/item/') &&
+          <Footer />
+        }
+      </QueryWrapper>
+      <ScrollRestoration />
+      <Scripts />
+    </body>
+  </html>
   )
 }
 
