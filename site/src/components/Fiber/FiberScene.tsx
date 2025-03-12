@@ -15,8 +15,8 @@ import Img from '../Img'
 
 
 export type FiberSceneProps = {
-  contentRef: RefObject<HTMLDivElement>
-  catalogRef: RefObject<HTMLDivElement>
+  contentRef: RefObject<HTMLDivElement | null>
+  catalogRef: RefObject<HTMLDivElement | null>
   children?: ReactNode
 }
 

@@ -2,76 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script checks to see if a redirect is present in the query string,
-      // converts it back into the correct url and adds it to the
-      // browser's history using window.history.replaceState(...),
-      // which won't cause the browser to attempt to load the new url.
-      // When the single page app is loaded further down in this file,
-      // the correct url will be waiting in the browser's history for
-      // the single page app to route accordingly.
-      (function(l) {
-        if (l.search[1] === '/' ) {
-          var decoded = l.search.slice(1).split('&').map(function(s) { 
-            return s.replace(/~and~/g, '&')
-          }).join('?');
-          window.history.replaceState(null, null,
-              l.pathname.slice(0, -1) + decoded + l.hash
-          );
-        }
-      }(window.location))
-    </script>
-
-    <script type="text/javascript" src="//points.boxberry.ru/js/boxberry.js"> </script>
-
-    <script src="https://widget.cloudpayments.ru/bundles/cloudpayments.js"></script>
-      
-    <title>maytry</title>
+    <title>Vite + React + TS</title>
+    <!--app-head-->
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript" >
-      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-
-      ym(95223283, "init", {
-          clickmap:true,
-          trackLinks:true,
-          accurateTrackBounce:true,
-          webvisor:true,
-          ecommerce:"dataLayerYandex"
-      });
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/95223283" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
-    <!-- Top.Mail.Ru counter -->
-    <script type="text/javascript">
-      var _tmr = window._tmr || (window._tmr = []);
-      _tmr.push({id: "3609099", type: "pageView", ecommerce: "dataLayerVK", start: (new Date()).getTime()});
-      (function (d, w, id) {
-        if (d.getElementById(id)) return;
-        var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
-        ts.src = "https://top-fwz1.mail.ru/js/code.js";
-        var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
-        if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
-      })(document, window, "tmr-code");
-    </script>
-    <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3609099;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
-    <!-- /Top.Mail.Ru counter -->
-  
-
+    <div id="root"><!--app-html--></div>
+    <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>

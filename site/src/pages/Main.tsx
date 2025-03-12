@@ -8,15 +8,28 @@ import useStore from '../hooks/useStore'
 import ItemLine from '../components/ItemLine'
 import { FiberScene } from '../components/Fiber/FiberScene'
 import Button from '../components/Button'
-import { ScrollToConsumer } from '../App'
 import { getCurrentPrice } from '../utils/price'
 import sortMap from '../utils/sortMap'
 import { CombinedItemType } from '../types/contentful.type'
 import dataLayer from '../utils/dataLayer'
 import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
+import { ScrollToConsumer } from '../components/ScrollTo'
 
 
 const Main: FC = () => {
+  /// ???
+  const { setShowStartBanner } = useStore()
+  const { setIsLoading } = useStore()
+
+  useEffect(() => {
+    setShowStartBanner(true)
+    setIsLoading(false)
+  }, [
+    setShowStartBanner,
+    setIsLoading
+  ])
+  /// ???
+
   const { showStartBanner } = useStore()
 
   const { showSearch } = useStore()
