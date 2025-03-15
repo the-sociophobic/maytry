@@ -7,10 +7,11 @@ import useUserIP from '../useUserIP'
 const useUserCityByIP = () => {
   const { data: user_ip } = useUserIP()
   
-  return useQuery(
-    ['orders', user_ip],
-    () => getUserCityByIP(user_ip)
-  )
+  return useQuery({
+    queryKey: ['orders', user_ip],
+    queryFn: async () => getUserCityByIP(user_ip),
+    initialData: undefined,
+  })
 }
 
 

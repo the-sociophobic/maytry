@@ -4,7 +4,11 @@ import { get } from '../utils/requests'
 import { OrderType } from '../types/boxberry.type'
 
 
-const useOrders = () => useQuery('orders', getOrders)
+const useOrders = () => useQuery({
+    queryKey: ['orders'],
+    queryFn: getOrders,
+    initialData: [],
+  })
 
 const getOrders = async () => get<OrderType[]>('/orders')
 

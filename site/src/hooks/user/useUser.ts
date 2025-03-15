@@ -11,7 +11,11 @@ import useStore from '../useStore'
 const useUser = () => {
   const { token } = useStore()
 
-  return useQuery(['user', token], () => getUser({ token }))
+  return useQuery({
+    queryKey: ['user', token],
+    queryFn: async () => getUser({ token }),
+    initialData: undefined,
+  })
 }
 
 const getUser = async (

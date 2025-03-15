@@ -24,7 +24,6 @@ export { ScrollToConsumer }
 function App() {
   const { setShowStartBanner } = useStore()
   const { setIsLoading } = useStore()
-  const { isLoading } = useStore()
   const contentRef = useRef<HTMLDivElement>(null)
   const scrollTo = (y: number) => {
     let scrollFrameCount = 0
@@ -66,7 +65,7 @@ function App() {
           <ProtectedRoutes />
         </ScrollToProvider>
       </div>
-      {isLoading && <Loader />}
+      <Loader />
     </div>
   )
 }

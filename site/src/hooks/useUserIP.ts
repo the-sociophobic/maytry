@@ -3,7 +3,11 @@ import { get } from '../utils/requests'
 
 
 const useUserIP = () => {
-  return useQuery('ip', getUserIP)
+  return useQuery({
+    queryKey: ['ip'],
+    queryFn: getUserIP,
+    initialData: undefined,
+  })
 }
 
 
