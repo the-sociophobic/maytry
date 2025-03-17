@@ -55,11 +55,6 @@ const routes: RouteType[] = [
     Comp: <Fail />,
   },
   {
-    to: '/account',
-    title: 'Корзина',
-    Comp: <Cart />,
-  },
-  {
     to: '/admin',
     title: 'Кабинет',
     Comp: <Admin />,

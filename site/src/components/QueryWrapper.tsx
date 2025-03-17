@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
   QueryClient,
@@ -12,23 +12,32 @@ export type QueryWrapperProps = {
 }
 
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      retry: 0
-    }
-  }
-})
-
 const QueryWrapper: React.FC<QueryWrapperProps> = ({
   children
-}) =>
-  <QueryClientProvider client={queryClient}>
-    <Hydrate state={{}}>
-      {children}
-    </Hydrate>
-  </QueryClientProvider>
+}) => {
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            // refetchOnWindowFocus: false,
+            // retry: 0,
+            staleTime: 60 * 1000
+          }
+        }
+      })
+  )
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Hydrate
+        // state={{}}
+      >
+        {children}
+      </Hydrate>
+    </QueryClientProvider>
+  )
+}
 
 
 export default QueryWrapper
