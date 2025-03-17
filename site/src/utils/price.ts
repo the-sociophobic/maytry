@@ -27,16 +27,19 @@ const getCurrentPrice = (item: CombinedItemType) => {
   return price
 }
 
-const printPrice = (price: number) => {
+const printPrice = (_price: number) => {
+  const price = Math.abs(_price)
   const priceString = price.toFixed(0) + ''
   const priceStringOffset = priceString.length % 3 - 1
-
-  return [...priceString].map((char, charIndex) =>
+  const priceWithSpaces = [...priceString].map((char, charIndex) =>
     charIndex >= priceStringOffset && (charIndex - priceStringOffset) % 3 === 0 ?
       char + ' '
       :
       char
-  ).join('') + ' RUB'
+  ).join('')
+  const priceWithSign = Math.sign(_price) === -1 ? `-${priceWithSpaces}` : priceWithSpaces
+
+  return priceWithSign + ' RUB'
 }
 
 const getInterval = (item: CombinedItemType) => {

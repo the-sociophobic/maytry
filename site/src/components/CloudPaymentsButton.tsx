@@ -2,13 +2,12 @@ import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Button from '../components/Button'
-import useTotalPrice from '../hooks/useTotalPrice'
 import { printPrice } from '../utils/price'
-import useDeliveryPrice from '../hooks/useDeliveryPrice'
 import useOrderCreate from '../hooks/useOrderCreate'
 import useCloudpayments from '../hooks/useCloudpayments'
 import useProceedAfterAddressCheck from '../hooks/useProceedAfterAddressCheck'
 import useStore from '../hooks/useStore'
+import useTotalPriceWithPromocodeAndBoxberry from '../hooks/useTotalPriceWithPromocodeAndBoxberry'
 
 
 export type CloudPaymentsButtonProps = {
@@ -19,9 +18,7 @@ export type CloudPaymentsButtonProps = {
 const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
   disabled
 }) => {
-  const totalPrice = useTotalPrice()
-  const deliveryPrice = useDeliveryPrice()
-  const totalPriceWithBoxberry = totalPrice + deliveryPrice
+  const totalPriceWithPromocodeAndBoxberry = useTotalPriceWithPromocodeAndBoxberry()
 
   const proceedAfterAddressCheck = useProceedAfterAddressCheck()
   const orderCreate = useOrderCreate()
@@ -35,7 +32,7 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
 
   const onClick = () => {
     proceedAfterAddressCheck(async () => openCloudpayments({
-      amount: totalPriceWithBoxberry,
+      amount: totalPriceWithPromocodeAndBoxberry,
       description: itemsList,
       onSuccess: (_options) => console.log('onSuccess', _options),
       onFail: () => {
@@ -58,7 +55,7 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
       disabled={disabled}
       onClick={onClick}
     >
-      ОПЛАТИТЬ {printPrice(totalPriceWithBoxberry)}
+      ОПЛАТИТЬ {printPrice(totalPriceWithPromocodeAndBoxberry)}
     </Button>
   )
 }

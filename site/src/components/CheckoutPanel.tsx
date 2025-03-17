@@ -12,6 +12,7 @@ import useContentful from '../hooks/useContentful'
 import useTotalPriceWithPromocode from '../hooks/useTotalPriceWithPromocode'
 import countableModels from '../utils/countable/models'
 import { PaymentTypeType } from '../types/frontend.type'
+import useTotalPriceWithPromocodeAndBoxberry from '../hooks/useTotalPriceWithPromocodeAndBoxberry'
 
 
 const CheckoutPanel: FC = () => {
@@ -75,10 +76,8 @@ const CheckoutPanel: FC = () => {
 
   // const totalPriceWithBoxberry = totalPrice + deliveryPrice
   const totalPriceWithPromocode = useTotalPriceWithPromocode()
-  const totalPriceWithPromocodeAndBoxberry = totalPriceWithPromocode + deliveryPrice
-  const promocodePrint = currentPromocode && printPrice(
-    currentPromocode.p_type ? (totalPrice - totalPriceWithPromocode) : currentPromocode.amount
-  )
+  const totalPriceWithPromocodeAndBoxberry = useTotalPriceWithPromocodeAndBoxberry()
+  const promocodePrint = currentPromocode && printPrice(totalPriceWithPromocode - totalPrice)
 
   return (
     <>
@@ -143,7 +142,7 @@ const CheckoutPanel: FC = () => {
             Скидка по промокоду.
           </div>
           <div className='ms-auto'>
-            -{promocodePrint}
+            {promocodePrint}
           </div>
         </div>
       }
