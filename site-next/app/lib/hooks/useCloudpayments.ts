@@ -12,6 +12,10 @@ export type openCloudpaymentsProps = {
 }
 
 
+const CLOUDPAYMENTS_TOKEN='pk_804071b2ebec8b37c022aff6d1961'
+const CLOUDPAYMENTS_TEST_TOKEN='pk_15732f58701e01bbff1459cfeb9bf'
+
+
 const useCloudpayments = () => {
   const { userFullName } = useStore()
   const { userPhone } = useStore()
@@ -46,9 +50,9 @@ const useCloudpayments = () => {
     widget.pay('charge', // или 'auth'
       { //options
         publicId: isProd() ?
-          import.meta.env.VITE_CLOUDPAYMENTS_TOKEN
+          CLOUDPAYMENTS_TOKEN
           :
-          import.meta.env.VITE_CLOUDPAYMENTS_TEST_TOKEN,
+          CLOUDPAYMENTS_TEST_TOKEN,
         description,
         amount,
         currency: 'RUB', //валюта

@@ -1,3 +1,5 @@
+'use client'
+
 import { StateType } from './state'
 import { useStore as _useStore } from './StoreProvider'
 

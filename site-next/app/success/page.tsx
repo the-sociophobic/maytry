@@ -1,3 +1,5 @@
+'use client'
+
 import { FC } from 'react'
 
 import useStore from '../lib/hooks/useStore'

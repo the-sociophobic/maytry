@@ -8,6 +8,9 @@ import { BoxberryDataType } from '../types/boxberry.type'
 import useUserCityByIP from '../hooks/useUserCityByIP'
 
 
+const BOXBERRY_KEY_TOKEN='1\$9ad707c2628d25fcd212a01daed532f3'
+
+
 const BoxberryPanel: FC = () => {
   const { userCity } = useStore()
   const { setUserCity } = useStore()
@@ -60,7 +63,7 @@ const BoxberryPanel: FC = () => {
       boxberry.openOnPage('boxberry_map')
       boxberry.open(
         boxberryCallbackFn,
-        import.meta.env.VITE_BOXBERRY_KEY_TOKEN,
+        BOXBERRY_KEY_TOKEN,
         userCity,
         '01010',
         totalPrice,

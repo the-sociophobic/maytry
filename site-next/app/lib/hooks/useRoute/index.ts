@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation'
 
-import routes from '../components/ProtectedRoutes/routes'
+import routes from './routes'
 
 
 const useRoute = () => {
