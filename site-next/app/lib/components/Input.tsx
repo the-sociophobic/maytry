@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 
 type InputProps = {
@@ -9,7 +9,7 @@ type InputProps = {
   label?: string
   placeholder?: string
   className?: string
-  children?: JSX.Element | JSX.Element[]
+  children?: ReactNode
   /** Show form-control is-valid if true */
   isSuccess?: boolean
   min?: number
