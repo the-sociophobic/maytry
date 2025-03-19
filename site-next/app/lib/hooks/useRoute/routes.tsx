@@ -1,13 +1,13 @@
-import Login from '../../pages/Login'
-import Cart from '../../pages/Cart'
-import Main from '../../pages/Main'
-import Register from '../../pages/Register'
-import Account from '../../pages/Account'
-import Redirect from '../Redirect'
-import Success from '../../pages/Success'
-import Fail from '../../pages/Fail'
-import Admin from '../../pages/Admin'
-import Checkout from '../../pages/Checkout'
+import Login from '../../../login/page'
+import Cart from '../../../cart/page'
+import Main from '../../../page'
+import Register from '../../../register/page'
+import Account from '../../../account/page'
+// import Redirect from '../Redirect/page'
+import Success from '../../../success/page'
+import Fail from '../../../fail/page'
+import Admin from '../../../admin/page'
+import Checkout from '../../../checkout/page'
 
 
 export type RouteType = {
@@ -55,6 +55,11 @@ const routes: RouteType[] = [
     Comp: <Fail />,
   },
   {
+    to: '/account',
+    title: 'Корзина',
+    Comp: <Cart />,
+  },
+  {
     to: '/admin',
     title: 'Кабинет',
     Comp: <Admin />,
@@ -65,11 +70,11 @@ const routes: RouteType[] = [
     title: 'main',
     Comp: <Main />,
   },
-  {
-    to: '/*',
-    title: 'redirect',
-    Comp: <Redirect to='/' />,
-  },
+  // {
+  //   to: '/*',
+  //   title: 'redirect',
+  //   Comp: <Redirect to='/' />,
+  // },
 ]
 
 
