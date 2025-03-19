@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app'
 
 import { useState } from 'react'
 
+// https://tanstack.com/query/latest/docs/framework/react/guides/ssr
 import {
   HydrationBoundary,
   QueryClient,

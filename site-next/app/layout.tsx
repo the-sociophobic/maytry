@@ -4,14 +4,8 @@ import QueryWrapper from './lib/components/QueryWrapper'
 import { ScrollToWrapper } from './lib/components/ScrollTo'
 import AppLayout from './lib/components/AppLayout'
 import { StoreProvider } from './lib/hooks/useStore/StoreProvider'
-import getMetadataFromContentful from './lib/utils/getMetadataFromContentful'
 
 import '@/app/lib/assets/styles/index.sass'
-
-
-export async function generateMetadata() {
-  return getMetadataFromContentful('/')
-}
 
 
 export default function RootLayout({
