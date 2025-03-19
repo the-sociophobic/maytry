@@ -66,6 +66,9 @@ const dataLayer = ({
 
 
   // VK
+  if (!window._tmr)
+    window._tmr = []
+  
   const { _tmr } = window
 
   items.forEach(item => {

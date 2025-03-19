@@ -1,9 +1,12 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 import { get } from '../utils/requests'
 
 
 const useUserIP = () => {
-  return useQuery('ip', getUserIP)
+  return useQuery({
+    queryKey: ['ip'],
+    queryFn: getUserIP
+  })
 }
 
 

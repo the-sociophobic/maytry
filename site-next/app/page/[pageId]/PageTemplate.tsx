@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { ContentfulPageType } from '../lib/types/contentful.type'
-import Img from '../lib/components/Img'
-import AddNewLines from '../lib/components/AddNewLines'
+import { ContentfulPageType } from '../../lib/types/contentful.type'
+import Img from '../../lib/components/Img'
+import AddNewLines from '../../lib/components/AddNewLines'
 
 
 export type PageTemplateProps = ContentfulPageType

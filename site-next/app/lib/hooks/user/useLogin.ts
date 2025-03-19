@@ -1,5 +1,7 @@
+'use client'
+
 import { useCallback } from 'react'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 
 import {
   LoginRequestType,
@@ -16,7 +18,7 @@ const useLogin = () => {
   const login = useCallback(async (props: LoginRequestType) => {
     const { token } = await loginRequest(props)
     setToken(token)
-    await queryClient.invalidateQueries({ queryKey: 'user' })
+    await queryClient.invalidateQueries({ queryKey: ['user'] })
   }, [setToken, queryClient])
 
   return login

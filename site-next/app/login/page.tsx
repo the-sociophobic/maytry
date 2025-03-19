@@ -1,3 +1,5 @@
+'use client'
+
 import { FC } from 'react'
 
 import useLogin from '../lib/hooks/user/useLogin'

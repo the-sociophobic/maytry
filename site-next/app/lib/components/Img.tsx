@@ -41,28 +41,33 @@ class Img extends React.Component<Props, State> {
         this.imgRef?.current?.width / this.imgRef?.current?.height
     })
 
-  render = () =>
-    <div
-      ref={this.containerRef}
-      className={`
-        Img
-        ${this.props.className}
-        ${typeof this.state.portrait === "undefined" && "Img--hidden"}
-      `}
-      style={this.props.style}
-      onClick={this.props.onClick}
-    >
-      <img
-        ref={this.imgRef}
-        alt={this.props.alt || this.props?.file?.file?.fileName || ''}
-        src={`${this.props.src || this.props?.file?.file?.url || ''}${this.props.urlParams || ''}`}
+  render = () => {
+    const src = `${this.props.src || this.props?.file?.file?.url || ''}${this.props.urlParams || ''}`
+
+    return src.length === 0 ? <></> : (
+      <div
+        ref={this.containerRef}
         className={`
-          Img__img
-          Img__img--${this.props.crop && (this.state.portrait ? "portrait" : "landscape")}
+          Img
+          ${this.props.className}
+          ${typeof this.state.portrait === "undefined" && "Img--hidden"}
         `}
-        onLoad={this.setOrientation}
-      />
-    </div>
+        style={this.props.style}
+        onClick={this.props.onClick}
+      >
+        <img
+          ref={this.imgRef}
+          alt={this.props.alt || this.props?.file?.file?.fileName || ''}
+          src={src}
+          className={`
+            Img__img
+            Img__img--${this.props.crop && (this.state.portrait ? "portrait" : "landscape")}
+          `}
+          onLoad={this.setOrientation}
+        />
+      </div>
+    )
+  }
 }
 
 

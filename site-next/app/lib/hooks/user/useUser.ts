@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import { post } from '../../utils/requests'
 import {
@@ -11,13 +11,16 @@ import useStore from '../useStore'
 const useUser = () => {
   const { token } = useStore()
 
-  return useQuery(['user', token], () => getUser({ token }))
+  return useQuery({
+    queryKey: ['user', token],
+    queryFn: async () => getUser({ token })
+  })
 }
 
 const getUser = async (
   props: UserRequestType
 ) => {
-  let res: UserResponseType | undefined
+  let res: UserResponseType | null = null
 
   if (!props.token)
     return res

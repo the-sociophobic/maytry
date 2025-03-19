@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 
 import {
   LoginAfterOrderRequestType,
@@ -17,7 +17,7 @@ const useLoginAfterOrder = () => {
     try {
       const { token } = await loginAfterOrderRequest(props)
       setToken(token)
-      await queryClient.invalidateQueries({ queryKey: 'user' })
+      await queryClient.invalidateQueries({ queryKey: ['user'] })
     } catch(err) {
       console.log(err)
     }

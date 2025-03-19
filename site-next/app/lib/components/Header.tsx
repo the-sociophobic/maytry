@@ -83,6 +83,7 @@ const Header: FC = () => {
                 src={logoImgSrc}
                 className='Header__logo'
                 alt='logo'
+                priority
               />
             </LinkWrapper>
 

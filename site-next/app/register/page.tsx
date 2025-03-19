@@ -1,3 +1,5 @@
+'use client'
+
 import { FC } from 'react'
 
 import useRegister from '../lib/hooks/user/useRegister'

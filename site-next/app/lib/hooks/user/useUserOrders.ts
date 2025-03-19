@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import { post } from '../../utils/requests'
 import {
@@ -11,7 +11,10 @@ import useStore from '../useStore'
 const useUserOrders = () => {
   const { token } = useStore()
 
-  return useQuery(['orders', token], () => getUserOrders({ token }))
+  return useQuery({
+    queryKey: ['orders', token],
+    queryFn: async () => getUserOrders({ token })
+  })
 }
 
 const getUserOrders = async (

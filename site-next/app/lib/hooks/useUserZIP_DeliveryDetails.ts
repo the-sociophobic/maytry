@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import useStore from './useStore'
 import useTotalPrice from './useTotalPrice'
@@ -9,9 +9,9 @@ export const useUserZIP_DeliveryDetails = () => {
   const totalPrice = useTotalPrice()
   const { userZIP } = useStore()
 
-  return useQuery(
-    ['user-zip-delivery-price', userZIP],
-    async () => {
+  return useQuery({
+    queryKey: ['user-zip-delivery-price', userZIP],
+    queryFn: async () => {
       return userZIP.length === 6 ?
         await deliveryCalculation({
           OrderSum: totalPrice,
@@ -26,7 +26,7 @@ export const useUserZIP_DeliveryDetails = () => {
           result: { DeliveryCosts: [] }
         })
     }
-  )
+  })
 }
 
 

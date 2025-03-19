@@ -6,6 +6,7 @@ import { FC } from 'react'
 import useContentful from '../hooks/useContentful'
 import LinkWrapper from './LinkWrapper'
 import Button from './Button'
+import isExternalLink from '../utils/isExternalLink'
 
 
 export type FooterProps = {}
@@ -16,7 +17,7 @@ const Footer: FC<FooterProps> = ({ }) => {
   const site = contentful?.sites[0]
   const pathname = usePathname()
   
-  return pathname.includes('/item/') ? <></> : (
+  return pathname.includes('/product/') ? <></> : (
     <div className='Footer'>
       <div className='container-2'>
         <div className='row py-5'>
@@ -24,7 +25,7 @@ const Footer: FC<FooterProps> = ({ }) => {
             {site?.footer_links?.map(link =>
               <LinkWrapper
                 key={link.link}
-                to={link.link}
+                to={isExternalLink(link.link) ? link.link : '/page' + link.link}
                 className={link.new_line ? 'd-block mb-4' : ''}
               >
                 <Button className='p-0'>

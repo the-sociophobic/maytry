@@ -32,16 +32,9 @@ declare global {
         currency: string
       }
     ) => void
-    dataLayerYandex: {
-      push: (props: DataLayerYandexProps) => void
-    }
+    dataLayerYandex: DataLayerYandexProps[]
     // dataLayerVK
-    _tmr: {
-      push: (props: DataLayerVKProps) => void
-    }
-    dataLayerVK: {
-      push: (props: DataLayerVKProps) => void
-    }
+    _tmr: DataLayerVKProps[]
     cp?: any & {
       CloudPayments: () => any
     }

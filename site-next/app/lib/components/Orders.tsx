@@ -1,6 +1,8 @@
+'use client'
+
 import { FC, useEffect, useState } from 'react'
 
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 
 import useOrders from '../hooks/useOrders'
 import { printPrice } from '../utils/price'
@@ -31,7 +33,7 @@ const Orders: FC = () => {
     setIsLoading(true)
     try {
       await post('/register-orders-in-1C', { orders: checkedOrders })
-      queryClient.invalidateQueries({ queryKey: 'orders-in-1C' })
+      queryClient.invalidateQueries({ queryKey: ['orders-in-1C'] })
     } catch(err) {
       console.log(err)
     }

@@ -56,7 +56,7 @@ const UserOrder: FC<UserOrderProps> = ({
           >
             <div className='Cart__items__item__IMG'>
               <LinkWrapper
-                to={'/item/' + item.link}
+                to={'/product/' + item.link}
                 className='d-block'
                 onClick={() => dataLayer({
                   actionType: 'click',

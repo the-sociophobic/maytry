@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery } from '@tanstack/react-query'
 
 import { get } from '../../utils/requests'
 import {
@@ -62,7 +62,10 @@ const getContentfulDataWithoutBadItems = async () => {
 }
 
 const useContentful = () => {
-  return useQuery<ContentfulDataTypeFE>('contentful', getContentfulDataWithoutBadItems)
+  return useQuery<ContentfulDataTypeFE>({
+    queryKey: ['contentful'],
+    queryFn: getContentfulDataWithoutBadItems
+  })
 }
 
 // const useMainPage = () => {

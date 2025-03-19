@@ -1,15 +1,15 @@
 import { FC, useEffect, useRef, useState } from 'react'
 
 
-import Button from '../lib/components/Button'
-import Img from '../lib/components/Img'
-import ItemInfo from '../lib/components/ItemInfo'
-import ImgDummy from '../lib/components/ImgDummy'
-import { CombinedItemType } from '../lib/types/contentful.type'
-import Footer from '../lib/components/Footer'
-import useSyncCart from '../lib/hooks/useSyncCart'
-import dataLayer from '../lib/utils/dataLayer'
-import useCurrentItemInCartBlank from '../lib/hooks/useCurrentItemInCartBlank'
+import Button from '../../lib/components/Button'
+import Img from '../../lib/components/Img'
+import ItemInfo from '../../lib/components/ItemInfo'
+import ImgDummy from '../../lib/components/ImgDummy'
+import Footer from '../../lib/components/Footer'
+import useSyncCart from '../../lib/hooks/useSyncCart'
+import dataLayer from '../../lib/utils/dataLayer'
+import useCurrentItemInCartBlank from '../../lib/hooks/useCurrentItemInCartBlank'
+import { CombinedItemType } from '../../lib/types/contentful.type'
 
 
 export type ItemProps = CombinedItemType

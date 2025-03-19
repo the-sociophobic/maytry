@@ -18,7 +18,7 @@ const ItemCard: FC<ItemCardProps> = (item) => {
 
   return (
     <LinkWrapper
-      to={'/item/' + item.link}
+      to={'/product/' + item.link}
       onClick={() => dataLayer({
         actionType: 'click',
         items: [itemInCart]

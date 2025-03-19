@@ -1,6 +1,8 @@
+import Link from 'next/link'
+
 import React, { MouseEventHandler } from 'react'
 
-import Link from 'next/link'
+import isExternalLink from '../utils/isExternalLink'
 // import NavLink from 'next/NavLink'
 
 
@@ -44,7 +46,7 @@ const LinkWrapper: React.FunctionComponent<LinkWrapperProps> = ({
       {children}
     </span>
     :
-    to.match(/http*|tel:*|mailto:*|#[a-zA-Z0-9]+/) ?
+    isExternalLink(to) ?
       <a
         ref={outerRef}
         className={`Link ${className}`}

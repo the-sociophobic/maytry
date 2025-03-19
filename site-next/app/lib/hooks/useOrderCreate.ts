@@ -2,7 +2,7 @@
  
 import { useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { useQueryClient } from 'react-query'
+import { useQueryClient } from '@tanstack/react-query'
 
 import useStore from '../hooks/useStore'
 import useDeliveryPrice from '../hooks/useDeliveryPrice'
@@ -75,8 +75,8 @@ const useOrderCreate = () => {
       })
       emptyCart()
       setCurrentPromocode(undefined)
-      queryClient.invalidateQueries({ queryKey: 'contentful' })
-      queryClient.invalidateQueries({ queryKey: 'orders' })
+      queryClient.invalidateQueries({ queryKey: ['contentful'] })
+      queryClient.invalidateQueries({ queryKey: ['orders'] })
       loginAfterOrder({ email: userEmail })
       // setBoxberryData(undefined)
       router.push('/success')
