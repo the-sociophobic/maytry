@@ -5,12 +5,12 @@ import { post } from '../../utils/requests'
 // const USER_CITY_FALLBACK = 'Санкт-Петербург'
 
 
-const getUserCityByIP = async (ip: string | undefined) => {
+const getUserCityByIP = async (ip: string | null) => {
   let userCityByIP: string | null = null
 
   try {
     const res = await post<CityByIPResponseType>('/city-by-ip', { ip })
-    userCityByIP = res.city
+    userCityByIP = res.city || null
   } catch (err) {
     console.log('getUserCityByIP error: ', getUserCityByIP)
   }

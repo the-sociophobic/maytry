@@ -1,22 +1,12 @@
-'use client'
-
-import { FC } from 'react'
-
-import useLogin from '../lib/hooks/user/useLogin'
-import CredentialsInput from '../lib/components/CredentialsInput'
+import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
+import Login from './Login'
 
 
-const Login: FC = () => {
-  const login = useLogin()
-
-  return (
-    <CredentialsInput
-      label='Вход'
-      buttonLabel='Войти'
-      onClick={login}
-    />
-  )
+export async function generateMetadata() {
+  return getMetadataFromContentful('/login')
 }
 
 
-export default Login
+export default async function Page() {
+  return <Login />
+}

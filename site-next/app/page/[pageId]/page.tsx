@@ -1,15 +1,22 @@
-'use client'
-
-import { useParams } from 'next/navigation'
-
-import useContentful from '../../lib/hooks/useContentful'
+import { getContentfulDataWithoutBadItems } from '../../lib/hooks/useContentful'
 import Loader from '../../lib/components/Loader'
 import PageTemplate from './PageTemplate'
+import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
  
 
-export default function Page() {
-  const { pageId } = useParams() as { pageId: string }
-  const { data: contentful } = useContentful()
+type PageProps = {
+  params: Promise<{ pageId: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  return getMetadataFromContentful('/page/' + (await params).pageId)
+}
+
+
+export default async function Page({ params }: PageProps) {
+  const { pageId } = await params
+  const contentful = await getContentfulDataWithoutBadItems()
 
   if (!contentful)
     return <Loader />

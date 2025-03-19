@@ -32,7 +32,7 @@ export const emptyContentful = {
 }
 
 
-const getContentfulDataWithoutBadItems = async () => {
+export const getContentfulDataWithoutBadItems = async () => {
   const data = await get<ContentfulDataTypeFE | undefined>('/data')
 
   if (!data?.items)

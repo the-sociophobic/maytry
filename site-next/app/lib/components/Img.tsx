@@ -1,10 +1,11 @@
-import React from 'react'
+'use client'
+
+import React, { FC, useState } from 'react'
 
 import { ContentfulFile } from '../types/contentful.type'
-// import ResizeObserver from 'resize-observer-polyfill'
 
 
-type Props = {
+type ImgProps = {
   src?: string
   style?: object
   className?: string
@@ -15,59 +16,42 @@ type Props = {
   onClick?: () => void
 }
 
-type State = {
-  portrait: boolean | undefined,
-  containerRatio: number,
-}
 
+const Img: FC<ImgProps> = (props) => {
+  const [portrait, setPortrait] = useState<boolean | undefined>(undefined)
+  const imgRef: any = React.createRef()
+  const containerRef: any = React.createRef()
 
-class Img extends React.Component<Props, State> {
-  state = {
-    portrait: undefined,
-    containerRatio: 0,
-  }
+  const setOrientation = () =>
+    setPortrait(containerRef?.current?.offsetWidth / containerRef?.current?.offsetHeight >
+        imgRef?.current?.width / imgRef?.current?.height
+    )
 
-  imgRef: any = React.createRef()
-  containerRef: any = React.createRef()
-  resizeObs: any
-
-  // componentDidMount = () =>
-  //   this.resizeObs = new ResizeObserver(this.setOrientation.bind(this))
-  //     .observe(this.containerRef.current)
-
-  setOrientation = () =>
-    this.setState({
-      portrait: this.containerRef?.current?.offsetWidth / this.containerRef?.current?.offsetHeight >
-        this.imgRef?.current?.width / this.imgRef?.current?.height
-    })
-
-  render = () => {
-    const src = `${this.props.src || this.props?.file?.file?.url || ''}${this.props.urlParams || ''}`
+    const src = `${props.src || props?.file?.file?.url || ''}${props.urlParams || ''}`
 
     return src.length === 0 ? <></> : (
       <div
-        ref={this.containerRef}
+        ref={containerRef}
         className={`
           Img
-          ${this.props.className}
-          ${typeof this.state.portrait === "undefined" && "Img--hidden"}
+          ${props.className}
+          ${typeof portrait === "undefined" && "Img--hidden"}
         `}
-        style={this.props.style}
-        onClick={this.props.onClick}
+        style={props.style}
+        onClick={props.onClick}
       >
         <img
-          ref={this.imgRef}
-          alt={this.props.alt || this.props?.file?.file?.fileName || ''}
+          ref={imgRef}
+          alt={props.alt || props?.file?.file?.fileName || ''}
           src={src}
           className={`
             Img__img
-            Img__img--${this.props.crop && (this.state.portrait ? "portrait" : "landscape")}
+            Img__img--${props.crop && (portrait ? "portrait" : "landscape")}
           `}
-          onLoad={this.setOrientation}
+          onLoad={setOrientation}
         />
       </div>
     )
-  }
 }
 
 

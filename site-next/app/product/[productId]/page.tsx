@@ -1,15 +1,22 @@
-'use client'
-
-import { useParams } from 'next/navigation'
-
-import useContentful from '../../lib/hooks/useContentful'
+import { getContentfulDataWithoutBadItems } from '../../lib/hooks/useContentful'
 import Loader from '../../lib/components/Loader'
-import Item from './Item'
+import ItemNoSSR from './ItemNoSSR'
+import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
  
 
-export default function Page() {
-  const { productId } = useParams() as { productId: string }
-  const { data: contentful } = useContentful()
+type PageProps = {
+  params: Promise<{ productId: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  return getMetadataFromContentful('/product/' + (await params).productId)
+}
+
+
+export default async function Page({ params }: PageProps) {
+  const { productId } = await params
+  const contentful = await getContentfulDataWithoutBadItems()
 
   if (!contentful)
     return <Loader />
@@ -19,5 +26,5 @@ export default function Page() {
   if (!item)
     return <Loader />
 
-  return <Item {...item} />
+  return <ItemNoSSR {...item} />
 }

@@ -25,7 +25,7 @@ const getUserIP = async () => {
     const resStringClean = resString.replace(/\?|\(|\)|;/g, '')
     const resObj: getUserIPResponceType = JSON.parse(resStringClean)
     
-    ip = resObj.ip
+    ip = resObj.ip || null
   } catch (err) {
     console.log('getUserIP error: ', err)
   }

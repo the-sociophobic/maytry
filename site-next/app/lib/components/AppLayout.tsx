@@ -1,13 +1,11 @@
 'use client'
- 
-import { FC, ReactNode, useEffect } from 'react'
+
+import { FC, ReactNode } from 'react'
 
 import { ScrollToConsumer } from './ScrollTo'
-import useStore from '../hooks/useStore'
 import Header from './Header'
 import Footer from './Footer'
 import Loader from './Loader'
-import useUser from '../hooks/user/useUser'
 
 
 export type AppLayoutProps = {
@@ -18,19 +16,6 @@ export type AppLayoutProps = {
 const AppLayout: FC<AppLayoutProps> = ({
   children
 }) => {
-  const { isLoading } = useStore()
-  const { data: user, isLoading: userIsLoading } = useUser()
-  const { logged } = useStore()
-  const { setLogged } = useStore()
-  
-  useEffect(() => {
-    if (userIsLoading)
-      return
-  
-    if (logged !== !!user)
-      setLogged(!!user)
-  }, [logged, setLogged, user, userIsLoading])
-
   return (
     <ScrollToConsumer>
       {({ contentRef }) =>
@@ -43,7 +28,7 @@ const AppLayout: FC<AppLayoutProps> = ({
             {children}
             <Footer />
           </div>
-          {isLoading && <Loader />}
+          <Loader />
         </div>
       }
     </ScrollToConsumer>

@@ -1,22 +1,12 @@
-'use client'
-
-import { FC } from 'react'
-
-import useRegister from '../lib/hooks/user/useRegister'
-import CredentialsInput from '../lib/components/CredentialsInput'
+import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
+import Register from './Register'
 
 
-const Register: FC = () => {
-  const register = useRegister()
-
-  return (
-    <CredentialsInput
-      label='Регистрация'
-      buttonLabel='Зарегистрироваться'
-      onClick={register}
-    />
-  )
+export async function generateMetadata() {
+  return getMetadataFromContentful('/register')
 }
 
 
-export default Register
+export default async function Page() {
+  return <Register />
+}
