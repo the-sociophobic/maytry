@@ -6,7 +6,7 @@ import { post } from '../../utils/requests'
 
 
 const getUserCityByIP = async (ip: string | undefined) => {
-  let userCityByIP: string | undefined
+  let userCityByIP: string | null = null
 
   try {
     const res = await post<CityByIPResponseType>('/city-by-ip', { ip })

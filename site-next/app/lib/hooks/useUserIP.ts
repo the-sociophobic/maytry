@@ -18,7 +18,7 @@ export type getUserIPResponceType = {
 }
 
 const getUserIP = async () => {
-  let ip: undefined | string
+  let ip: null | string = null
 
   try {
     const resString = await get<string>('https://api.ipify.org?format=jsonp&callback=?')

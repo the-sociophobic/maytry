@@ -125,7 +125,7 @@ export type StateType = {
 
 export type initializerFnType = (
   partial: StateType | Partial<StateType> | ((state: StateType) => StateType | Partial<StateType>),
-  replace?: boolean | undefined
+  replace?: false | undefined
 ) => void
 
 

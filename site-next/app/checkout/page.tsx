@@ -1,3 +1,5 @@
+'use client'
+
 import { FC } from 'react'
 
 import CheckoutPanel from '../lib/components/CheckoutPanel'

@@ -7,7 +7,7 @@ import { initializer, StateType } from './state'
 const USE_PERSIST_STATE = true
 
 
-const useStore = USE_PERSIST_STATE ?
+const createStore = () => USE_PERSIST_STATE ?
   create(
     persist<StateType>(
       initializer,
@@ -21,4 +21,4 @@ const useStore = USE_PERSIST_STATE ?
   create<StateType>(initializer)
 
 
-export default useStore
+export default createStore

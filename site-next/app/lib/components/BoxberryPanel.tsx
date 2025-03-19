@@ -1,3 +1,5 @@
+'use client'
+
 import { FC, useCallback, useEffect, useRef } from 'react'
 
 import useStore from '../hooks/useStore'
@@ -51,6 +53,9 @@ const BoxberryPanel: FC = () => {
       userCity.length > 0
     ) {
       const { boxberry } = window
+
+      if (!boxberry)
+        return
 
       boxberry.openOnPage('boxberry_map')
       boxberry.open(

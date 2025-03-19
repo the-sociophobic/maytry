@@ -3,8 +3,10 @@ import type { Metadata } from 'next'
 import QueryWrapper from './lib/components/QueryWrapper'
 import { ScrollToWrapper } from './lib/components/ScrollTo'
 
-import '@/app/lib/assets/styles/index.sass'
 import AppLayout from './lib/components/AppLayout'
+import { StoreProvider } from './lib/hooks/useStore/StoreProvider'
+
+import '@/app/lib/assets/styles/index.sass'
 
 
 export const metadata: Metadata = {
@@ -22,11 +24,13 @@ export default function RootLayout({
     <html lang='ru'>
       <body>
         <QueryWrapper>
-          <ScrollToWrapper>
-            <AppLayout>
-              {children}
-            </AppLayout>
-          </ScrollToWrapper>
+          <StoreProvider>
+            <ScrollToWrapper>
+              <AppLayout>
+                {children}
+              </AppLayout>
+            </ScrollToWrapper>
+          </StoreProvider>
         </QueryWrapper>
       </body>
     </html>
