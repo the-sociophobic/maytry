@@ -8,8 +8,8 @@ import ImgDummy from '../../lib/components/ImgDummy'
 import Footer from '../../lib/components/Footer'
 import useSyncCart from '../../lib/hooks/useSyncCart'
 import dataLayer from '../../lib/utils/dataLayer'
-import useCurrentItemInCartBlank from '../../lib/hooks/useCurrentItemInCartBlank'
 import { CombinedItemType } from '../../lib/types/contentful.type'
+import createCurrentItemInCartBlank from '@/app/lib/utils/createCurrentItemInCartBlank'
 
 
 export type ItemProps = CombinedItemType
@@ -28,11 +28,11 @@ const Item: FC<ItemProps> = (item) => {
   const imagesAreaRef = useRef<HTMLDivElement>(null)
   const imagesAreaMobileRef = useRef<HTMLDivElement>(null)
 
-  const itemInCart = useCurrentItemInCartBlank(item, 1)
+  const itemInCart = createCurrentItemInCartBlank(item, 1)
   useEffect(() => {
     dataLayer({
       actionType: 'detail',
-      items: [itemInCart]
+      items: itemInCart ? [itemInCart] : []
     })
   }, [])
 

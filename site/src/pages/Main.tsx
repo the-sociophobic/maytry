@@ -13,7 +13,7 @@ import { getCurrentPrice } from '../utils/price'
 import sortMap from '../utils/sortMap'
 import { CombinedItemType } from '../types/contentful.type'
 import dataLayer from '../utils/dataLayer'
-import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
+import createCurrentItemInCartBlank from '../utils/createCurrentItemInCartBlank'
 
 
 const Main: FC = () => {
@@ -135,11 +135,11 @@ const Main: FC = () => {
       orderSortFn
     )
   
-  const itemInCart = useCurrentItemInCartBlank(filteredItems[0], 1)
+  const itemInCart = createCurrentItemInCartBlank(filteredItems[0], 1)
   useEffect(() => {
     dataLayer({
       actionType: 'impressions',
-      items: [itemInCart]
+      items: itemInCart ? [itemInCart] : []
     })
   }, [])
 

@@ -15,7 +15,7 @@ import yandexGoal from '../utils/yandex/goal'
 import { YANDEX_GOAL } from '../utils/yandex/consts'
 import SizesTable from './SizesTable'
 import Dropdown from './Dropdown'
-import useCurrentItemInCartBlank from '../hooks/useCurrentItemInCartBlank'
+import createCurrentItemInCartBlank from '../utils/createCurrentItemInCartBlank'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -38,10 +38,10 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
   }, [currentColor])
 
   const { itemsInCart } = useStore()
-  const currentItemInCartBlank = useCurrentItemInCartBlank(item, 0, currentSize, currentColor)
+  const currentItemInCartBlank = createCurrentItemInCartBlank(item, 0, currentSize, currentColor)
   const currentItemInCart = itemsInCart
     .find(itemInCart => itemInCart.id === currentSize?.id)
-    || currentItemInCartBlank
+    || currentItemInCartBlank!
   const { setItemInCart } = useStore()
 
   const navigate = useNavigate()
