@@ -16,8 +16,20 @@ const useUserOrders = () => {
 
 const getUserOrders = async (
   props: UserOrdersRequestType
-) =>
-  post<UserOrdersResponseType>('/user-orders', props)
+) => {
+  let res: UserOrdersResponseType = { orders: [] }
+
+  if (!props.token)
+    return res
+
+  try {
+    res = await post<UserOrdersResponseType>('/user-orders', props)
+  } catch(err) {
+    console.log(err)
+  }
+
+  return res
+}
 
 
 export default useUserOrders
