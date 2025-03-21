@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from 'react-query'
 
 import { post } from '../../utils/requests'
 import {
@@ -11,16 +11,25 @@ import useStore from '../useStore'
 const useUserOrders = () => {
   const { token } = useStore()
 
-  return useQuery({
-    queryKey: ['orders', token],
-    queryFn: async () => getUserOrders({ token })
-  })
+  return useQuery(['orders', token], () => getUserOrders({ token }))
 }
 
 const getUserOrders = async (
   props: UserOrdersRequestType
-) =>
-  post<UserOrdersResponseType>('/user-orders', props)
+) => {
+  let res: UserOrdersResponseType = { orders: [] }
+
+  if (!props.token)
+    return res
+
+  try {
+    res = await post<UserOrdersResponseType>('/user-orders', props)
+  } catch(err) {
+    console.log(err)
+  }
+
+  return res
+}
 
 
 export default useUserOrders
