@@ -42,5 +42,7 @@
     .dark-theme-only {
       display: none;
     }
+    --main-background: black;
+    --main-text: white;
   }
 } */

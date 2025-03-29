@@ -18,10 +18,13 @@ const getMetadataFromContentful = async (link: string): Promise<MetadataType> =>
     const productId = link.replace('/product/', '')
     const item = contentful.items.find(item => item.link === productId)
     
+    if (!item)
+      return metadataFallback
+
     return {
-      h1: item?.metaH1 || 'undefined item',
-      title: item?.metaTitle || 'undefined item title',
-      description: item?.metaDescription || 'undefined item description',
+      h1: item.metaH1 || item.name || 'undefined item',
+      title: item.metaTitle || `${item.name} — купить в бренде одежды MAYTRY`,
+      description: item.metaDescription || `Купите ${item.name}. Подробности на сайте.` || 'undefined item description',
     }
   }
 

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import LinkWrapper from './LinkWrapper'
 import useStore from '../hooks/useStore'
@@ -15,6 +15,18 @@ export type ItemCardProps = CombinedItemType
 const ItemCard: FC<ItemCardProps> = (item) => {
   const { setHoveredItem } = useStore()
   const itemInCart = createCurrentItemInCartBlank(item, 1)
+  const [width, setWidth] = useState(0)
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    const handleResize = () => {
+      console.log(window.innerWidth, window.innerHeight)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return window.removeEventListener('resize', handleResize)
+  })
 
   return (
     <LinkWrapper
@@ -27,10 +39,14 @@ const ItemCard: FC<ItemCardProps> = (item) => {
       onMouseOver={() => setHoveredItem(item)}
       onMouseLeave={() => setHoveredItem(undefined)}
     >
-      <ImgDummy
-        img={item.images?.[0]}
-        className='w-100'
-      />
+      <div className='ItemCard__Img-container'>
+        <ImgDummy
+          img={item.images?.[0]}
+          className='ItemCard__Img-container__Img'
+          // width={100}
+          // height={100}
+        />
+      </div>
       {/* <div className='ItemCard__name'>
         {item.name}
       </div> */}

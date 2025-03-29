@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 import React, { FC, useState } from 'react'
 
 import { ContentfulFile } from '../types/contentful.type'
@@ -14,6 +16,8 @@ type ImgProps = {
   crop?: boolean
   urlParams?: string
   onClick?: () => void
+  width?: number | `${number}` | undefined
+  height?: number | `${number}` | undefined
 }
 
 
@@ -40,15 +44,18 @@ const Img: FC<ImgProps> = (props) => {
         style={props.style}
         onClick={props.onClick}
       >
+        {/* <Image */}
         <img
           ref={imgRef}
           alt={props.alt || props?.file?.file?.fileName || ''}
-          src={src}
+          src={!src.includes('http') ? src.replace('//', 'https://') : src}
           className={`
             Img__img
             Img__img--${props.crop && (portrait ? "portrait" : "landscape")}
           `}
           onLoad={setOrientation}
+          // width={props.width}
+          // height={props.height}
         />
       </div>
     )
