@@ -1,3 +1,5 @@
+// import Link from 'next/link'
+
 import { FC } from 'react'
 
 import ColorSizes from './ColorSizes'
@@ -22,8 +24,10 @@ const ItemData: FC<ItemDataProps> = (item) => {
     <div className='ItemData'>
       <div className='col-sm-9 col-md-4'>
         <div className='ItemData__price'>
-          <div className='mb-2'>
-            {name}
+          <div className='ItemData__price__name mb-2'>
+            {/* <Link href={'/product/' + item.link}> */}
+              {name}
+            {/* </Link> */}
           </div>
           <Price
             className='mb-3'

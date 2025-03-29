@@ -5,7 +5,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 
 import useContentful from './lib/hooks/useContentful'
-import ItemCard from './lib/components/ItemCard'
+import ItemCard, { ItemCardEmpty } from './lib/components/ItemCard'
 import useStore from './lib/hooks/useStore'
 import ItemLine from './lib/components/ItemLine'
 import { FiberScene } from './lib/components/Fiber/FiberScene'
@@ -146,6 +146,9 @@ const Main: FC = () => {
     })
   }, [])
 
+  const numberOfEmptyCards = 6 - (filteredItems.length % 6)
+  const emptyCardsArray = Array(numberOfEmptyCards).fill(0)
+
   return (
     <ScrollToConsumer>
       {({ scrollTo, contentRef }) =>
@@ -190,6 +193,9 @@ const Main: FC = () => {
                   />
               )
             }
+            {emptyCardsArray.map((emptyCard, emptyCardIndex) =>
+              <ItemCardEmpty key={emptyCardIndex} />
+            )}
           </div>
         </div>
       }

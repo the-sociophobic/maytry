@@ -43,8 +43,8 @@ const ItemCard: FC<ItemCardProps> = (item) => {
         <ImgDummy
           img={item.images?.[0]}
           className='ItemCard__Img-container__Img'
-          // width={100}
-          // height={100}
+        // width={100}
+        // height={100}
         />
       </div>
       {/* <div className='ItemCard__name'>
@@ -57,3 +57,13 @@ const ItemCard: FC<ItemCardProps> = (item) => {
 
 
 export default ItemCard
+
+
+export const ItemCardEmpty: FC = () => {
+  return (
+    <div className='ItemCard'>
+      <div className='ItemCard__Img-container'>
+      </div>
+    </div>
+  )
+}

@@ -213,17 +213,19 @@ $member-height-inline: 24px
   @media (hover: hover) and (pointer: fine)
     &:hover .ItemData
       opacity: 1
+      .ItemData__price__name
+        text-decoration: underline
   &__Img-container
     width: 100%
-    padding-top: 135%
+    padding-top: 145%
     position: relative
     overflow: hidden
     &__Img
       width: 100%
       position: absolute
-      top: 50%
+      top: 0
       left: 50%
-      transform: translate(-50%, -50%)
+      transform: translateX(-50%)
   .ItemData
     @media (hover: none)
       opacity: 1 !important
@@ -235,6 +237,7 @@ $member-height-inline: 24px
     @extend .justify-content-between
     &__price
       min-width: 75px
+      &__
 
 
 .ItemLine
