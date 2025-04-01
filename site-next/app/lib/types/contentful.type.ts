@@ -99,7 +99,8 @@ export interface ContentfulImageType extends ContentfulItemClass {
   large?: ContentfulFile
 }
 
-export interface ContentfulCategoryType extends ContentfulItemClass {
+export interface ContentfulCategoryType extends ContentfulItemClass, ContentfulMetaTagsType {
+  link?: string
   name: string
   subcategories: ContentfulCategoryType[]
 }
@@ -136,4 +137,5 @@ export type ContentfulMetaTagsType = {
   metaH1?: string
   metaTitle?: string
   metaDescription?: string
+  noindex?: boolean
 }

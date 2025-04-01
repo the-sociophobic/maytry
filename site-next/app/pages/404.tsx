@@ -1,5 +1,12 @@
 import type { AppProps } from 'next/app'
 
+import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
+
+
+export async function generateMetadata() {
+  return getMetadataFromContentful('/404')
+}
+
 
 function Custom404({
   // Component,

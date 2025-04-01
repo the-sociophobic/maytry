@@ -43,7 +43,7 @@ export type CombinedItemType = ContentfulItemType & {
   oneC_item?: OneCItemType
 }
 
-export interface ContentfulItemType extends ContentfulItemClass {
+export interface ContentfulItemType extends ContentfulItemClass, ContentfulMetaTagsType {
   link: string
   name: string
   description: string
@@ -83,7 +83,7 @@ export interface ContentfulColorPriceSizeType extends ContentfulItemClass {
   max_available: number
 }
 
-export interface ContentfulSiteType extends ContentfulItemClass {
+export interface ContentfulSiteType extends ContentfulItemClass, ContentfulMetaTagsType {
   title: string
   main_image: ContentfulFile
   header_filter_categories: ContentfulCategoryType[]
@@ -99,7 +99,8 @@ export interface ContentfulImageType extends ContentfulItemClass {
   large?: ContentfulFile
 }
 
-export interface ContentfulCategoryType extends ContentfulItemClass {
+export interface ContentfulCategoryType extends ContentfulItemClass, ContentfulMetaTagsType {
+  link?: string
   name: string
   subcategories: ContentfulCategoryType[]
 }
@@ -110,7 +111,7 @@ export interface ContentfulLinkType extends ContentfulItemClass {
   new_line: boolean
 }
 
-export interface ContentfulPageType extends ContentfulItemClass {
+export interface ContentfulPageType extends ContentfulItemClass, ContentfulMetaTagsType {
   link: ContentfulLinkType
   title: string
   image?: ContentfulFile
@@ -130,4 +131,11 @@ export interface ContentfulPromocodeType extends ContentfulItemClass {
   amount: number
   p_type: boolean
   items?: ContentfulItemType[]
+}
+
+export type ContentfulMetaTagsType = {
+  metaH1?: string
+  metaTitle?: string
+  metaDescription?: string
+  noindex?: boolean
 }

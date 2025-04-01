@@ -18,7 +18,14 @@ import dataLayer from './lib/utils/dataLayer'
 import createCurrentItemInCartBlank from './lib/utils/createCurrentItemInCartBlank'
 
 
-const Main: FC = () => {
+export type MainProps = {
+  categoryId?: string
+}
+
+
+const Main: FC<MainProps> = ({
+  categoryId
+}) => {
   const { showStartBanner } = useStore()
 
   const { showSearch } = useStore()

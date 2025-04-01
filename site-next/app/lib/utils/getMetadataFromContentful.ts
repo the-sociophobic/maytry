@@ -7,6 +7,15 @@ export type MetadataType = {
   description?: string
 }
 
+const CUSTOM_PAGES_LINKS = [
+  'contacts',
+  'privacy-policy',
+  'terms-of-service',
+  'checkout',
+  'cart',
+  'success',
+  '404',
+]
 
 const getMetadataFromContentful = async (link: string): Promise<MetadataType> => {
   const contentful = await getContentfulDataWithoutBadItems()
@@ -28,9 +37,22 @@ const getMetadataFromContentful = async (link: string): Promise<MetadataType> =>
     }
   }
 
-  if (link.includes('/page/')) {
-    const pageId = link.replace('/page/', '')
-    const page = contentful.pages.find(page => page.link.link === pageId)
+  if (link.includes('/faq/')) {
+    const pageId = link.replace('/faq/', '')
+    const page = contentful.pages
+      .find(page => page.link.link.replace('/', '') === pageId)
+    
+    return {
+      h1: page?.metaH1 || 'undefined page',
+      title: page?.metaTitle || 'undefined page title',
+      description: page?.metaDescription || 'undefined page description',
+    }
+  }
+
+  if (CUSTOM_PAGES_LINKS.includes(link.replace('/', ''))) {
+    const pageId = link.replace('/', '')
+    const page = contentful.pages
+      .find(page => page.link.link.replace('/', '') === pageId)
     
     return {
       h1: page?.metaH1 || 'undefined page',
