@@ -17,7 +17,7 @@ export async function generateMetadata(props: PageProps) {
 }
 
 
-export default async function Page(props: PageProps & AppProps) {
+export default async function Page(props: PageProps) {
   const searchParams = (await (await props).searchParams)
   const categoryLink = (await (await props).params).categoriyaId
   const contentful = await getContentfulDataWithoutBadItems()

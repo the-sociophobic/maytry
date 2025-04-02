@@ -17,7 +17,7 @@ export async function generateMetadata(props: PageProps) {
 }
 
 
-export default async function Page(props: PageProps & AppProps) {
+export default async function Page(props: PageProps) {
   const contentful = await getContentfulDataWithoutBadItems()
   
   if (!contentful)

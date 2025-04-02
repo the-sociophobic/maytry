@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 
-export default async function Page({ params }: PageProps & AppProps) {
+export default async function Page({ params }: PageProps) {
   const { productId } = await params
   const contentful = await getContentfulDataWithoutBadItems()
 
