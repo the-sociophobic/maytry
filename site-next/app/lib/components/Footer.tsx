@@ -6,7 +6,7 @@ import { FC } from 'react'
 import useContentful from '../hooks/useContentful'
 import LinkWrapper from './LinkWrapper'
 import Button from './Button'
-import isExternalLink from '../utils/isExternalLink'
+// import isExternalLink from '../utils/isExternalLink'
 
 
 export type FooterProps = {}
@@ -25,7 +25,7 @@ const Footer: FC<FooterProps> = ({ }) => {
             {site?.footer_links?.map(link =>
               <LinkWrapper
                 key={link.link}
-                to={isExternalLink(link.link) ? link.link : '/page' + link.link}
+                to={link.link}
                 className={link.new_line ? 'd-block mb-4' : ''}
               >
                 <Button className='p-0'>

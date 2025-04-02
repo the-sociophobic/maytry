@@ -6,6 +6,7 @@ import { ScrollToConsumer } from './ScrollTo'
 import Header from './Header'
 import Footer from './Footer'
 import Loader from './Loader'
+import useStore from '../hooks/useStore'
 
 
 export type AppLayoutProps = {
@@ -16,6 +17,8 @@ export type AppLayoutProps = {
 const AppLayout: FC<AppLayoutProps> = ({
   children
 }) => {
+  const { isLoading } = useStore()
+
   return (
     <ScrollToConsumer>
       {({ contentRef }) =>
@@ -28,7 +31,9 @@ const AppLayout: FC<AppLayoutProps> = ({
             {children}
             <Footer />
           </div>
-          <Loader />
+          {isLoading &&
+            <Loader />
+          }
         </div>
       }
     </ScrollToConsumer>

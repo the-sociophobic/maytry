@@ -1,7 +1,10 @@
+import Link from 'next/link'
+
 import useContentful from '../../hooks/useContentful'
 import useStore from '../../hooks/useStore'
 import Button from '../Button'
 import Input from '../Input'
+import LinkWrapper from '../LinkWrapper'
 
 
 const HeaderControls = () => {
@@ -22,21 +25,30 @@ const HeaderControls = () => {
   const { setPriceTo } = useStore()
 
   const { data: contentful } = useContentful()
-  const header_filter_categories = contentful?.sites[0]?.header_filter_categories || []
+  // const header_filter_categories = contentful?.sites[0]?.header_filter_categories || []
+  const header_filter_categories = contentful?.categorys.filter(category => category.link) || []
 
   return (
     <div className='d-flex'>
       <div className='Header__section'>
-        <Button onClick={() => {
-          if (!showFilter) {
-            setShowAccount(false)
-            setShowSearch(false)
-          }
-          setShowExtendedFilter(false)
-          setShowFilter(!showFilter)
-        }}>
-          ФИЛЬТР
-        </Button>
+        <Link href={'/'}>
+          <Button onClick={() => {
+            // if (!showFilter) {
+            //   setShowAccount(false)
+            //   setShowSearch(false)
+            // }
+            // setShowExtendedFilter(false)
+            // setShowFilter(!showFilter)
+            if (!showExtendedFilter) {
+              setShowAccount(false)
+              setShowSearch(false)
+            }
+            // setShowExtendedFilter(false)
+            setShowExtendedFilter(!showExtendedFilter)
+          }}>
+            ФИЛЬТР
+          </Button>
+        </Link>
       </div>
       {!showFilter ?
         <>
@@ -79,22 +91,26 @@ const HeaderControls = () => {
         </>
         :
         <>
-          {header_filter_categories
+          {/* {header_filter_categories
             .map((category, index) =>
-              <Button
+              <Link
                 key={index}
-                hoverable
-                gray={filterBy.includes(category.name) && !showExtendedFilter}
-                onClick={() => {
-                  setFilterBy([category.name])
-                  setShowExtendedFilter(false)
-                }}
+                href={category.link || '/'}
               >
-                {category.name}
-              </Button>
+                <Button
+                  hoverable
+                  gray={filterBy.includes(category.name) && !showExtendedFilter}
+                  onClick={() => {
+                    // setFilterBy([category.link || category.name])
+                    setShowExtendedFilter(false)
+                  }}
+                >
+                  {category.name}
+                </Button>
+              </Link>
             )
-          }
-          <Button
+          } */}
+          {/* <Button
             hoverable
             gray={showExtendedFilter}
             onClick={() => {
@@ -103,7 +119,7 @@ const HeaderControls = () => {
             }}
           >
             Расширенный фильтр
-          </Button>
+          </Button> */}
           <Button
             onClick={() => {
               setShowFilter(false)

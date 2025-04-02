@@ -29,7 +29,7 @@ const HeaderBody: FC<HeaderBodyProps> = ({
 }) => {
   // const { hoveredItem } = useStore()
   const pathname = usePathname()
-  const is_main_page = pathname === '/'
+  const is_main_page = pathname === '/' || pathname.includes('categoriya')
   const is_cart_page = pathname === '/cart'
 
 

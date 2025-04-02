@@ -64,9 +64,9 @@ const Orders: FC = () => {
       {orders
       ?.filter(order =>
         hideCheckedOrders && !!checkedOrders?.includes(order.order_id) ? false : true)
-      ?.map(order =>
+      ?.map((order, orderIndex) =>
         <div
-          key={order.parcel.label}
+          key={order.parcel.label + orderIndex}
           className='Orders__item'
         >
           <div className='col-1'>

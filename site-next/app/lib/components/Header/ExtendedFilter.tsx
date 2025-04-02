@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import useContentful from '../../hooks/useContentful'
 import useStore from '../../hooks/useStore'
 import { toggleInSet } from '../../utils/sets'
@@ -21,24 +23,54 @@ const ExtendedFilter = () => {
   const { selectedSizesIds } = useStore()
   const { setSelectedSizesIds } = useStore()
 
+  const extended_filter_categories = contentful?.categorys
+    .filter(category => category.link && !category.link.includes('=')) || []
+    const currentCategory = extended_filter_categories.find(category => filterBy.includes(category.link || '---'))
+    const subcategories = currentCategory?.subcategories || []
+
   return (
     <div className='Header__extended-filter'>
       <div className='d-flex flex-column'>
         <p className='m-0 mt-3'>Категории:</p>
         <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
-          {contentful?.sites[0]?.extended_filter_categories
+          {extended_filter_categories
             .map((category, index) =>
-              <Button
+              <Link
                 key={index}
-                hoverable
-                gray={filterBy.includes(category.name)}
-                className='me-2 mb-2'
-                onClick={() => {
-                  setFilterBy(toggleInSet(filterBy, category.name))
-                }}
+                href={'/categoriya/' + (category.link || '')}
               >
-                {category.name}
-              </Button>
+                <Button
+                  hoverable
+                  gray={filterBy.includes(category.link || '---')}
+                  className='me-2 mb-2'
+                  onClick={() => {
+                    // setFilterBy(toggleInSet(filterBy, category.name))
+                  }}
+                >
+                  {category.name}
+                </Button>
+              </Link>
+            )
+          }
+        </div>
+        <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
+          {subcategories
+            .map((category, index) =>
+              <Link
+                key={index}
+                href={'/categoriya/' + (currentCategory?.link || '') + '/?' + (category.link || '')}
+              >
+                <Button
+                  hoverable
+                  gray={filterBy.includes(category.link || '---')}
+                  className='me-2 mb-2'
+                  onClick={() => {
+                    // setFilterBy(toggleInSet(filterBy, category.name))
+                  }}
+                >
+                  {category.name}
+                </Button>
+              </Link>
             )
           }
         </div>

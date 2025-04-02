@@ -1,11 +1,7 @@
+import { Metadata } from 'next'
+
 import { getContentfulDataWithoutBadItems } from '../hooks/useContentful'
 
-
-export type MetadataType = {
-  h1?: string
-  title?: string
-  description?: string
-}
 
 const CUSTOM_PAGES_LINKS = [
   'contacts',
@@ -17,7 +13,7 @@ const CUSTOM_PAGES_LINKS = [
   '404',
 ]
 
-const getMetadataFromContentful = async (link: string): Promise<MetadataType> => {
+const getMetadataFromContentful = async (link: string): Promise<Metadata> => {
   const contentful = await getContentfulDataWithoutBadItems()
 
   if (!contentful)
@@ -31,41 +27,33 @@ const getMetadataFromContentful = async (link: string): Promise<MetadataType> =>
       return metadataFallback
 
     return {
-      h1: item.metaH1 || item.name || 'undefined item',
+      // h1: item.metaH1 || item.name || 'undefined item',
       title: item.metaTitle || `${item.name} — купить в бренде одежды MAYTRY`,
       description: item.metaDescription || `Купите ${item.name}. Подробности на сайте.` || 'undefined item description',
     }
   }
 
-  if (link.includes('/faq/')) {
-    const pageId = link.replace('/faq/', '')
+  if (link.includes('/faq') || CUSTOM_PAGES_LINKS.includes(link.replace('/', ''))) {
     const page = contentful.pages
-      .find(page => page.link.link.replace('/', '') === pageId)
+      .find(page => page.link.link === link)
     
+    const canonicalProps: Partial<Metadata> = page?.noindex ? {} : {
+      alternates: { canonical: link }
+    }
     return {
-      h1: page?.metaH1 || 'undefined page',
+      // h1: page?.metaH1 || 'undefined page',
       title: page?.metaTitle || 'undefined page title',
       description: page?.metaDescription || 'undefined page description',
+      ...canonicalProps
     }
   }
 
-  if (CUSTOM_PAGES_LINKS.includes(link.replace('/', ''))) {
-    const pageId = link.replace('/', '')
-    const page = contentful.pages
-      .find(page => page.link.link.replace('/', '') === pageId)
-    
-    return {
-      h1: page?.metaH1 || 'undefined page',
-      title: page?.metaTitle || 'undefined page title',
-      description: page?.metaDescription || 'undefined page description',
-    }
-  }
 
   if (link === '/') {
     const site = contentful.sites[0]
     
     return {
-      h1: site ? site.metaH1 : 'undefined site',
+      // h1: site ? site.metaH1 : 'undefined site',
       title: site ? site.metaTitle : 'undefined site title',
       description: site ? site.metaDescription : 'undefined site description',
     }
@@ -83,51 +71,51 @@ const getMetadataFromContentful = async (link: string): Promise<MetadataType> =>
 export default getMetadataFromContentful
 
 
-const metadataFallback: MetadataType = {
-  h1: 'maytry h1',
+const metadataFallback: Metadata = {
+  // h1: 'maytry h1',
   title: 'maytry: ',
   description: 'maytry page description'
 }
 
 
-const metadataVocabulary: { [key: string]: MetadataType } = {
+const metadataVocabulary: { [key: string]: Metadata } = {
   '/login': {
-    h1: 'Вход',
+    // h1: 'Вход',
     title: 'maytry: вход',
     description: 'maytry вход'  
   },
   '/register': {
-    h1: 'Регистрация',
+    // h1: 'Регистрация',
     title: 'maytry: регистрация',
     description: 'maytry регистрация'  
   },
   '/account': {
-    h1: 'Профиль',
+    // h1: 'Профиль',
     title: 'maytry: профиль',
     description: 'maytry профиль'  
   },
   '/cart': {
-    h1: 'корзина',
+    // h1: 'корзина',
     title: 'maytry: корзина',
     description: 'maytry корзина'  
   },
   '/checkout': {
-    h1: 'заказ',
+    // h1: 'заказ',
     title: 'maytry: заказ',
     description: 'maytry заказ'  
   },
   '/success': {
-    h1: 'успех',
+    // h1: 'успех',
     title: 'maytry: успех',
     description: 'maytry успех'  
   },
   '/fail': {
-    h1: 'неудача',
+    // h1: 'неудача',
     title: 'maytry: неудача',
     description: 'maytry неудача'  
   },
   '/admin': {
-    h1: 'Админ',
+    // h1: 'Админ',
     title: 'maytry: админка',
     description: 'maytry админка'  
   },

@@ -1,14 +1,14 @@
 import type { AppProps } from 'next/app'
 
-import { getContentfulDataWithoutBadItems } from '../../lib/hooks/useContentful'
-import Loader from '../../lib/components/Loader'
+import { getContentfulDataWithoutBadItems } from '../lib/hooks/useContentful'
+import Loader from '../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import Custom404 from '@/app/pages/404'
-import Main from '@/app/Main'
+import PageTemplate from '../lib/components/PageTemplate'
  
 
 type PageProps = {
-  params: Promise<{ categoriyaId: string }>
+  params: Promise<{ pageId: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
@@ -18,31 +18,25 @@ export async function generateMetadata(props: PageProps) {
 
 
 export default async function Page(props: PageProps & AppProps) {
-  const searchParams = (await (await props).searchParams)
-  const categoryLink = (await (await props).params).categoriyaId
   const contentful = await getContentfulDataWithoutBadItems()
-
+  
   if (!contentful)
     return <Loader />
 
-  const category = contentful.categorys
-    .find(category => category.link === categoryLink)
+  const URL = await getUrl(props)
+  const page = contentful.pages
+    .find(page => page.link.link === URL)
 
-  if (!category)
+  if (!page)
     return <Custom404 {...(props.params as any as AppProps)} />
 
-  return (
-    <Main
-      categoryLink={categoryLink}
-      searchParams={searchParams}
-    />
-  )
+  return <PageTemplate {...page} />
 }
 
 
 const getUrl = async ({ params }: PageProps) => {
-  const { categoriyaId } = await params
-  const URL = '/categoriya/' + decodeURIComponent(categoriyaId)
+  const { pageId } = await params
+  const URL = '/' + pageId
 
   return URL
 }

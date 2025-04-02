@@ -1,12 +1,13 @@
 'use client'
 
-import useStore from '../hooks/useStore'
+// import useStore from '../hooks/useStore'
 
 
 const Loader = () => {
-  const { isLoading } = useStore()  
+  // const { isLoading } = useStore()  
 
-  return !isLoading ? <></> : (
+  // return !isLoading ? <></> : (
+  return (
     <div className='Loader'>
       Загрузка...
     </div>

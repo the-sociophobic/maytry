@@ -19,12 +19,16 @@ import createCurrentItemInCartBlank from './lib/utils/createCurrentItemInCartBla
 
 
 export type MainProps = {
-  categoryId?: string
+  categoryLink?: string
+  searchParams?: {
+    [key: string]: string | string[] | undefined;
+  }
 }
 
 
 const Main: FC<MainProps> = ({
-  categoryId
+  categoryLink,
+  searchParams
 }) => {
   const { showStartBanner } = useStore()
 
@@ -37,6 +41,7 @@ const Main: FC<MainProps> = ({
   const { setFilterBy } = useStore()
 
   const { showExtendedFilter } = useStore()
+  const { setShowExtendedFilter } = useStore()
   const { sortOrder } = useStore()
   const { mainPageView } = useStore()
 
@@ -49,6 +54,27 @@ const Main: FC<MainProps> = ({
   const { selectedSizesIds } = useStore()
   const { setSelectedSizesIds } = useStore()
 
+  useEffect(() => {
+    if (categoryLink) {
+      console.log('filterBy')
+      setShowExtendedFilter(true)
+      setFilterBy([categoryLink])
+
+      if (searchParams) {
+        const searchParamsString = Object.entries(searchParams)
+          .map(([key, value]) => `${key}=${value}`)
+          .reduce((a, b) => a + b, '')
+
+        setFilterBy([ categoryLink, searchParamsString ])
+      }
+    }
+  }, [
+    categoryLink,
+    searchParams,
+    setFilterBy,
+    setShowExtendedFilter
+  ])
+
   const catalogRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -59,13 +85,13 @@ const Main: FC<MainProps> = ({
     setSearchString
   ])
 
-  useEffect(() => {
-    if (!showFilter)
-      setFilterBy([])
-  }, [
-    showFilter,
-    setFilterBy
-  ])
+  // useEffect(() => {
+  //   if (!showExtendedFilter)
+  //     setFilterBy([])
+  // }, [
+  //   showExtendedFilter,
+  //   setFilterBy
+  // ])
 
   const [sortNeverClicked, setSortNeverClicked] = useState(true)
   const [initialSortOrder] = useState(sortOrder)
@@ -111,8 +137,9 @@ const Main: FC<MainProps> = ({
     )
     .filter(item =>
       (!(showFilter || use_extendedFilter) || filterBy.length === 0) ||
-      item.categories?.map(itemCategory => itemCategory.name)
-        .some(itemCategoryName => filterBy.includes(itemCategoryName))
+      item.categories?.map(itemCategory => itemCategory.link || itemCategory.name)
+        .some(itemCategoryName =>
+          itemCategoryName === (filterBy[1].includes('=') ? filterBy[1] : filterBy[0]))
     )
     .filter(item => {
       if (!use_extendedFilter || priceFrom === undefined)
