@@ -18,7 +18,7 @@ const Custom404: FC<Custom404Props> = ({
 }) => {
   return (
     <div className='container-2'>
-      <h3 className='h3'>404 - Page Not Found</h3>
+      <h3 className='h3'>Ошибка 404 – Страница не найдена</h3>
     </div>
   )
 }

@@ -97,8 +97,8 @@ export default getMetadataFromContentful
 
 const metadataFallback: GetMetadataReturnType = {
   h1: 'maytry h1',
-  title: 'maytry: ',
-  description: 'maytry page description'
+  title: 'MAYTRY – 404 Страница не найдена',
+  description: 'MAYTRY – 404 Страница не найдена'
 }
 
 
