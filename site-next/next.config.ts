@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['images.ctfassets.net'],
   },
+  trailingSlash: true
 };
 
 export default nextConfig;

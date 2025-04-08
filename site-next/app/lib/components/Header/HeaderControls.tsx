@@ -45,6 +45,7 @@ const HeaderControls = () => {
             }
             // setShowExtendedFilter(false)
             setShowExtendedFilter(!showExtendedFilter)
+            setFilterBy([])
           }}>
             ФИЛЬТР
           </Button>
