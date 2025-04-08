@@ -12,7 +12,14 @@ import useSyncCart from '../lib/hooks/useSyncCart'
 import UserOrder from '../lib/components/UserOrder'
 
 
-const Cart: FC = () => {
+export type CartProps = {
+  h1?: string
+}
+
+
+const Cart: FC<CartProps> = ({
+  h1
+}) => {
   const { itemsInCart } = useStore()
   const totalPrice = useTotalPrice()
 
@@ -29,9 +36,9 @@ const Cart: FC = () => {
       <div className='container-2'>
         <div className='row'>
           <div className='col col-xl-6'>
-            <h3 className='h3 mb-5'>
-              Корзина
-            </h3>
+            <h1 className='h3 mb-5'>
+              {h1 || 'Корзина'}
+            </h1>
 
             {itemsInCart.length === 0 ? 'Пусто' :
               <>

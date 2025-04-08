@@ -23,12 +23,14 @@ export type MainProps = {
   searchParams?: {
     [key: string]: string | string[] | undefined;
   }
+  h1?: string
 }
 
 
 const Main: FC<MainProps> = ({
   categoryLink,
-  searchParams
+  searchParams,
+  h1
 }) => {
   const { showStartBanner } = useStore()
 
@@ -187,6 +189,7 @@ const Main: FC<MainProps> = ({
     <ScrollToConsumer>
       {({ scrollTo, contentRef }) =>
         <div className='container-2'>
+          <h1 className='d-none'>{h1}</h1>
           {(showStartBanner && contentRef) &&
             <FiberScene
               contentRef={contentRef}

@@ -8,5 +8,7 @@ export async function generateMetadata() {
 
 
 export default async function Page() {
-  return <Main />
+  const { h1 } = await getMetadataFromContentful('/')
+
+  return <Main h1={h1} />
 }

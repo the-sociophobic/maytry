@@ -13,15 +13,16 @@ const PageTemplate: FC<PageTemplateProps> = ({
   title,
   image,
   text,
+  metaH1
   // items,
 }) => {
   return (
     <div className='container'>
       <div className='row'>
         <div className='col col-md-6 col-lg-3'>
-          <h3 className='h3 font-bold mb-5'>
-            {title}
-          </h3>
+          <h1 className='h3 font-bold mb-5'>
+            {metaH1 || title}
+          </h1>
           <Img
             className={'w-100'}
             file={image}

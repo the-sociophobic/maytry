@@ -8,5 +8,7 @@ export async function generateMetadata() {
 
 
 export default async function Page() {
-  return <Cart />
+  const { h1 } = await getMetadataFromContentful('/cart')
+
+  return <Cart h1={h1} />
 }

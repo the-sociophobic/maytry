@@ -62,9 +62,9 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
           maxHeight: 'calc(100vh - 70px)'
         }}
       >
-        <h3 className='h3 mb-4'>
-          {item.name}
-        </h3>
+        <h1 className='h3 mb-4'>
+          {item.metaH1}
+        </h1>
         <div className='row mb-3'>
 
           <div className='col'>

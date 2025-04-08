@@ -8,5 +8,7 @@ export async function generateMetadata() {
 
 
 export default async function Page() {
-  return <Checkout />
+  const { h1 } = await getMetadataFromContentful('/checkout')
+
+  return <Checkout h1={h1} />
 }

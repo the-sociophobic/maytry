@@ -10,7 +10,14 @@ import Radio from '../lib/components/Radio'
 import { DeliveryTypeType } from '../lib/types/frontend.type'
 
 
-const Checkout: FC = () => {
+export type CheckoutProps = {
+  h1?: string
+}
+
+
+const Checkout: FC<CheckoutProps> = ({
+  h1
+}) => {
   const { deliveryType } = useStore()
   const { boxberryData } = useStore()
   const { setDeliveryType } = useStore()
@@ -22,9 +29,9 @@ const Checkout: FC = () => {
         <div className='col-9 col-md-5 pe-md-5'>
           {deliveryType === 'Пункт выдачи Boxberry' && !boxberryData ?
             <>
-              <h4 className='h4 mt-5 mb-4 font-bold'>
-                Доставка
-              </h4>
+              <h1 className='h4 mt-5 mb-4 font-bold'>
+                {h1 || 'Доставка'}
+              </h1>
 
               <Radio
                 selected={deliveryType}
