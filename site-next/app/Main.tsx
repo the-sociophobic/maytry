@@ -133,26 +133,40 @@ const Main: FC<MainProps> = ({
       getCurrentPrice(b) - getCurrentPrice(a)
 
   const filteredItems = (contentful?.items || [])
+    // Строка поиска
     .filter(item =>
       !showSearch || searchString.length === 0 ||
       item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
     )
-    .filter(item =>
-      (!(showFilter || use_extendedFilter) || filterBy.length === 0) ||
-      item.categories?.map(itemCategory => itemCategory.link || itemCategory.name)
-        .some(itemCategoryName =>
-          itemCategoryName === (filterBy[1].includes('=') ? filterBy[1] : filterBy[0]))
-    )
+    // Категории
+    .filter(item => {
+      if (!(showFilter || use_extendedFilter) || filterBy.length === 0)
+        return true
+
+      const categoryMatch = filterBy[0] ?
+        item.categories.find(category => category.link === filterBy[0])
+        :
+        true
+      const subategoryMatch = filterBy[1] ?
+        item.categories.find(category => category.link === filterBy[1])
+        :
+        true
+
+      return categoryMatch && subategoryMatch
+    })
+    // Минимальная цена
     .filter(item => {
       if (!use_extendedFilter || priceFrom === undefined)
         return true
       return getCurrentPrice(item) >= priceFrom
     })
+    // Максимальная цена
     .filter(item => {
       if (!use_extendedFilter || priceTo === undefined)
         return true
       return getCurrentPrice(item) <= priceTo
     })
+    // Цвет
     .filter(item => {
       if (!use_extendedFilter || selectedColorIds.length === 0)
         return true
@@ -160,6 +174,7 @@ const Main: FC<MainProps> = ({
         ?.find(c_p_s =>
           selectedColorIds.includes(c_p_s.color?.id || ''))
     })
+    // Размер
     .filter(item => {
       if (!use_extendedFilter || selectedSizesIds.length === 0)
         return true

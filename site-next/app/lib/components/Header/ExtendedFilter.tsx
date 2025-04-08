@@ -25,55 +25,79 @@ const ExtendedFilter = () => {
 
   const extended_filter_categories = contentful?.categorys
     .filter(category => category.link && !category.link.includes('=')) || []
-    const currentCategory = extended_filter_categories.find(category => filterBy.includes(category.link || '---'))
-    const subcategories = currentCategory?.subcategories || []
+  const currentCategory = extended_filter_categories
+    .find(category => category.link && filterBy.includes(category.link))
+  const subcategories = currentCategory?.subcategories || []
 
   return (
     <div className='Header__extended-filter'>
       <div className='d-flex flex-column'>
         <p className='m-0 mt-3'>Категории:</p>
         <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
-          {extended_filter_categories
-            .map((category, index) =>
+          {extended_filter_categories.map((category, index) => {
+            const isActive = !!category.link && filterBy.includes(category.link)
+            const href = isActive ?
+              `/`
+              :
+              `/categoriya/${category.link || ''}`
+
+            return (
               <Link
                 key={index}
-                href={'/categoriya/' + (category.link || '')}
+                href={href}
               >
                 <Button
                   hoverable
-                  gray={filterBy.includes(category.link || '---')}
+                  gray={isActive}
                   className='me-2 mb-2'
                   onClick={() => {
-                    // setFilterBy(toggleInSet(filterBy, category.name))
+                    setFilterBy(isActive ?
+                      []
+                      :
+                      (category.link ? [category.link] : [])
+                    )
                   }}
                 >
                   {category.name}
                 </Button>
               </Link>
             )
-          }
+          })}
         </div>
-        <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
-          {subcategories
-            .map((category, index) =>
-              <Link
-                key={index}
-                href={'/categoriya/' + (currentCategory?.link || '') + '/?' + (category.link || '')}
-              >
-                <Button
-                  hoverable
-                  gray={filterBy.includes(category.link || '---')}
-                  className='me-2 mb-2'
-                  onClick={() => {
-                    // setFilterBy(toggleInSet(filterBy, category.name))
-                  }}
+        {currentCategory &&
+          <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
+            {subcategories.map((subcategory, index) => {
+              const isActive = !!subcategory.link && filterBy.includes(subcategory.link)
+              const href = isActive ?
+                `/categoriya/${currentCategory.link || ''}`
+                :
+                `/categoriya/${currentCategory.link || ''}/?${subcategory.link || ''}`
+
+              return (
+                <Link
+                  key={index}
+                  href={href}
                 >
-                  {category.name}
-                </Button>
-              </Link>
-            )
-          }
-        </div>
+                  <Button
+                    hoverable
+                    gray={isActive}
+                    className='me-2 mb-2'
+                    onClick={() => {
+                      if (currentCategory.link)
+                        setFilterBy(isActive ?
+                          [currentCategory.link]
+                          :
+                          (subcategory.link ? [currentCategory.link, subcategory.link] : [currentCategory.link])
+                        )
+                    }}
+                  >
+                    {subcategory.name}
+                  </Button>
+                </Link>
+              )
+            })}
+          </div>
+        }
         <div className='d-flex flex-row my-3'>
           <p className='m-0'>Цена:</p>
           <Input

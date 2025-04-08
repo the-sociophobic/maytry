@@ -66,7 +66,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
   }
 
   if (link.includes('categoriya')) {
-    const categoryLink = (link.split('categoriya/')[1]).split('?')[0]
+    const categoryLink = (link.split('categoriya/')[1])?.split('?')?.[0]
     const subcategoryLink = link.split('?')[1]
     const category = contentful.categorys.find(category => category.link === categoryLink)
     const subcategory = contentful.categorys.find(category => category.link === subcategoryLink)
