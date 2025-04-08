@@ -2,6 +2,7 @@ import { getContentfulDataWithoutBadItems } from '../lib/hooks/useContentful'
 import Loader from '../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import PageTemplate from '../lib/components/PageTemplate'
+import Custom404 from '../pages/404'
  
 
 export async function generateMetadata() {
@@ -21,7 +22,7 @@ export default async function Page() {
     .find(page => page.link.link === URL)
 
   if (!page)
-    return <Loader />
+    return <Custom404 />
 
   return <PageTemplate {...page} />
 }

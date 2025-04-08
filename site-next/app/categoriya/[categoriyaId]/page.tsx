@@ -25,6 +25,7 @@ export default async function Page(props: PageProps) {
   const categoryLink = (await (await props).params).categoriyaId
   const contentful = await getContentfulDataWithoutBadItems()
   const { h1 } = await getMetadataFromContentful(await getUrl(props))
+  
   if (!contentful)
     return <Loader />
 

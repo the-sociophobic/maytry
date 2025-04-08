@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 
 import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
+import { FC } from 'react'
 
 
 export async function generateMetadata() {
@@ -8,10 +9,13 @@ export async function generateMetadata() {
 }
 
 
-function Custom404({
+export type Custom404Props = Partial<AppProps>
+
+
+const Custom404: FC<Custom404Props> = ({
   // Component,
   // pageProps
-}: AppProps) {
+}) => {
   return (
     <div className='container-2'>
       <h3 className='h3'>404 - Page Not Found</h3>
