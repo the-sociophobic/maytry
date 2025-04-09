@@ -200,7 +200,7 @@ const Main: FC<MainProps> = ({
     })
   }, [])
 
-  const numberOfEmptyCards = 6 - (filteredItems.length % 6)
+  const numberOfEmptyCards = (6 - (filteredItems.length % 6)) % 6
   const emptyCardsArray = Array(numberOfEmptyCards).fill(0)
 
   return (
