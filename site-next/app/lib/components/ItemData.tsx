@@ -17,6 +17,7 @@ const ItemData: FC<ItemDataProps> = (item) => {
   const interval = getInterval(item)
   const {
     name,
+    metaH1,
     color_price_size,
   } = item
   const colors = parseColors(color_price_size)
@@ -27,7 +28,7 @@ const ItemData: FC<ItemDataProps> = (item) => {
         <div className='ItemData__price'>
           <div className='ItemData__price__name mb-2'>
             {/* <Link href={parseItemHref(item)}> */}
-              {name}
+              {metaH1 || name}
             {/* </Link> */}
           </div>
           <Price

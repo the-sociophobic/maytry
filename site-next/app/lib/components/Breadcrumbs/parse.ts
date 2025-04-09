@@ -52,7 +52,7 @@ const parseItem = (
     label: item.name
   }
   const category = item.categories
-    .find(category => category.subcategories.length > 0)
+    .find(category => category.subcategories?.length > 0)
 
   if (!category)
     return [itemBreadcrumb]
