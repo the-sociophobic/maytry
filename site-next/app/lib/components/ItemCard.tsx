@@ -15,26 +15,35 @@ export type ItemCardProps = CombinedItemType
 const ItemCard: FC<ItemCardProps> = (item) => {
   // const { setHoveredItem } = useStore()
   const itemInCart = createCurrentItemInCartBlank(item, 1)
+  const { metaH1, name } = item
 
   return (
-    <Link
-      href={parseItemHref(item)}
-      onClick={() => dataLayer({
-        actionType: 'click',
-        items: itemInCart ? [itemInCart] : []
-      })}
-      className='ItemCard'
-      // onMouseOver={() => setHoveredItem(item)}
-      // onMouseLeave={() => setHoveredItem(undefined)}
-    >
-      <div className='ItemCard__Img-container'>
-        <ImgDummy
-          img={item.images?.[0]}
-          className='ItemCard__Img-container__Img'
-        />
-      </div>
-      <ItemData {...item} />
-    </Link>
+    <>
+      <Link
+        href={parseItemHref(item)}
+        onClick={() => dataLayer({
+          actionType: 'click',
+          items: itemInCart ? [itemInCart] : []
+        })}
+        className='ItemCard'
+        // onMouseOver={() => setHoveredItem(item)}
+        // onMouseLeave={() => setHoveredItem(undefined)}
+      >
+        <div className='ItemCard__Img-container'>
+          <ImgDummy
+            img={item.images?.[0]}
+            className='ItemCard__Img-container__Img'
+          />
+        </div>
+        <ItemData {...item} />
+      </Link>
+      <Link
+        href={parseItemHref(item)}
+        className='d-none'
+      >
+        {metaH1 || name}
+      </Link>
+    </>
   )
 }
 

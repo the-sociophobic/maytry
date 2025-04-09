@@ -22,14 +22,14 @@ const ColorSelector: FC<ColorSelectorProps> = ({
   return (
     <div className={`ColorSelector ${className}`}>
       <div className='d-flex flex-row align-items-center flex-wrap'>
-        <p className='m-0 me-3'>Цвета:</p>
+        <p className='m-0 me-3 mb-2'>Цвета:</p>
         {colors.map(color =>
           <Color
             key={color.id}
             {...color}
             selected={selectedColorIds.includes(color.id)}
             onClick={() => onChange(toggleInSet(selectedColorIds, color.id))}
-            className='me-3'
+            className='me-3 mb-2'
           />
         )}
       </div>

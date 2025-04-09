@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import useStore from '../../hooks/useStore'
 import LinkWrapper from './../LinkWrapper'
@@ -13,21 +13,10 @@ import AccountControls from './AccountControls'
 import logoImgSrc from '../../assets/images/logo.svg'
 import HeaderControls from './HeaderControls'
 import ExtendedFilter from './ExtendedFilter'
+import Categories from './Categories'
 
 
-export type HeaderBodyProps = {
-  // pathname: string
-  // is_main_page: boolean
-  // is_cart_page: boolean
-}
-
-
-const HeaderBody: FC<HeaderBodyProps> = ({
-  // pathname,
-  // is_main_page,
-  // is_cart_page,
-}) => {
-  // const { hoveredItem } = useStore()
+const HeaderBody: FC = () => {
   const pathname = usePathname()
   const is_main_page = pathname === '/' || pathname.includes('categoriya')
   const is_cart_page = pathname === '/cart'
@@ -41,11 +30,10 @@ const HeaderBody: FC<HeaderBodyProps> = ({
   const { setShowFilter } = useStore()
   const { showExtendedFilter } = useStore()
   const { setShowExtendedFilter } = useStore()
-  const headerRef = useRef<HTMLDivElement>(null)
   const [mobileHeaderOpened, setMobileHeaderOpened] = useState(false)
 
   useEffect(() => {
-    if (pathname !== '/')
+    if (pathname !== '/' && !pathname.includes('categoriya'))
       setShowExtendedFilter(false)
   }, [
     pathname,
@@ -70,100 +58,80 @@ const HeaderBody: FC<HeaderBodyProps> = ({
   }, [])
 
   return (
-    <>
-      <div
-        className={`Header Header--relative`}
-        style={headerRef.current?.clientHeight ? {
-          minHeight: (!showExtendedFilter ? 70 : headerRef.current?.clientHeight) + 'px'
-        } : {}}
-      />
-      <div
-        ref={headerRef}
-        className={`Header Header--fixed`}
-      >
-        <div className='container-2'>
-          <div className='Header__top'>
-            <LinkWrapper to='/'>
-              {/* <img src={logoImg} className='Header__logo' /> */}
-              <Image
-                src={logoImgSrc}
-                className='Header__logo'
-                alt='logo'
-                priority
-              />
-            </LinkWrapper>
+    <div className='container-2'>
+      <div className='Header__top'>
+        <LinkWrapper to='/'>
+          <Image
+            src={logoImgSrc}
+            className='Header__logo'
+            alt='logo'
+            priority
+          />
+        </LinkWrapper>
 
-            {is_main_page ?
-              <div
-                className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
-                onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
-              />
-              :
-              <LinkWrapper
-                to='/cart'
-                className='ms-auto mobile-only'
-              >
-                <Button black>
-                  КОРЗИНА ({numberOfItemsInCart})
-                </Button>
-              </LinkWrapper>
-            }
+        {is_main_page ?
+          <div
+            className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
+            onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
+          />
+          :
+          <LinkWrapper
+            to='/cart'
+            className='ms-auto mobile-only'
+          >
+            <Button black>
+              КОРЗИНА ({numberOfItemsInCart})
+            </Button>
+          </LinkWrapper>
+        }
 
-            <div className='Header__desktop'>
-              {is_main_page ?
-                <HeaderControls />
-                :
-                <LinkWrapper to='/'>
-                  <Button>
-                    {is_cart_page ? 'ПРОДОЛЖИТЬ ПОКУПКИ' : 'НА ГЛАВНУЮ'}
+        <div className='Header__desktop'>
+          <div className='d-flex flex-row align-items-center w-100'>
+            <HeaderControls />
+            <div className='d-flex flex-row ms-auto'>
+              <AccountControls />
+
+              <div className='Header__section d-flex justify-content-end'>
+                <LinkWrapper
+                  to='/cart'
+                  className='d-inline-block'
+                >
+                  <Button black>
+                    КОРЗИНА ({numberOfItemsInCart})
                   </Button>
                 </LinkWrapper>
-              }
-              <div className='d-flex flex-row ms-auto'>
-                <AccountControls />
-
-                <div className='Header__section d-flex justify-content-end'>
-                  <LinkWrapper
-                    to='/cart'
-                    className='d-inline-block'
-                  >
-                    <Button black>
-                      КОРЗИНА ({numberOfItemsInCart})
-                    </Button>
-                  </LinkWrapper>
-                </div>
               </div>
             </div>
           </div>
-
-          {mobileHeaderOpened &&
-            <div className={`Header__mobile ${!is_main_page && 'py-5'}`}>
-              {!is_main_page &&
-                <LinkWrapper to='/'>
-                  <Button>
-                    {is_cart_page ? 'ПРОДОЛЖИТЬ ПОКУПКИ' : 'НА ГЛАВНУЮ'}
-                  </Button>
-                </LinkWrapper>
-              }
-              <AccountControls />
-              <LinkWrapper
-                to='/cart'
-                className='d-inline-block ms-auto'
-                onClick={closeMobileHeader}
-              >
-                <Button black>
-                  КОРЗИНА ({numberOfItemsInCart})
-                </Button>
-              </LinkWrapper>
-            </div>
-          }
-          {showExtendedFilter &&
-            <ExtendedFilter />
-          }
-
         </div>
       </div>
-    </>
+
+      {mobileHeaderOpened &&
+        <div className={`Header__mobile no-padding ${!is_main_page && 'py-5'}`}>
+          <HeaderControls />
+          <AccountControls />
+
+          <LinkWrapper
+            to='/cart'
+            className='d-inline-block ms-auto'
+            onClick={closeMobileHeader}
+          >
+            <Button black>
+              КОРЗИНА ({numberOfItemsInCart})
+            </Button>
+          </LinkWrapper>
+        </div>
+      }
+
+      {is_main_page &&
+        <Categories />
+      }
+
+      {showExtendedFilter &&
+        <ExtendedFilter />
+      }
+
+    </div>
   )
 }
 

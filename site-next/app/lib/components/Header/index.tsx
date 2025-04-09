@@ -3,7 +3,14 @@ import HeaderBody from './HeaderBody'
 
 const Header = () => {
   return (
-    <HeaderBody />
+    <>
+      <div className={`Header Header--relative`}>
+        <HeaderBody />      
+      </div>
+      <div className={`Header Header--fixed`}>
+        <HeaderBody />      
+      </div>
+    </>
   )
 }
 

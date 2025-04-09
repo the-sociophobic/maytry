@@ -1,5 +1,7 @@
 'use client'
  
+import { usePathname } from 'next/navigation'
+
 import { FC, useEffect, useRef, useState } from 'react'
 
 import { isMobile } from 'react-device-detect'
@@ -39,7 +41,6 @@ const Main: FC<MainProps> = ({
   const { searchString } = useStore()
   const { setSearchString } = useStore()
 
-  const { showFilter } = useStore()
   const { filterBy } = useStore()
   const { setFilterBy } = useStore()
 
@@ -59,7 +60,7 @@ const Main: FC<MainProps> = ({
 
   useEffect(() => {
     if (categoryLink) {
-      setShowExtendedFilter(true)
+      // setShowExtendedFilter(true)
       setFilterBy([categoryLink])
 
       if (searchParams) {
@@ -87,13 +88,15 @@ const Main: FC<MainProps> = ({
     setSearchString
   ])
 
-  // useEffect(() => {
-  //   if (!showExtendedFilter)
-  //     setFilterBy([])
-  // }, [
-  //   showExtendedFilter,
-  //   setFilterBy
-  // ])
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (pathname === '/')
+      setFilterBy([])
+  }, [
+    showExtendedFilter,
+    setFilterBy
+  ])
 
   const [sortNeverClicked, setSortNeverClicked] = useState(true)
   const [initialSortOrder] = useState(sortOrder)
@@ -135,12 +138,12 @@ const Main: FC<MainProps> = ({
   const filteredItems = (contentful?.items || [])
     // Строка поиска
     .filter(item =>
-      !showSearch || searchString.length === 0 ||
+      searchString.length === 0 ||
       item.name.toLocaleLowerCase().includes(searchString.toLocaleLowerCase())
     )
     // Категории
     .filter(item => {
-      if (!(showFilter || use_extendedFilter) || filterBy.length === 0)
+      if (filterBy.length === 0)
         return true
 
       const categoryMatch = filterBy[0] ?

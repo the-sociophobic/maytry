@@ -33,40 +33,8 @@ const ExtendedFilter = () => {
   return (
     <div className='Header__extended-filter'>
       <div className='d-flex flex-column'>
-        <p className='m-0 mt-3'>Категории:</p>
-        <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
-          {extended_filter_categories.map((category, index) => {
-            const isActive = !!category.link && filterBy.includes(category.link)
-            const href = isActive ?
-              `/`
-              :
-              `/categoriya/${category.link || ''}`
-
-            return (
-              <Link
-                key={index}
-                href={href}
-              >
-                <Button
-                  hoverable
-                  gray={isActive}
-                  className='me-2 mb-2'
-                  onClick={() => {
-                    setFilterBy(isActive ?
-                      []
-                      :
-                      (category.link ? [category.link] : [])
-                    )
-                  }}
-                >
-                  {category.name}
-                </Button>
-              </Link>
-            )
-          })}
-        </div>
         {currentCategory &&
-          <div className='d-flex flex-row align-items-center my-3 flex-wrap'>
+          <div className='d-flex flex-row align-items-center my-3 flex-wrap no-padding'>
             {subcategories.map((subcategory, index) => {
               const isActive = !!subcategory.link && filterBy.includes(subcategory.link)
               const href = isActive ?

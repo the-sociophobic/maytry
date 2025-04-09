@@ -28,7 +28,7 @@ const SizeSelector: FC<SizeSelectorProps> = ({
 }) => {
   return (
     <div className={`SizeSelector ${className}`}>
-      <div className='d-flex flex-row'>
+      <div className='d-flex flex-row flex-wrap'>
         <div className='me-3'>
           Размер:
         </div>

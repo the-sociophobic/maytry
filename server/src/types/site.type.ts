@@ -8,3 +8,8 @@ export type ItemInCartType = Omit<CombinedItemType,
 > & ContentfulColorPriceSizeType & {
   quantity: number
 }
+
+export type MappedLinkType = {
+  href: string
+  label: string
+}

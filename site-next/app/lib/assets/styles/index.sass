@@ -32,6 +32,8 @@ body
       // @extend .mb-3
       &--relative
         position: relative
+        @include media-breakpoint-down(md)
+          margin-bottom: 10px
       &--fixed
         @extend .d-flex
         @extend .flex-column
@@ -58,6 +60,20 @@ body
       &__extended-filter
         @extend .d-flex
         @extend .flex-column
+        border: 1px solid $main-text
+        // border-right: 1px solid black
+        // border-bottom: 1px solid black
+        background-color: $main-background
+        padding: 0 15px
+        @include media-breakpoint-down(md)
+          width: 100%
+          margin-top: 10px
+        @include media-breakpoint-up(md)
+          // width: 80%
+          position: absolute
+          top: 100%
+          left: 50%
+          transform: translateX(-50%)
       &__logo
         width: 90px
         height: 70px

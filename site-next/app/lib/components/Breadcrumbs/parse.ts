@@ -1,14 +1,9 @@
 import { ContentfulDataTypeFE } from '@/app/lib/types/contentful.type'
 import { parseCategoryHref, parseItemHref } from '../../utils/parseHref'
+import { MappedLinkType } from '../../types/site.type'
 
 
-export type BreadcrumbType = {
-  href: string
-  label: string
-}
-
-
-const mainBreadcrumb: BreadcrumbType = {
+const mainBreadcrumb: MappedLinkType = {
   href: '/',
   label: 'Главная'
 }
@@ -16,8 +11,8 @@ const mainBreadcrumb: BreadcrumbType = {
 export const parsePathname = (
   pathname: string,
   contentful: ContentfulDataTypeFE
-): BreadcrumbType[] => {
-  let breadcrumbs: BreadcrumbType[] = []
+): MappedLinkType[] => {
+  let breadcrumbs: MappedLinkType[] = []
 
   if (pathname.includes('categoriya/')) {
     breadcrumbs = parseCategory(pathname.split('/').slice(-2)[0], contentful)
@@ -41,7 +36,7 @@ export const parsePathname = (
 const parseItem = (
   itemLink: string,
   contentful: ContentfulDataTypeFE
-): BreadcrumbType[] => {
+): MappedLinkType[] => {
   const item = contentful.items.find(item => item.link === itemLink)
   
   if (!item)
@@ -72,7 +67,7 @@ const parseItem = (
 const parseFAQ = (
   pageLink: string,
   contentful: ContentfulDataTypeFE
-): BreadcrumbType[] => {
+): MappedLinkType[] => {
   const faqRoot = contentful.pages.find(page => page.link.link === '/faq')
   
   if (!faqRoot)
@@ -101,7 +96,7 @@ const parseFAQ = (
 const parseCategory = (
   categoryLink: string,
   contentful: ContentfulDataTypeFE
-): BreadcrumbType[] => {
+): MappedLinkType[] => {
   const category = contentful.categorys
     .find(category => category.link === categoryLink)
 

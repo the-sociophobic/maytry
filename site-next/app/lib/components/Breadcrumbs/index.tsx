@@ -14,9 +14,9 @@ const Breadcrumbs: FC = () => {
   const { data: contentful } = useContentful()
   const breadcrumbs = contentful ? parsePathname(pathname, contentful) : []
 
-  return (
+  return breadcrumbs.length < 2 ? <></> : (
     <div className='mb-4'>
-      {breadcrumbs.length > 1 && breadcrumbs.map((breadcrumb, breadcrumbIndex) =>
+      {breadcrumbs.map((breadcrumb, breadcrumbIndex) =>
         breadcrumbIndex < breadcrumbs.length - 1 ?
           <Link
             href={breadcrumb.href}
