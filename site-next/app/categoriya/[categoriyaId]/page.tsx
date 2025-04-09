@@ -13,9 +13,6 @@ type PageProps = {
 }
 
 export async function generateMetadata(props: PageProps) {
-  const URL = await getUrl(props)
-
-  console.log(await props.searchParams)
   return getMetadataFromContentful(await getUrl(props))
 }
 
@@ -47,7 +44,7 @@ export default async function Page(props: PageProps) {
 
 const getUrl = async ({ params, searchParams }: PageProps) => {
   const { categoriyaId } = await params
-  const searchString = Object.entries(searchParams).map(([key, value]) => `${key}=${value}`)
+  const searchString = Object.entries(await searchParams).map(([key, value]) => `${key}=${value}`)
   const URL = `/categoriya/${decodeURIComponent(categoriyaId)}?${searchString}`
 
   return URL

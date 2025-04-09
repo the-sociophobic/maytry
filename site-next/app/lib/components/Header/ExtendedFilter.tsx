@@ -6,6 +6,7 @@ import { toggleInSet } from '../../utils/sets'
 import Button from '../Button'
 import Input from '../Input'
 import SizeSelector from '../SizeSelector'
+import ColorSelector from '../ColorSelector'
 
 
 const ExtendedFilter = () => {
@@ -18,8 +19,8 @@ const ExtendedFilter = () => {
   const { setPriceTo } = useStore()
   const { sortOrder } = useStore()
   const { setSortOrder } = useStore()
-  // const { selectedColorIds } = useStore()
-  // const { setSelectedColorIds } = useStore()
+  const { selectedColorIds } = useStore()
+  const { setSelectedColorIds } = useStore()
   const { selectedSizesIds } = useStore()
   const { setSelectedSizesIds } = useStore()
 
@@ -124,12 +125,12 @@ const ExtendedFilter = () => {
             Цене {sortOrder === 'asc' ? '↑' : '↓'}
           </p>
         </div>
-        {/* <ColorSelector
+        <ColorSelector
           colors={contentful?.colors || []}
           selectedColorIds={selectedColorIds}
           onChange={setSelectedColorIds}
           className='my-3'
-        /> */}
+        />
         <SizeSelector
           sizes={(contentful?.sizes || []).map(size => ({
             ...size,

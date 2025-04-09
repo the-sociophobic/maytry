@@ -16,6 +16,7 @@ import sortMap from './lib/utils/sortMap'
 import { CombinedItemType } from './lib/types/contentful.type'
 import dataLayer from './lib/utils/dataLayer'
 import createCurrentItemInCartBlank from './lib/utils/createCurrentItemInCartBlank'
+import Breadcrumbs from './lib/components/Breadcrumbs'
 
 
 export type MainProps = {
@@ -58,7 +59,6 @@ const Main: FC<MainProps> = ({
 
   useEffect(() => {
     if (categoryLink) {
-      console.log('filterBy')
       setShowExtendedFilter(true)
       setFilterBy([categoryLink])
 
@@ -204,6 +204,7 @@ const Main: FC<MainProps> = ({
     <ScrollToConsumer>
       {({ scrollTo, contentRef }) =>
         <div className='container-2'>
+          <Breadcrumbs />
           <h1 className='d-none'>{h1}</h1>
           {(showStartBanner && contentRef) &&
             <FiberScene

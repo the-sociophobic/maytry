@@ -3,6 +3,7 @@ import { FC } from 'react'
 import LinkWrapper from './LinkWrapper'
 import { CombinedItemType } from '../types/contentful.type'
 import { getPrice } from '../utils/price'
+import { parseItemHref } from '../utils/parseHref'
 
 
 export type ItemLineProps = CombinedItemType
@@ -13,7 +14,7 @@ const ItemLine: FC<ItemLineProps> = (item) => {
 
   return (
     <LinkWrapper
-      to={'/product/' + item.link}
+      to={parseItemHref(item)}
       className='ItemLine'
     >
       <div className='ItemLine__name'>

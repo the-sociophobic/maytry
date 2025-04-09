@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { ContentfulPageType } from '../types/contentful.type'
 import Img from './Img'
 import AddNewLines from './AddNewLines'
+import Breadcrumbs from './Breadcrumbs'
 
 
 export type PageTemplateProps = ContentfulPageType
@@ -18,6 +19,7 @@ const PageTemplate: FC<PageTemplateProps> = ({
 }) => {
   return (
     <div className='container'>
+      <Breadcrumbs />
       <div className='row'>
         <div className='col col-md-6 col-lg-3'>
           <h1 className='h3 font-bold mb-5'>

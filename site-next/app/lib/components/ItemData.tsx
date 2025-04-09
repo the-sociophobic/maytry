@@ -7,6 +7,7 @@ import parseColors from '../utils/parseColors'
 import Price from './Price'
 import { getInterval } from '../utils/price'
 import { CombinedItemType } from '../types/contentful.type'
+import { parseItemHref } from '../utils/parseHref'
 
 
 export type ItemDataProps = CombinedItemType
@@ -25,7 +26,7 @@ const ItemData: FC<ItemDataProps> = (item) => {
       <div className='col-sm-9 col-md-4'>
         <div className='ItemData__price'>
           <div className='ItemData__price__name mb-2'>
-            {/* <Link href={'/product/' + item.link}> */}
+            {/* <Link href={parseItemHref(item)}> */}
               {name}
             {/* </Link> */}
           </div>

@@ -18,6 +18,7 @@ import { YANDEX_GOAL } from '../utils/yandex/consts'
 import SizesTable from './SizesTable'
 import Dropdown from './Dropdown'
 import createCurrentItemInCartBlank from '../utils/createCurrentItemInCartBlank'
+import Breadcrumbs from './Breadcrumbs'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -57,11 +58,13 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
         style={{
           top: '0px',
           overflowX: 'hidden',
-          paddingLeft: '10px',          
+          // paddingLeft: '10px',          
           overflowY: 'scroll',
           maxHeight: 'calc(100vh - 70px)'
         }}
       >
+        <Breadcrumbs />
+
         <h1 className='h3 mb-4'>
           {item.metaH1}
         </h1>

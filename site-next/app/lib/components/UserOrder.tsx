@@ -9,6 +9,7 @@ import ImgDummy from '../components/ImgDummy'
 import useStore from '../hooks/useStore'
 import { ItemInCartType } from '../types/site.type'
 import dataLayer from '../utils/dataLayer'
+import { parseItemHref } from '../utils/parseHref'
 
 
 export type UserOrderProps = {
@@ -56,7 +57,7 @@ const UserOrder: FC<UserOrderProps> = ({
           >
             <div className='Cart__items__item__IMG'>
               <LinkWrapper
-                to={'/product/' + item.link}
+                to={parseItemHref(item)}
                 className='d-block'
                 onClick={() => dataLayer({
                   actionType: 'click',

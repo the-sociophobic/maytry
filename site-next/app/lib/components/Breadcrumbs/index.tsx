@@ -1,0 +1,35 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+
+import { FC } from 'react'
+
+import useContentful from '@/app/lib/hooks/useContentful'
+import { parsePathname } from './parse'
+
+
+const Breadcrumbs: FC = () => {
+  const pathname = usePathname()
+  const { data: contentful } = useContentful()
+  const breadcrumbs = contentful ? parsePathname(pathname, contentful) : []
+
+  return (
+    <div className='mb-4'>
+      {breadcrumbs.length > 1 && breadcrumbs.map((breadcrumb, breadcrumbIndex) =>
+        breadcrumbIndex < breadcrumbs.length - 1 ?
+          <Link
+            href={breadcrumb.href}
+            className='text-black'
+          >
+            {breadcrumb.label}
+          </Link>
+          :
+          breadcrumb.label
+      ).reduce((a, b) => <>{a}<p className='d-inline-block ms-3 me-3'> / </p>{b}</>)}
+    </div>
+  )
+}
+
+
+export default Breadcrumbs
