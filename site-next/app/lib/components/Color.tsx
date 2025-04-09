@@ -11,7 +11,7 @@ export type ColorProps = ContentfulColorType & {
 
 
 const Color: FC<ColorProps> = ({
-  name: _name,
+  name,
   colorCode,
   className,
   onClick,
@@ -19,6 +19,7 @@ const Color: FC<ColorProps> = ({
 }) => {
   return (
     <div
+      title={name}
       className={`Color ${selected && 'Color--selected'} ${className}`}
       style={{ backgroundColor: colorCode }}
       onClick={onClick}
