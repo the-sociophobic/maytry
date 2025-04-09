@@ -1,3 +1,4 @@
+import Noindex from '../lib/components/Noindex'
 import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
 import Register from './Register'
 
@@ -8,5 +9,10 @@ export async function generateMetadata() {
 
 
 export default async function Page() {
-  return <Register />
+  return (
+    <>
+      <Noindex />
+      <Register />
+    </>
+  )
 }

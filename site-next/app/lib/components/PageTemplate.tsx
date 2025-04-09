@@ -4,6 +4,7 @@ import { ContentfulPageType } from '../types/contentful.type'
 import Img from './Img'
 import AddNewLines from './AddNewLines'
 import Breadcrumbs from './Breadcrumbs'
+import Noindex from './Noindex'
 
 
 export type PageTemplateProps = ContentfulPageType
@@ -19,6 +20,7 @@ const PageTemplate: FC<PageTemplateProps> = ({
 }) => {
   return (
     <div className='container'>
+      <Noindex />
       <Breadcrumbs />
       <div className='row'>
         <div className='col col-md-6 col-lg-3'>

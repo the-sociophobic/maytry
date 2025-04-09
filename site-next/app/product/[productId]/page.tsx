@@ -5,6 +5,7 @@ import Loader from '../../lib/components/Loader'
 import ItemNoSSR from './ItemNoSSR'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import Custom404 from '@/app/pages/404'
+import Canonical from '@/app/lib/components/Canonical'
  
 
 type PageProps = {
@@ -29,5 +30,10 @@ export default async function Page({ params }: PageProps) {
   if (!item)
     return <Custom404 {...(params as any as AppProps)} />
 
-  return <ItemNoSSR {...item} />
+  return (
+    <>
+      <Canonical href={`/product/${productId}`} />
+      <ItemNoSSR {...item} />
+    </>
+  )
 }

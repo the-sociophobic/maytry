@@ -5,6 +5,8 @@ import Loader from '../../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import Custom404 from '@/app/pages/404'
 import Main from '@/app/Main'
+import Canonical from '@/app/lib/components/Canonical'
+import Noindex from '@/app/lib/components/Noindex'
  
 
 type PageProps = {
@@ -21,7 +23,8 @@ export default async function Page(props: PageProps) {
   const searchParams = (await (await props).searchParams)
   const categoryLink = (await (await props).params).categoriyaId
   const contentful = await getContentfulDataWithoutBadItems()
-  const { h1 } = await getMetadataFromContentful(await getUrl(props))
+  const URL = await getUrl(props)
+  const { h1 } = await getMetadataFromContentful(URL)
   
   if (!contentful)
     return <Loader />
@@ -33,11 +36,18 @@ export default async function Page(props: PageProps) {
     return <Custom404 {...(props.params as any as AppProps)} />
 
   return (
-    <Main
-      categoryLink={categoryLink}
-      searchParams={searchParams}
-      h1={h1}
-    />
+    <>
+      {Object.entries(searchParams).length > 0 ?
+        <Noindex />
+        :
+        <Canonical href={URL} />
+      }
+      <Main
+        categoryLink={categoryLink}
+        searchParams={searchParams}
+        h1={h1}
+      />
+    </>
   )
 }
 

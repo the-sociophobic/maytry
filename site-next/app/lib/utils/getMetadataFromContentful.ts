@@ -43,14 +43,10 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
     const page = contentful.pages
       .find(page => page.link.link === link)
     
-    const canonicalProps: Partial<Metadata> = page?.noindex ? {} : {
-      alternates: { canonical: link }
-    }
     return {
       h1: page?.metaH1 || 'undefined page',
       title: page?.metaTitle || 'undefined page title',
       description: page?.metaDescription || 'undefined page description',
-      ...canonicalProps
     }
   }
 

@@ -1,3 +1,4 @@
+import Noindex from '../lib/components/Noindex'
 import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
 import Checkout from './Checkout'
 
@@ -10,5 +11,10 @@ export async function generateMetadata() {
 export default async function Page() {
   const { h1 } = await getMetadataFromContentful('/checkout')
 
-  return <Checkout h1={h1} />
+  return (
+    <>
+      <Noindex />
+      <Checkout h1={h1} />
+    </>
+  )
 }

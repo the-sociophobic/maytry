@@ -1,3 +1,4 @@
+import Noindex from '../lib/components/Noindex'
 import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
 import Cart from './Cart'
 
@@ -10,5 +11,10 @@ export async function generateMetadata() {
 export default async function Page() {
   const { h1 } = await getMetadataFromContentful('/cart')
 
-  return <Cart h1={h1} />
+  return (
+    <>
+      <Noindex />
+      <Cart h1={h1} />
+    </>
+  )
 }

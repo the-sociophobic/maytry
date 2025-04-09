@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app'
 
 import getMetadataFromContentful from '../lib/utils/getMetadataFromContentful'
 import { FC } from 'react'
+import Noindex from '../lib/components/Noindex'
 
 
 export async function generateMetadata() {
@@ -18,6 +19,7 @@ const Custom404: FC<Custom404Props> = ({
 }) => {
   return (
     <div className='container-2'>
+      <Noindex />
       <h3 className='h3'>Ошибка 404 – Страница не найдена</h3>
     </div>
   )
