@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
  
 import { FC, useEffect, useState } from 'react'
 
@@ -63,7 +63,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
           maxHeight: 'calc(100vh - 70px)'
         }}
       >
-        <Breadcrumbs />
+        <Breadcrumbs pathname={`/product/${item.link}/`} />
 
         <h1 className='h3 mb-4'>
           {item.metaH1}

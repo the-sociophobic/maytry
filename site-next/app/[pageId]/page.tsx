@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import { redirect } from 'next/navigation'
 
 import { getContentfulDataWithoutBadItems } from '../lib/hooks/useContentful'
 import Loader from '../lib/components/Loader'
@@ -28,7 +29,8 @@ export default async function Page(props: PageProps) {
     .find(page => page.link.link === URL)
 
   if (!page)
-    return <Custom404 {...(props.params as any as AppProps)} />
+    // return <Custom404 {...(props.params as any as AppProps)} />
+    redirect('/404')
 
   return <PageTemplate {...page} />
 }

@@ -1,6 +1,5 @@
-'use client'
+// 'use client'
 
-import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 import { FC } from 'react'
@@ -9,8 +8,14 @@ import useContentful from '@/app/lib/hooks/useContentful'
 import { parsePathname } from './parse'
 
 
-const Breadcrumbs: FC = () => {
-  const pathname = usePathname()
+export type BreadcrumbsProps = {
+  pathname: string
+}
+
+
+const Breadcrumbs: FC<BreadcrumbsProps> = ({
+  pathname
+}) => {
   const { data: contentful } = useContentful()
   const breadcrumbs = contentful ? parsePathname(pathname, contentful) : []
 

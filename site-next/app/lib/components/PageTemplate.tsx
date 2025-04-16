@@ -21,7 +21,7 @@ const PageTemplate: FC<PageTemplateProps> = ({
   return (
     <div className='container'>
       <Noindex />
-      <Breadcrumbs />
+      {/* <Breadcrumbs pathname={``} /> */}
       <div className='row'>
         <div className='col col-md-6 col-lg-3'>
           <h1 className='h3 font-bold mb-5'>

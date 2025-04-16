@@ -1,6 +1,4 @@
 'use client'
- 
-import { usePathname } from 'next/navigation'
 
 import { FC, useEffect, useRef, useState } from 'react'
 
@@ -88,10 +86,8 @@ const Main: FC<MainProps> = ({
     setSearchString
   ])
 
-  const pathname = usePathname()
-
   useEffect(() => {
-    if (pathname === '/')
+    if (categoryLink?.length || 0 < 3)
       setFilterBy([])
   }, [
     showExtendedFilter,
@@ -207,7 +203,7 @@ const Main: FC<MainProps> = ({
     <ScrollToConsumer>
       {({ scrollTo, contentRef }) =>
         <div className='container-2'>
-          <Breadcrumbs />
+          <Breadcrumbs pathname={`/categoriya/${categoryLink}/`} />
           <h1 className='d-none'>{h1}</h1>
           {(showStartBanner && contentRef) &&
             <FiberScene

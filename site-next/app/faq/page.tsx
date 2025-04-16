@@ -1,3 +1,5 @@
+import { redirect } from 'next/navigation'
+
 import { getContentfulDataWithoutBadItems } from '../lib/hooks/useContentful'
 import Loader from '../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
@@ -22,7 +24,8 @@ export default async function Page() {
     .find(page => page.link.link === URL)
 
   if (!page)
-    return <Custom404 />
+    // return <Custom404 />
+    redirect('/404')
 
   return <PageTemplate {...page} />
 }

@@ -28,7 +28,8 @@ export default async function Page(props: PageProps) {
     .find(page => page.link.link === URL)
 
   if (!page)
-    return <Custom404 />
+    // return <Custom404 />
+    redirect('/404')
 
   return <PageTemplate {...page} />
 }
