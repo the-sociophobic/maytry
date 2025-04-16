@@ -59,8 +59,8 @@ const Main: FC<MainProps> = ({
   useEffect(() => {
     if (categoryLink) {
       // setShowExtendedFilter(true)
-      setFilterBy([categoryLink])
-
+      if (!searchParams)
+        setFilterBy([categoryLink])
       if (searchParams) {
         const searchParamsString = Object.entries(searchParams)
           .map(([key, value]) => `${key}=${value}`)
@@ -87,9 +87,10 @@ const Main: FC<MainProps> = ({
   ])
 
   useEffect(() => {
-    if (categoryLink?.length || 0 < 3)
+    if ((categoryLink?.length || 0) < 3)
       setFilterBy([])
   }, [
+    categoryLink,
     showExtendedFilter,
     setFilterBy
   ])
@@ -204,7 +205,6 @@ const Main: FC<MainProps> = ({
       {({ scrollTo, contentRef }) =>
         <div className='container-2'>
           <BreadcrumbsCSR pathname={`/categoriya/${categoryLink}/`} />
-          <h1 className='d-none'>{h1}</h1>
           {(showStartBanner && contentRef) &&
             <FiberScene
               contentRef={contentRef}
@@ -245,7 +245,7 @@ const Main: FC<MainProps> = ({
                   />
               )
             }
-            {emptyCardsArray.map((emptyCard, emptyCardIndex) =>
+            {emptyCardsArray.map((_emptyCard, emptyCardIndex) =>
               <ItemCardEmpty key={emptyCardIndex} />
             )}
           </div>

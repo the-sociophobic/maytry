@@ -36,6 +36,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
       h1: item.metaH1 || item.name || 'undefined item',
       title: item.metaTitle || `${item.name} — купить в бренде одежды MAYTRY`,
       description: item.metaDescription || `Купите ${item.name}. Подробности на сайте.` || 'undefined item description',
+      alternates: { canonical: `https://maytry.ru/${link}` }
     }
   }
 
@@ -47,6 +48,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
       h1: page?.metaH1 || 'undefined page',
       title: page?.metaTitle || 'undefined page title',
       description: page?.metaDescription || 'undefined page description',
+      robots: { index: false }
     }
   }
 
@@ -58,6 +60,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
       h1: site ? site.metaH1 : 'undefined site',
       title: site ? site.metaTitle : 'undefined site title',
       description: site ? site.metaDescription : 'undefined site description',
+      alternates: { canonical: 'https://maytry.ru/' }
     }
   }
 
@@ -72,10 +75,16 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
       return metadataFallback
     }
 
+    const canonicalOrNoIndex = subcategoryLink === undefined || subcategoryLink.length === 0 ?
+      { alternates: { canonical: `https://maytry.ru/${link.replace('?', '/')}` } }
+      :
+      { robots: { index: false } }
+
     return {
       h1: currentCategory.metaH1,
       title: currentCategory.metaTitle,
       description: currentCategory.metaDescription,
+      ...canonicalOrNoIndex
     }
   }
 
@@ -102,41 +111,49 @@ const metadataVocabulary: { [key: string]: GetMetadataReturnType } = {
   '/login': {
     h1: 'Вход',
     title: 'maytry: вход',
-    description: 'maytry вход'  
+    description: 'maytry вход',
+    robots: { index: false }
   },
   '/register': {
     h1: 'Регистрация',
     title: 'maytry: регистрация',
-    description: 'maytry регистрация'  
+    description: 'maytry регистрация',
+    robots: { index: false }
   },
   '/account': {
     h1: 'Профиль',
     title: 'maytry: профиль',
-    description: 'maytry профиль'  
+    description: 'maytry профиль',
+    robots: { index: false }
   },
   '/cart': {
     h1: 'корзина',
     title: 'maytry: корзина',
-    description: 'maytry корзина'  
+    description: 'maytry корзина',
+    robots: { index: false }
   },
   '/checkout': {
     h1: 'заказ',
     title: 'maytry: заказ',
-    description: 'maytry заказ'  
+    description: 'maytry заказ',
+    robots: { index: false }
   },
   '/success': {
     h1: 'успех',
     title: 'maytry: успех',
-    description: 'maytry успех'  
+    description: 'maytry успех',
+    robots: { index: false }
   },
   '/fail': {
     h1: 'неудача',
     title: 'maytry: неудача',
-    description: 'maytry неудача'  
+    description: 'maytry неудача',
+    robots: { index: false }
   },
   '/admin': {
     h1: 'Админ',
     title: 'maytry: админка',
-    description: 'maytry админка'  
+    description: 'maytry админка',
+    robots: { index: false }
   },
 }
