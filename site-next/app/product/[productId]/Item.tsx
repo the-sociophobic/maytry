@@ -10,15 +10,11 @@ import useSyncCart from '../../lib/hooks/useSyncCart'
 import dataLayer from '../../lib/utils/dataLayer'
 import { CombinedItemType } from '../../lib/types/contentful.type'
 import createCurrentItemInCartBlank from '@/app/lib/utils/createCurrentItemInCartBlank'
+import ImgScrollerMobile from './ImgScrollerMobile'
+import { CONTAINER_PADDINGS, HEADER_HEIGHT, IMAGE_HEIGHT, IMAGE_WIDTH } from './consts'
 
 
 export type ItemProps = CombinedItemType
-
-
-const HEADER_HEIGHT = 70
-const IMAGE_WIDTH = 1120
-const IMAGE_HEIGHT = 1680
-const CONTAINER_PADDINGS = 30
 
 
 const Item: FC<ItemProps> = (item) => {
@@ -66,7 +62,7 @@ const Item: FC<ItemProps> = (item) => {
     if (!imagesAreaRef.current || !scrollAreaRef.current)
       return
 
-    const { children } = imagesAreaRef.current;
+    const { children } = imagesAreaRef.current
     const currentImgNode = [...children]
       .find((_img, imgIndex) => imgIndex === imageIndex)
 
@@ -74,40 +70,6 @@ const Item: FC<ItemProps> = (item) => {
       scrollAreaRef.current
         .scrollTo(0, (currentImgNode as any).offsetTop - HEADER_HEIGHT)
     }
-  }
-  const scrollToImageMobile = (imageIndex: number) => {
-    if (!imagesAreaMobileRef.current || !scrollAreaRef.current)
-      return
-
-    const { children } = imagesAreaMobileRef.current;
-    const currentImgNode = [...children]
-      .filter(child => child.classList.contains('Img'))
-      .find((_img, imgIndex) => imgIndex === imageIndex)
-
-    if (currentImgNode) {
-      scrollAreaRef.current
-        .scrollTo(0, (currentImgNode as any).offsetTop - HEADER_HEIGHT)
-    }
-  }
-
-  const touchScrollerRef = useRef<HTMLDivElement>(null)
-  const [currentMobileImage, setCurrentMobileImage] = useState(-1)
-  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    // e.preventDefault()
-    const touch = e.changedTouches[0]
-    const touchScroller = touchScrollerRef.current
-
-    if (!touch || !touchScroller)
-      return
-
-    const progress = (touch.pageY - touchScroller.getBoundingClientRect().top) / touchScroller.clientHeight
-    const numberOfPhoto = Math.floor(progress * item.images.length)
-
-    scrollToImageMobile(numberOfPhoto)
-    setCurrentMobileImage(numberOfPhoto)
-  }
-  const onTouchEnd = () => {
-    setCurrentMobileImage(-1)
   }
 
   const syncCart = useSyncCart()
@@ -122,6 +84,9 @@ const Item: FC<ItemProps> = (item) => {
       ref={scrollAreaRef}
       className='ItemPage'
     >
+      <h1 className='d-none'>
+        {item.metaH1}
+      </h1>
       <div className='container-2'>
 
         <div className='row desktop-only'>
@@ -168,7 +133,7 @@ const Item: FC<ItemProps> = (item) => {
               style={{
                 top: '0px',
                 overflowX: 'hidden',
-                paddingLeft: '10px',          
+                paddingLeft: '10px',
                 overflowY: 'scroll',
                 maxHeight: 'calc(100vh - 70px)'
               }}
@@ -208,29 +173,11 @@ const Item: FC<ItemProps> = (item) => {
             )}
           </div>
 
-          {/* <div className='col-1 overflow-hidden'> */}
-            <div
-              ref={touchScrollerRef}
-              className='ImgScrollerMobile'
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
-            >
-              {item.images.map((image, imageIndex) =>
-                <div
-                  key={image.id}
-                  className='ImgScrollerMobile__line'
-                  onClick={() => scrollToImageMobile(imageIndex)}
-                >
-                  {currentMobileImage === imageIndex &&
-                    <div className='ImgScrollerMobile__line__tooltip'>
-                      {image.title}
-                    </div>
-                  }
-                </div>
-              )}
-            </div>
-          {/* </div> */}
-
+          <ImgScrollerMobile
+            item={item}
+            imagesAreaMobileRef={imagesAreaMobileRef}
+            scrollAreaRef={scrollAreaRef}
+          />
         </div>
 
       </div>

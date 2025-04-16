@@ -65,9 +65,9 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
       >
         <Breadcrumbs pathname={`/product/${item.link}/`} />
 
-        <h1 className='h3 mb-4'>
+        <h3 className='h3 mb-4'>
           {item.metaH1}
-        </h1>
+        </h3>
         <div className='row mb-3'>
 
           <div className='col'>

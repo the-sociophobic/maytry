@@ -47,7 +47,7 @@ const Img: FC<ImgProps> = (props) => {
         {/* <Image */}
         <img
           ref={imgRef}
-          alt={props.alt || props?.file?.file?.fileName || ''}
+          alt={props.alt || props?.file?.file?.fileName || 'image'}
           src={!src.includes('http') ? src.replace('//', 'https://') : src}
           className={`
             Img__img
