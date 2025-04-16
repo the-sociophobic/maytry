@@ -37,7 +37,7 @@ export default async function Page({ params }: PageProps) {
     <>
       <Canonical href={`/product/${productId}`} />
       <ItemNoSSR {...item} />
-      {/* <ItemSSR {...item} /> */}
+      <ItemSSR {...item} />
     </>
   )
 }

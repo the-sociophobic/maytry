@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react'
 
 import { ScrollToConsumer } from './ScrollTo'
 import Header from './Header'
-import Footer from './Footer'
+import { FooterCSR } from './Footer'
 import LoaderSelfHandled from './LoaderSelfHandled'
 
 
@@ -26,7 +26,7 @@ const AppLayout: FC<AppLayoutProps> = ({
           >
             <Header />
             {children}
-            <Footer />
+            <FooterCSR />
           </div>
           <LoaderSelfHandled />
         </div>

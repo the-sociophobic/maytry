@@ -3,9 +3,9 @@ import { FC, useEffect, useRef, useState } from 'react'
 
 import Button from '../../lib/components/Button'
 import Img from '../../lib/components/Img'
-import ItemInfo from '../../lib/components/ItemInfo'
+import { ItemInfoCSR } from '../../lib/components/ItemInfo'
 import { ImgDummyCSR } from '../../lib/components/ImgDummy'
-import Footer from '../../lib/components/Footer'
+import { FooterCSR } from '../../lib/components/Footer'
 import useSyncCart from '../../lib/hooks/useSyncCart'
 import dataLayer from '../../lib/utils/dataLayer'
 import { CombinedItemType } from '../../lib/types/contentful.type'
@@ -84,14 +84,11 @@ const Item: FC<ItemProps> = (item) => {
       ref={scrollAreaRef}
       className='ItemPage'
     >
-      <h1 className='d-none'>
-        {item.metaH1}
-      </h1>
       <div className='container-2'>
 
         <div className='row desktop-only'>
           {!zoomed &&
-            <ItemInfo
+            <ItemInfoCSR
               className='col pe-5'
               {...item}
             />
@@ -160,7 +157,7 @@ const Item: FC<ItemProps> = (item) => {
               img={item.images[0]}
               className='mb-2'
             />
-            <ItemInfo
+            <ItemInfoCSR
               className='mb-5'
               {...item}
             />
@@ -181,7 +178,7 @@ const Item: FC<ItemProps> = (item) => {
         </div>
 
       </div>
-      <Footer />
+      <FooterCSR />
     </div>
   )
 }

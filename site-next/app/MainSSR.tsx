@@ -5,6 +5,7 @@ import { FC } from 'react'
 import { getContentfulDataWithoutBadItems } from './lib/hooks/useContentful'
 import { ItemCardSSR, ItemCardEmpty } from './lib/components/ItemCard'
 import { BreadcrumbsSSR } from './lib/components/Breadcrumbs'
+import { FooterSSR } from './lib/components/Footer'
 
 
 export type MainSSRProps = {
@@ -84,6 +85,7 @@ const MainSSR: FC<MainSSRProps> = async ({
           )}
         </div>
       </div>
+      <FooterSSR />
     </div>
   )
 }

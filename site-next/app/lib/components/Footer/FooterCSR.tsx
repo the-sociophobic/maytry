@@ -3,16 +3,17 @@
 import { usePathname } from 'next/navigation'
 
 import { FC } from 'react'
-import useContentful from '../hooks/useContentful'
-import LinkWrapper from './LinkWrapper'
-import Button from './Button'
+
+import useContentful from '../../hooks/useContentful'
+import LinkWrapper from '../LinkWrapper'
+import Button from '../Button'
 // import isExternalLink from '../utils/isExternalLink'
 
 
-export type FooterProps = {}
+export type FooterCSRProps = {}
 
 
-const Footer: FC<FooterProps> = ({ }) => {
+const FooterCSR: FC<FooterCSRProps> = ({ }) => {
   const { data: contentful } = useContentful()
   const site = contentful?.sites[0]
   const pathname = usePathname()
@@ -48,4 +49,4 @@ const Footer: FC<FooterProps> = ({ }) => {
 }
 
 
-export default Footer
+export { FooterCSR }

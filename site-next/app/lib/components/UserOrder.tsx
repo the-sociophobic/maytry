@@ -5,7 +5,7 @@ import ColorSizes from '../components/ColorSizes'
 import { calculateItemsPrice, printPrice } from '../utils/price'
 import Price from '../components/Price'
 import QuantitySelector from '../components/QuantitySelector'
-import ImgDummy from '../components/ImgDummy'
+import { ImgDummyCSR } from '../components/ImgDummy'
 import useStore from '../hooks/useStore'
 import { ItemInCartType } from '../types/site.type'
 import dataLayer from '../utils/dataLayer'
@@ -64,7 +64,7 @@ const UserOrder: FC<UserOrderProps> = ({
                   items: [item]
                 })}
               >
-                <ImgDummy img={item.images?.[0]} />
+                <ImgDummyCSR img={item.images?.[0]} />
               </LinkWrapper>
             </div>
             <div className='Cart__items__item__NAME-DETAILS-PRICE'>
