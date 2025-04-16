@@ -25,7 +25,7 @@ const Categories: FC = () => {
         <div className={`d-flex flex-row align-items-center flex-wrap`}>
           {extended_filter_categories.map((category, index) => {
             const isActive = !!category.link && filterBy.includes(category.link)
-            const href = isActive ?
+            const href = isActive && false ?
               `/`
               :
               `/categoriya/${category.link || ''}`
@@ -40,7 +40,7 @@ const Categories: FC = () => {
                   gray={isActive}
                   className='me-2 mb-2'
                   onClick={() => {
-                    setFilterBy(isActive ?
+                    setFilterBy(isActive && false ?
                       []
                       :
                       (category.link ? [category.link] : [])
