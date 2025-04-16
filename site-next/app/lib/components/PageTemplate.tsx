@@ -4,7 +4,6 @@ import { ContentfulPageType } from '../types/contentful.type'
 import Img from './Img'
 import AddNewLines from './AddNewLines'
 import { BreadcrumbsCSR } from './Breadcrumbs'
-import Noindex from './Noindex'
 
 
 export type PageTemplateProps = ContentfulPageType
@@ -20,7 +19,6 @@ const PageTemplate: FC<PageTemplateProps> = ({
 }) => {
   return (
     <div className='container'>
-      <Noindex />
       {/* <BreadcrumbsCSR pathname={``} /> */}
       <div className='row'>
         <div className='col col-md-6 col-lg-3'>

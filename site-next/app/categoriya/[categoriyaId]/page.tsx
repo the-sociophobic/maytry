@@ -6,8 +6,6 @@ import Loader from '../../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import Custom404 from '@/app/pages/404'
 import Main from '@/app/Main'
-import Canonical from '@/app/lib/components/Canonical'
-import Noindex from '@/app/lib/components/Noindex'
 import MainSSR from '@/app/MainSSR'
  
 
@@ -40,11 +38,6 @@ export default async function Page(props: PageProps) {
 
   return (
     <>
-      {Object.entries(searchParams).length > 0 ?
-        <Noindex />
-        :
-        <Canonical href={URL} />
-      }
       <Main
         categoryLink={categoryLink}
         searchParams={searchParams}
