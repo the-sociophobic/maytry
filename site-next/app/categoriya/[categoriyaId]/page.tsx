@@ -8,6 +8,7 @@ import Custom404 from '@/app/pages/404'
 import Main from '@/app/Main'
 import Canonical from '@/app/lib/components/Canonical'
 import Noindex from '@/app/lib/components/Noindex'
+import MainSSR from '@/app/MainSSR'
  
 
 type PageProps = {
@@ -45,6 +46,11 @@ export default async function Page(props: PageProps) {
         <Canonical href={URL} />
       }
       <Main
+        categoryLink={categoryLink}
+        searchParams={searchParams}
+        h1={h1}
+      />
+      <MainSSR
         categoryLink={categoryLink}
         searchParams={searchParams}
         h1={h1}

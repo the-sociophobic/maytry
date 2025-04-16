@@ -62,6 +62,16 @@ export default function RootLayout({
           })(document, window, "tmr-code");
         `}
         </Script>
+
+        <Script type="text/javascript">
+        {`
+          if (typeof window !== 'undefined') {
+            const sheet = new CSSStyleSheet()
+            sheet.replaceSync('.server-only { display: none !important; }')
+            document.adoptedStyleSheets = [sheet]
+          }
+        `}
+        </Script>
         
       </body>
     </html>

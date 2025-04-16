@@ -4,7 +4,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import Button from '../../lib/components/Button'
 import Img from '../../lib/components/Img'
 import ItemInfo from '../../lib/components/ItemInfo'
-import ImgDummy from '../../lib/components/ImgDummy'
+import { ImgDummyCSR } from '../../lib/components/ImgDummy'
 import Footer from '../../lib/components/Footer'
 import useSyncCart from '../../lib/hooks/useSyncCart'
 import dataLayer from '../../lib/utils/dataLayer'
@@ -116,7 +116,7 @@ const Item: FC<ItemProps> = (item) => {
                 />
               )}
               {item.images.length === 0 &&
-                <ImgDummy
+                <ImgDummyCSR
                   img={undefined}
                   className={`mb-2 cursor-zoom-${zoomed ? 'out' : 'in'}`}
                   onClick={() => {
@@ -156,7 +156,7 @@ const Item: FC<ItemProps> = (item) => {
             className='col pe-4 overflow-hidden'
             ref={imagesAreaMobileRef}
           >
-            <ImgDummy
+            <ImgDummyCSR
               img={item.images[0]}
               className='mb-2'
             />

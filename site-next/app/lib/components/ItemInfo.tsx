@@ -1,4 +1,4 @@
-// 'use client'
+'use client'
  
 import { FC, useEffect, useState } from 'react'
 
@@ -18,7 +18,7 @@ import { YANDEX_GOAL } from '../utils/yandex/consts'
 import SizesTable from './SizesTable'
 import Dropdown from './Dropdown'
 import createCurrentItemInCartBlank from '../utils/createCurrentItemInCartBlank'
-import Breadcrumbs from './Breadcrumbs'
+import { BreadcrumbsCSR } from './Breadcrumbs'
 
 
 export type ItemInfoProps = CombinedItemType & {
@@ -63,7 +63,7 @@ const ItemInfo: FC<ItemInfoProps> = ({ className, ...item }) => {
           maxHeight: 'calc(100vh - 70px)'
         }}
       >
-        <Breadcrumbs pathname={`/product/${item.link}/`} />
+        <BreadcrumbsCSR pathname={`/product/${item.link}/`} />
 
         <h3 className='h3 mb-4'>
           {item.metaH1}

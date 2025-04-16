@@ -5,7 +5,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 
 import useContentful from './lib/hooks/useContentful'
-import ItemCard, { ItemCardEmpty } from './lib/components/ItemCard'
+import { ItemCardCSR, ItemCardEmpty } from './lib/components/ItemCard'
 import useStore from './lib/hooks/useStore'
 import ItemLine from './lib/components/ItemLine'
 import { FiberScene } from './lib/components/Fiber/FiberScene'
@@ -16,7 +16,7 @@ import sortMap from './lib/utils/sortMap'
 import { CombinedItemType } from './lib/types/contentful.type'
 import dataLayer from './lib/utils/dataLayer'
 import createCurrentItemInCartBlank from './lib/utils/createCurrentItemInCartBlank'
-import Breadcrumbs from './lib/components/Breadcrumbs'
+import { BreadcrumbsCSR } from './lib/components/Breadcrumbs'
 
 
 export type MainProps = {
@@ -203,7 +203,7 @@ const Main: FC<MainProps> = ({
     <ScrollToConsumer>
       {({ scrollTo, contentRef }) =>
         <div className='container-2'>
-          <Breadcrumbs pathname={`/categoriya/${categoryLink}/`} />
+          <BreadcrumbsCSR pathname={`/categoriya/${categoryLink}/`} />
           <h1 className='d-none'>{h1}</h1>
           {(showStartBanner && contentRef) &&
             <FiberScene
@@ -234,7 +234,7 @@ const Main: FC<MainProps> = ({
             {filteredItems
               .map((item, itemIndex) =>
                 mainPageView === 'IMG' ?
-                  <ItemCard
+                  <ItemCardCSR
                     key={item.oneC_item?.barcode || itemIndex}
                     {...item}
                   />

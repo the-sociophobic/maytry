@@ -1,6 +1,7 @@
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import Main from './Main'
 import Canonical from './lib/components/Canonical'
+import MainSSR from './MainSSR'
 
 
 export async function generateMetadata() {
@@ -15,6 +16,7 @@ export default async function Page() {
     <>
       <Canonical href='/' />
       <Main h1={h1} />
+      <MainSSR h1={h1} />
     </>
   )
 }

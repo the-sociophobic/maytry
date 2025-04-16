@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
-import useBlankImage from '../hooks/useBlankImage'
-import Img from './Img'
-import { ContentfulImageType } from '../types/contentful.type'
+import useBlankImage from '../../hooks/useBlankImage'
+import Img from '../Img'
+import { ContentfulImageType } from '../../types/contentful.type'
 
 
-export type ImgDummyProps = {
+export type ImgDummyCSRProps = {
   img: ContentfulImageType | undefined
   className?: string
   onClick?: () => void
@@ -14,7 +14,7 @@ export type ImgDummyProps = {
 }
 
 
-const ImgDummy: FC<ImgDummyProps> = ({
+const ImgDummyCSR: FC<ImgDummyCSRProps> = ({
   img,
   className,
   onClick,
@@ -36,4 +36,4 @@ const ImgDummy: FC<ImgDummyProps> = ({
 }
 
 
-export default ImgDummy
+export { ImgDummyCSR }

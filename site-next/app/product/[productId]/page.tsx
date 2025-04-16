@@ -7,6 +7,7 @@ import ItemNoSSR from './ItemNoSSR'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import Custom404 from '@/app/pages/404'
 import Canonical from '@/app/lib/components/Canonical'
+import ItemSSR from './ItemSSR'
  
 
 type PageProps = {
@@ -36,6 +37,7 @@ export default async function Page({ params }: PageProps) {
     <>
       <Canonical href={`/product/${productId}`} />
       <ItemNoSSR {...item} />
+      {/* <ItemSSR {...item} /> */}
     </>
   )
 }
