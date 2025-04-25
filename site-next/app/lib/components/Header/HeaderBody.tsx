@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 
 import useStore from '../../hooks/useStore'
 import LinkWrapper from './../LinkWrapper'
@@ -19,7 +19,6 @@ import Categories from './Categories'
 const HeaderBody: FC = () => {
   const pathname = usePathname()
   const is_main_page = pathname === '/' || pathname.includes('categoriya')
-  const is_cart_page = pathname === '/cart'
 
 
   const { itemsInCart } = useStore()
@@ -30,7 +29,8 @@ const HeaderBody: FC = () => {
   const { setShowFilter } = useStore()
   const { showExtendedFilter } = useStore()
   const { setShowExtendedFilter } = useStore()
-  const [mobileHeaderOpened, setMobileHeaderOpened] = useState(false)
+  const { mobileHeaderOpened } = useStore()
+  const { setMobileHeaderOpened } = useStore()
 
   useEffect(() => {
     if (pathname !== '/' && !pathname.includes('categoriya'))
@@ -69,21 +69,10 @@ const HeaderBody: FC = () => {
           />
         </LinkWrapper>
 
-        {is_main_page ?
-          <div
-            className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
-            onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
-          />
-          :
-          <LinkWrapper
-            to='/cart'
-            className='ms-auto mobile-only'
-          >
-            <Button black>
-              КОРЗИНА ({numberOfItemsInCart})
-            </Button>
-          </LinkWrapper>
-        }
+        <div
+          className={`Header__burger ms-auto ${mobileHeaderOpened && 'Header__burger--opened'}`}
+          onClick={() => setMobileHeaderOpened(!mobileHeaderOpened)}
+        />
 
         <div className='Header__desktop'>
           <div className='d-flex flex-row align-items-center w-100'>

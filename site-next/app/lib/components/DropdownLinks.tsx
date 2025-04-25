@@ -4,6 +4,7 @@ import { FC, useState } from 'react'
 
 import { MappedLinkType } from '../types/site.type'
 import Button from './Button'
+import useStore from '../hooks/useStore'
 
 
 export type DropdownLinksProps = {
@@ -17,11 +18,22 @@ const DropdownLinks: FC<DropdownLinksProps> = ({
   className
 }) => {
   const [hovered, setHovered] = useState(false)
+  const { setShowExtendedFilter } = useStore()
+  const { setMobileHeaderOpened } = useStore()
+  
+  const closeMobileHeader = () => {
+    setShowExtendedFilter(false)
+    setMobileHeaderOpened(false)
+  }
+
   const mappedLinks = links.map(link =>
     <Link
       key={link.href}
       href={link.href}
-      onClick={() => setHovered(false)}
+      onClick={() => {
+        setHovered(false)
+        closeMobileHeader()
+      }}
     >
       <Button className='text-nowrap my-1'>
         {link.label}

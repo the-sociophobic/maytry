@@ -2,11 +2,20 @@ import Link from 'next/link'
 
 import DropdownLinks from '../DropdownLinks'
 import Button from '../Button'
+import useStore from '../../hooks/useStore'
 
 
 const HeaderControls = () => {
+  const { setShowExtendedFilter } = useStore()
+  const { setMobileHeaderOpened } = useStore()
+
+  const closeMobileHeader = () => {
+    setShowExtendedFilter(false)
+    setMobileHeaderOpened(false)
+  }
+
   return (
-    <div className='d-flex flex-row align-items-center'>
+    <div className='d-flex flex-column align-items-start mb-4'>
       <DropdownLinks links={[
         {
           href: '/',
@@ -51,7 +60,10 @@ const HeaderControls = () => {
           label: 'УХОД'
         },
       ]} />
-      <Link href={'/contacts'}>
+      <Link
+        href={'/contacts'}
+        onClick={closeMobileHeader}
+      >
         <Button>
           КОНТАКТЫ
         </Button>

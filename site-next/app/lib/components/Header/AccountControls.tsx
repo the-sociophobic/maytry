@@ -20,6 +20,14 @@ const AccountControls = () => {
   const { logged } = useStore()
   const { setLogged } = useStore()
   
+  const { setShowExtendedFilter } = useStore()
+  const { setMobileHeaderOpened } = useStore()
+
+  const closeMobileHeader = () => {
+    setShowExtendedFilter(false)
+    setMobileHeaderOpened(false)
+  }
+
   useEffect(() => {
     if (userIsLoading)
       return
@@ -34,6 +42,7 @@ const AccountControls = () => {
         <LinkWrapper
           to='/account'
           className='d-inline-block'
+          onClick={closeMobileHeader}
         >
           <Button hoverable>
             АККАУНТ
@@ -43,7 +52,10 @@ const AccountControls = () => {
       <div className='Header__section d-flex justify-content-end'>
         <Button
           hoverable
-          onClick={logout}
+          onClick={() => {
+            logout()
+            closeMobileHeader()
+          }}
         >
           ВЫЙТИ
         </Button>
@@ -55,6 +67,7 @@ const AccountControls = () => {
         <div className='Header__section d-flex justify-content-end'>
           <LinkWrapper
             to='/login'
+            onClick={closeMobileHeader}
             className='d-inline-block'
           >
             <Button hoverable>
@@ -65,6 +78,7 @@ const AccountControls = () => {
         <div className='Header__section d-flex justify-content-end'>
           <LinkWrapper
             to='/register'
+            onClick={closeMobileHeader}
             className='d-inline-block'
           >
             <Button hoverable>

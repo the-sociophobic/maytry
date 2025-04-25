@@ -48,6 +48,9 @@ export type StateType = {
   showExtendedFilter: boolean
   setShowExtendedFilter: (showExtendedFilter: boolean) => void
 
+  mobileHeaderOpened: boolean
+  setMobileHeaderOpened: (mobileHeaderOpened: boolean) => void
+
   showAccount: boolean
   setShowAccount: (showAccount: boolean) => void
 
@@ -165,6 +168,9 @@ export const initializer = (set: initializerFnType) => ({
 
   showExtendedFilter: false,
   setShowExtendedFilter: (showExtendedFilter: boolean) => set({ showExtendedFilter }),
+
+  mobileHeaderOpened: false,
+  setMobileHeaderOpened: (mobileHeaderOpened: boolean) => set({ mobileHeaderOpened }),
 
   showAccount: true,
   setShowAccount: (showAccount: boolean) => set({ showAccount }),
