@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import Script from 'next/script'
 
 import QueryWrapper from './lib/components/QueryWrapper'
@@ -16,10 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ru'>
-      <Head>
+      <head>
         <Script type="text/javascript" src="//points.boxberry.ru/js/boxberry.js" />
         <Script src="https://widget.cloudpayments.ru/bundles/cloudpayments.js" />
-      </Head>
+      </head>
       <body>
         <QueryWrapper>
           <StoreProvider>
