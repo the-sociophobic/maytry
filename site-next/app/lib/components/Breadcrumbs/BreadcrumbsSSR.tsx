@@ -2,8 +2,8 @@
 
 import { FC } from 'react'
 
-import { getContentfulDataWithoutBadItems } from '@/app/lib/hooks/useContentful'
 import Breadcrumbs from './Breadcrumbs'
+import contentful from '@/app/lib/utils/preloaded/contentful'
 
 
 export type BreadcrumbsSSRProps = {
@@ -14,8 +14,6 @@ export type BreadcrumbsSSRProps = {
 const BreadcrumbsSSR: FC<BreadcrumbsSSRProps> = async ({
   pathname
 }) => {
-  const contentful = await getContentfulDataWithoutBadItems()
-
   return (
     <Breadcrumbs
       pathname={pathname}

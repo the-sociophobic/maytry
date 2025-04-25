@@ -1,13 +1,10 @@
-import type { AppProps } from 'next/app'
 import { redirect } from 'next/navigation'
 
-import { getContentfulDataWithoutBadItems } from '../../lib/hooks/useContentful'
-import Loader from '../../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
-import Custom404 from '@/app/pages/404'
 import Main from '@/app/Main'
 import MainSSR from '@/app/MainSSR'
- 
+import contentful from '@/app/lib/utils/preloaded/contentful'
+
 
 type PageProps = {
   params: Promise<{ categoriyaId: string }>
@@ -22,13 +19,9 @@ export async function generateMetadata(props: PageProps) {
 export default async function Page(props: PageProps) {
   const searchParams = (await (await props).searchParams)
   const categoryLink = (await (await props).params).categoriyaId
-  const contentful = await getContentfulDataWithoutBadItems()
   const URL = await getUrl(props)
   const { h1 } = await getMetadataFromContentful(URL)
   
-  if (!contentful)
-    return <Loader />
-
   const category = contentful.categorys
     .find(category => category.link === categoryLink)
 

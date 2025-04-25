@@ -1,11 +1,9 @@
 import { redirect } from 'next/navigation'
 
-import { getContentfulDataWithoutBadItems } from '../lib/hooks/useContentful'
-import Loader from '../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import PageTemplate from '../lib/components/PageTemplate'
-import Custom404 from '../pages/404'
- 
+import contentful from '@/app/lib/utils/preloaded/contentful'
+
 
 export async function generateMetadata() {
   return getMetadataFromContentful(await getUrl())
@@ -13,11 +11,6 @@ export async function generateMetadata() {
 
 
 export default async function Page() {
-  const contentful = await getContentfulDataWithoutBadItems()
-
-  if (!contentful)
-    return <Loader />
-
   const URL = await getUrl()
 
   const page = contentful.pages

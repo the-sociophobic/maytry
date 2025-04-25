@@ -2,10 +2,10 @@
 
 import { FC } from 'react'
 
-import { getContentfulDataWithoutBadItems } from './lib/hooks/useContentful'
 import { ItemCardSSR, ItemCardEmpty } from './lib/components/ItemCard'
 import { BreadcrumbsSSR } from './lib/components/Breadcrumbs'
 import { FooterSSR } from './lib/components/Footer'
+import contentful from '@/app/lib/utils/preloaded/contentful'
 
 
 export type MainSSRProps = {
@@ -23,7 +23,6 @@ const MainSSR: FC<MainSSRProps> = async ({
   h1
 }) => {
   let filterBy: string[] = []
-  const contentful = await getContentfulDataWithoutBadItems()
 
   if (categoryLink) {
     filterBy = [categoryLink]

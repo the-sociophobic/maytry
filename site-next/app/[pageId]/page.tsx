@@ -6,7 +6,8 @@ import Loader from '../lib/components/Loader'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
 import Custom404 from '@/app/pages/404'
 import PageTemplate from '../lib/components/PageTemplate'
- 
+import contentful from '@/app/lib/utils/preloaded/contentful'
+
 
 type PageProps = {
   params: Promise<{ pageId: string }>
@@ -19,11 +20,6 @@ export async function generateMetadata(props: PageProps) {
 
 
 export default async function Page(props: PageProps) {
-  const contentful = await getContentfulDataWithoutBadItems()
-  
-  if (!contentful)
-    return <Loader />
-
   const URL = await getUrl(props)
   const page = contentful.pages
     .find(page => page.link.link === URL)

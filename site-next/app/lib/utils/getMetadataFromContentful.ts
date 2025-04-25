@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 
-import { getContentfulDataWithoutBadItems } from '../hooks/useContentful'
+import contentful from '@/app/lib/utils/preloaded/contentful'
 
 
 const CUSTOM_PAGES_LINKS = [
@@ -20,11 +20,6 @@ export type GetMetadataReturnType = Metadata & {
 
 
 const getMetadataFromContentful = async (link: string): Promise<GetMetadataReturnType> => {
-  const contentful = await getContentfulDataWithoutBadItems()
-
-  if (!contentful)
-    return metadataFallback
-
   if (link.includes('/product/')) {
     const productId = link.replace('/product/', '')
     const item = contentful.items.find(item => item.link === productId)

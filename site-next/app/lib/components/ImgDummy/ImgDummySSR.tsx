@@ -4,7 +4,7 @@ import { FC } from 'react'
 
 import Img from '../Img'
 import { ContentfulImageType } from '../../types/contentful.type'
-import { getContentfulDataWithoutBadItems } from '../../hooks/useContentful'
+import contentful from '@/app/lib/utils/preloaded/contentful'
 
 
 export type ImgDummySSRProps = {
@@ -22,10 +22,9 @@ const ImgDummySSR: FC<ImgDummySSRProps> = async ({
   height,
 }) => {
   const realImage = img?.small?.file?.url
-  const contentful = await getContentfulDataWithoutBadItems()
   let blankImage: string | undefined
 
-  for (const item of (contentful?.items || [])) {
+  for (const item of (contentful.items || [])) {
     if (item.images?.[0]?.small?.file?.url)
       blankImage = item.images[0].small.file.url
   }

@@ -1,13 +1,11 @@
 import type { AppProps } from 'next/app'
 import { redirect } from 'next/navigation'
 
-import { getContentfulDataWithoutBadItems } from '../../lib/hooks/useContentful'
-import Loader from '../../lib/components/Loader'
 import ItemNoSSR from './ItemNoSSR'
 import getMetadataFromContentful from '@/app/lib/utils/getMetadataFromContentful'
-import Custom404 from '@/app/pages/404'
 import ItemSSR from './ItemSSR'
- 
+import contentful from '@/app/lib/utils/preloaded/contentful'
+
 
 type PageProps = {
   params: Promise<{ productId: string }>
@@ -21,11 +19,6 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function Page({ params }: PageProps) {
   const { productId } = await params
-  const contentful = await getContentfulDataWithoutBadItems()
-
-  if (!contentful)
-    return <Loader />
-
   const item = contentful.items.find(item => item.link === productId)
 
   if (!item)

@@ -4,16 +4,15 @@ import Link from 'next/link'
 
 import { FC } from 'react'
 
-import { getContentfulDataWithoutBadItems } from '../../hooks/useContentful'
+import contentful from '@/app/lib/utils/preloaded/contentful'
 
 
 export type FooterSSRProps = {}
 
 
 const FooterSSR: FC<FooterSSRProps> = async ({ }) => {
-  const contentful = await getContentfulDataWithoutBadItems()
-  const site = contentful?.sites[0]
-  // console.log(site?.footer_links)
+  const site = contentful.sites[0]
+
   return (
     <div className='Footer'>
       <div className='container-2'>
