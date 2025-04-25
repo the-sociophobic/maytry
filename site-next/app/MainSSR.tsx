@@ -6,6 +6,7 @@ import { ItemCardSSR, ItemCardEmpty } from './lib/components/ItemCard'
 import { BreadcrumbsSSR } from './lib/components/Breadcrumbs'
 import { FooterSSR } from './lib/components/Footer'
 import contentful from '@/app/lib/utils/preloaded/contentful'
+import Loader from './lib/components/Loader'
 
 
 export type MainSSRProps = {
@@ -60,6 +61,7 @@ const MainSSR: FC<MainSSRProps> = async ({
 
   return (
     <div className='server-only'>
+      <Loader />
       <div className='container-2'>
         <BreadcrumbsSSR pathname={`/categoriya/${categoryLink}/`} />
         <h1 className='d-none'>{h1}</h1>

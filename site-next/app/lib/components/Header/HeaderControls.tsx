@@ -15,7 +15,7 @@ const HeaderControls = () => {
   }
 
   return (
-    <div className='d-flex flex-column align-items-start mb-4'>
+    <div className='d-flex flex-column flex-md-row align-items-start align-items-md-center mb-4 mb-md-0'>
       <DropdownLinks links={[
         {
           href: '/',

@@ -9,7 +9,10 @@ const Loader = () => {
   // return !isLoading ? <></> : (
   return (
     <div className='Loader'>
-      Загрузка...
+      <p>Загрузка...</p>
+      <div className='Loader__bar-container'>
+        <div className='Loader__bar' />
+      </div>
     </div>
   )
 }
