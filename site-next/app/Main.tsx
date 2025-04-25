@@ -17,6 +17,7 @@ import { CombinedItemType } from './lib/types/contentful.type'
 import dataLayer from './lib/utils/dataLayer'
 import createCurrentItemInCartBlank from './lib/utils/createCurrentItemInCartBlank'
 import { BreadcrumbsCSR } from './lib/components/Breadcrumbs'
+import { usePathname } from 'next/navigation'
 
 
 export type MainProps = {
@@ -107,7 +108,18 @@ const Main: FC<MainProps> = ({
     setSortNeverClicked
   ])
 
-  const use_extendedFilter = showExtendedFilter || isMobile
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (pathname === '/') {
+      setPriceFrom(undefined)
+      setPriceTo(undefined)
+      setSelectedColorIds([])
+      setSelectedSizesIds([])
+    }
+  }, [pathname])
+
+  const use_extendedFilter = true//showExtendedFilter || isMobile
 
   useEffect(() => {
     if (!use_extendedFilter) {

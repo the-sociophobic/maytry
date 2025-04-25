@@ -6,6 +6,7 @@ import { ItemInfoSSR } from '../../lib/components/ItemInfo'
 import { ImgDummySSR } from '../../lib/components/ImgDummy'
 import { CombinedItemType } from '../../lib/types/contentful.type'
 import { FooterSSR } from '@/app/lib/components/Footer'
+import Loader from '@/app/lib/components/Loader'
 
 
 export type ItemSSRProps = CombinedItemType
@@ -16,9 +17,8 @@ const ItemSSR: FC<ItemSSRProps> = (item) => {
   const currentImage = 0
 
   return (
-    <div
-      className='ItemPage server-only'
-    >
+    <div className='ItemPage server-only'>
+      <Loader />
       <div className='container-2'>
 
         <div className='row desktop-only'>
