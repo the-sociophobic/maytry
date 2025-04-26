@@ -18,7 +18,9 @@ const ItemSSR: FC<ItemSSRProps> = (item) => {
 
   return (
     <div className='ItemPage server-only'>
-      <Loader className='desktop-only' />
+      <Loader
+        className='desktop-only'
+      />
       <div className='container-2'>
 
         <div className='row desktop-only'>

@@ -69,6 +69,12 @@ export default function RootLayout({
             sheet.replaceSync('.server-only { display: none !important; }')
             document.adoptedStyleSheets = [sheet]
           }
+            
+          if (typeof document !== 'undefined') {
+            [...document.getElementsByTagName('div')]
+              .filter(element => element.className.includes('server-only'))
+              .forEach(element => element.setAttribute('style', 'display: none !important'))
+          }
         `}
         </Script>
         

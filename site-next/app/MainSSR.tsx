@@ -61,7 +61,9 @@ const MainSSR: FC<MainSSRProps> = async ({
 
   return (
     <div className='server-only'>
-      <Loader className='desktop-only' />
+      <Loader
+        className='desktop-only'
+      />
       <div className='container-2'>
         <BreadcrumbsSSR pathname={`/categoriya/${categoryLink}/`} />
         <h1 className='d-none'>{h1}</h1>
