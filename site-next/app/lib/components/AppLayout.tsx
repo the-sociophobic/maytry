@@ -1,11 +1,12 @@
 'use client'
 
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useEffect } from 'react'
 
 import { ScrollToConsumer } from './ScrollTo'
 import Header from './Header'
 import { FooterCSR } from './Footer'
 import LoaderSelfHandled from './LoaderSelfHandled'
+import useStore from '../hooks/useStore'
 
 
 export type AppLayoutProps = {
@@ -16,6 +17,10 @@ export type AppLayoutProps = {
 const AppLayout: FC<AppLayoutProps> = ({
   children
 }) => {
+  const { setIsLoading } = useStore()
+
+  useEffect(() => setIsLoading(false), [])
+  
   return (
     <ScrollToConsumer>
       {({ contentRef }) =>
