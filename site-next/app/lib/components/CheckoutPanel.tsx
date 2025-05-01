@@ -81,6 +81,19 @@ const CheckoutPanel: FC = () => {
   const totalPriceWithPromocodeAndBoxberry = useTotalPriceWithPromocodeAndBoxberry()
   const promocodePrint = currentPromocode && printPrice(totalPriceWithPromocode - totalPrice)
 
+  const payInPVZ_unavailable = boxberryData?.prepaid === '1'
+  const paymentOptions = payInPVZ_unavailable ?
+    [
+      'Оплата онлайн',
+      'Оплата долями CloudPayments',
+    ]
+    :
+    [
+      'Оплата онлайн',
+      'Оплата долями CloudPayments',
+      'Оплата при получении'
+    ]
+
   return (
     <>
       <div className='d-flex flex-row align-items-end'>
@@ -165,21 +178,22 @@ const CheckoutPanel: FC = () => {
 
       <Radio
         selected={paymentType}
-        options={[
-          'Оплата онлайн',
-          'Оплата долями CloudPayments',
-          'Оплата при получении'
-        ]}
+        options={paymentOptions}
         onChange={(option: string) => setPaymentType(option as PaymentTypeType)}
-        className='mb-5'
       />
 
-      {parselCreateError &&
+      {payInPVZ_unavailable &&
         <div className='d-flex flex-row justify-content-between py-2'>
+          В данном отделении недоступна оплата при получении. Только по предоплате
+        </div>
+      }
+
+      {parselCreateError &&
+        <div className='d-flex flex-row justify-content-between py-2 mt-5'>
           ERR: {parselCreateError}
         </div>
       }
-      <div className='d-flex flex-row justify-content-between py-3'>
+      <div className='d-flex flex-row justify-content-between py-3 mt-5'>
         <OrderCreateButton
           disabled={data_not_filled}
         />
