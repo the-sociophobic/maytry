@@ -70,16 +70,17 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
       return metadataFallback
     }
 
-    const canonicalOrNoIndex = subcategoryLink === undefined || subcategoryLink.length === 0 ?
-      { alternates: { canonical: `https://maytry.ru/${link.replace('?', '/')}` } }
-      :
-      { robots: { index: false } }
+    // const canonicalOrNoIndex = subcategoryLink === undefined || subcategoryLink.length === 0 ?
+    //   { alternates: { canonical: `https://maytry.ru/${link.replace('?', '/')}` } }
+    //   :
+    //   { robots: { index: false } }
 
     return {
       h1: currentCategory.metaH1,
       title: currentCategory.metaTitle,
       description: currentCategory.metaDescription,
-      ...canonicalOrNoIndex
+      // ...canonicalOrNoIndex
+      alternates: { canonical: `https://maytry.ru/${link}` }
     }
   }
 
