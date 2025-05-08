@@ -22,6 +22,8 @@ const getUser = async (
 ) => {
   let res: UserResponseType | null = null
 
+  return res
+  
   if (!props.token)
     return res
   

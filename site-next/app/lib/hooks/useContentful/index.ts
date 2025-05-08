@@ -33,32 +33,45 @@ export const emptyContentful = {
 
 
 export const getContentfulDataWithoutBadItems = async () => {
-  const data = await get<ContentfulDataTypeFE | undefined>('/data')
+  let data: ContentfulDataTypeFE | undefined = emptyContentful
+  let error = false
+  let filteredData: ContentfulDataTypeFE = emptyContentful
 
-  if (!data?.items)
-    return emptyContentful
+  try {
+    data = await get<ContentfulDataTypeFE | undefined>('/data')
 
-  const badItemsIds = data.items
-    .filter(item =>
-      !item.color_price_size ||
-      item.color_price_size?.length === 0 ||
-      item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size) ||
-      !item.images
-    )
-    .map(item => item.id)
-  const filteredData = {
-    ...data,
-    items: data.items
-      .filter(item => !badItemsIds.includes(item.id))
-      .map(item => ({
-        ...item,
-        link: item.link.replace('/', '')
-      }))
+    if (!data?.items) {
+      error = true
+    } else {
+      const badItemsIds = data.items
+        .filter(item =>
+          !item.color_price_size ||
+          item.color_price_size?.length === 0 ||
+          item.color_price_size.some(c_p_s => !c_p_s.color || !c_p_s.size) ||
+          !item.images
+        )
+        .map(item => item.id)
+
+      filteredData = {
+        ...data,
+        items: data.items
+          .filter(item => !badItemsIds.includes(item.id))
+          .map(item => ({
+            ...item,
+            link: item.link.replace('/', '')
+          }))
+      }
+    }
+  } catch (err) {
+    error = true
   }
 
   // console.log(filteredData)
 
-  return filteredData
+  if (error)
+    return emptyContentful
+  else
+    return filteredData
 }
 
 const useContentful = () => {
@@ -71,7 +84,7 @@ const useContentful = () => {
 // const useMainPage = () => {
 //   return useQuery<ContentfulSiteType>('contentful', async () => {
 //     const data = await getContentfulData<ContentfulDataTypeFE>()
-  
+
 //     return data.sites[0]
 //   })
 // }
