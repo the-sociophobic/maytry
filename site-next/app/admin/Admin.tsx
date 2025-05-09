@@ -7,6 +7,8 @@ import Orders from '../lib/components/Orders'
 import { get } from '../lib/utils/requests'
 import useStore from '../lib/hooks/useStore'
 import Input from '../lib/components/Input'
+import downloadFile from '../lib/utils/preloaded/downloadFile'
+import { getContentfulDataWithoutBadItems } from '../lib/hooks/useContentful'
 
 
 const Admin: FC = () => {
@@ -36,6 +38,12 @@ const Authotized: FC = () => {
     await get('/update-combined-data')
     setIsLoading(false)
   }
+  const downloadCombinedJSON = async () => {
+    setIsLoading(true)
+    const data = await getContentfulDataWithoutBadItems()
+    downloadFile(JSON.stringify(data), 'combined', 'json')
+    setIsLoading(false)
+  }
 
   return (
     <div className='container-2'>
@@ -50,10 +58,17 @@ const Authotized: FC = () => {
           </Button>
           <Button
             black
-            className='d-inline-block'
+            className='d-inline-block me-3'
             onClick={updateCombinedData}
           >
             {isLoading ? 'обновление...' : 'Обновить формат данных'}
+          </Button>
+          <Button
+            black
+            className='d-inline-block'
+            onClick={downloadCombinedJSON}
+          >
+            Скачать combined.json
           </Button>
         </div>
       </div>
