@@ -345,6 +345,25 @@ $color-square-size: 12px
         line-height: 1.5
         padding: 0 7px
         white-space: nowrap
+  .ImgScrollerMobileNew
+    touch-action: none
+    &__square
+      width: 6px
+      height: 6px
+      margin-right: 5px
+      margin-bottom: 4px
+      position: relative
+      background-color: #dadada
+      cursor: pointer
+      &--selected::after
+        content: ''
+        position: absolute
+        width: 8px
+        height: 8px
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
+        background-color: black
 
 .Cart
   @extend .flex-grow-1

@@ -1,6 +1,6 @@
 import { WebAppAuthObject } from '../../utils/auth'
 import { BoxberryDataType } from '../../types/boxberry.type'
-import { CombinedItemType, ContentfulPromocodeType } from '../../types/contentful.type'
+import { CombinedItemType, ContentfulPromocodeType, ParsedColorType } from '../../types/contentful.type'
 import { ItemInCartType } from '../../types/site.type'
 import dataLayer from '../../utils/dataLayer'
 import {
@@ -123,6 +123,9 @@ export type StateType = {
 
   logged: boolean
   setLogged: (logged: boolean) => void
+
+  currentColor: ParsedColorType | undefined
+  setCurrentColor: (currentColor: ParsedColorType | undefined) => void
 }
 
 
@@ -274,4 +277,8 @@ export const initializer = (set: initializerFnType) => ({
 
   logged: false,
   setLogged: (logged: boolean) => set({ logged }),
+
+  currentColor: undefined,
+  setCurrentColor: (currentColor: ParsedColorType | undefined) => set({ currentColor }),
+
 })

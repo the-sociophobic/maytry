@@ -1,5 +1,5 @@
 'use client'
- 
+
 import { FC, useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
@@ -19,6 +19,8 @@ import SizesTable from '../SizesTable'
 import Dropdown from '../Dropdown'
 import createCurrentItemInCartBlank from '../../utils/createCurrentItemInCartBlank'
 import { BreadcrumbsCSR } from '../Breadcrumbs'
+import { isMobile } from 'react-device-detect'
+import { printPrice } from '../../utils/price'
 
 
 export type ItemInfoCSRProps = CombinedItemType & {
@@ -28,9 +30,14 @@ export type ItemInfoCSRProps = CombinedItemType & {
 
 const ItemInfoCSR: FC<ItemInfoCSRProps> = ({ className, ...item }) => {
   const colors = parseColors(item.color_price_size)
+  const { currentColor } = useStore()
+  const { setCurrentColor } = useStore()
 
-  const defaultColor = colors.find(color => color.sizes.some(size => size.max_available > 0))
-  const [currentColor, setCurrentColor] = useState(defaultColor)
+  useEffect(() => {
+    const defaultColor = colors.find(color => color.sizes.some(size => size.max_available > 0))
+
+    setCurrentColor(defaultColor)
+  }, [])
 
   const currentSizes = currentColor?.sizes || []
   const defaultSize = currentSizes.find(size => size.max_available > 0)
@@ -49,13 +56,13 @@ const ItemInfoCSR: FC<ItemInfoCSRProps> = ({ className, ...item }) => {
 
   const router = useRouter()
 
-  const currentPrice = currentSize?.salePrice || item.defaultSalePrice || currentSize?.price || item.defaultPrice || 0
+  const currentPrice = currentSize?.salePrice || currentSize?.price || item.defaultSalePrice || item.defaultPrice || 0
 
   return (
     <div className={className}>
       <div
-        className='position-sticky'
-        style={{
+        style={isMobile ? {} : {
+          position: 'sticky',
           top: '0px',
           overflowX: 'hidden',
           // paddingLeft: '10px',          
@@ -80,7 +87,7 @@ const ItemInfoCSR: FC<ItemInfoCSRProps> = ({ className, ...item }) => {
               onChange={sizeId => setCurrentSize(currentSizes.find(size => size.size.id === sizeId))}
             />
 
-            <div className='d-flex flex-row mt-3 mb-4'>
+            <div className='d-flex flex-row mt-3 mb-3'>
               <div className='me-3'>
                 Цена:
               </div>
@@ -88,6 +95,11 @@ const ItemInfoCSR: FC<ItemInfoCSRProps> = ({ className, ...item }) => {
                 price={currentSize?.price || item.defaultPrice || 0}
                 salePrice={currentSize?.salePrice || item.defaultSalePrice}
               />
+            </div>
+            <div className='d-flex flex-row mt-3 mb-4'>
+              <div className='me-3'>
+                Долями: 4 платежа по {printPrice(currentPrice / 4)}
+              </div>
             </div>
 
             {currentItemInCart.quantity > 0 ?
@@ -149,19 +161,24 @@ const ItemInfoCSR: FC<ItemInfoCSRProps> = ({ className, ...item }) => {
 
         </div>
 
-        <SizesTable
-          className='mt-4 mb-5'
-          sizes={item.sizes}
-        />
-
-        <div className='ItemPage__description desktop-only'>
-          <AddNewLines string={item.description} />
+        <div className='desktop-only mt-4 mb-5'>
+          <SizesTable
+            sizes={item.sizes}
+          />
+        </div>
+        <div className='mobile-only mt-4 mb-5'>
+          <Dropdown header={`Размерная таблица`}>
+            <SizesTable
+              sizes={item.sizes}
+            />
+          </Dropdown>
         </div>
 
-        <div className='ItemPage__description mobile-only'>
-          <Dropdown header={`Описание ${item.name}`}>
-            <AddNewLines string={item.description} />
-          </Dropdown>
+        <div className='ItemPage__description'>
+          <div className='h3'>
+            {`Описание ${item.name}`}
+          </div>
+          <AddNewLines string={item.description} />
         </div>
 
       </div>

@@ -12,7 +12,7 @@ const useDeliveryPeriod = () => {
     :
     boxberryData?.period && parseInt(boxberryData?.period)
 
-  return deliveryPeriod ? deliveryPeriod + 3 : 14
+  return deliveryPeriod ? deliveryPeriod : 14
 }
 
 

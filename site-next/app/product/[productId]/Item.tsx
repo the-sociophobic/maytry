@@ -12,6 +12,8 @@ import { CombinedItemType } from '../../lib/types/contentful.type'
 import createCurrentItemInCartBlank from '@/app/lib/utils/createCurrentItemInCartBlank'
 import ImgScrollerMobile from './ImgScrollerMobile'
 import { CONTAINER_PADDINGS, HEADER_HEIGHT, IMAGE_HEIGHT, IMAGE_WIDTH } from './consts'
+import useStore from '@/app/lib/hooks/useStore'
+import { isMobile } from 'react-device-detect'
 
 
 export type ItemProps = CombinedItemType
@@ -21,8 +23,10 @@ const Item: FC<ItemProps> = (item) => {
   const [zoomed, setZoomed] = useState(false)
   const [currentImage, setCurrentImage] = useState(0)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const scrollAreaMobileRef = useRef<HTMLDivElement>(null)
   const imagesAreaRef = useRef<HTMLDivElement>(null)
   const imagesAreaMobileRef = useRef<HTMLDivElement>(null)
+  const touchScrollerRef = useRef<HTMLDivElement>(null)
 
   const itemInCart = createCurrentItemInCartBlank(item, 1)
   useEffect(() => {
@@ -33,20 +37,27 @@ const Item: FC<ItemProps> = (item) => {
   }, [])
 
   useEffect(() => {
-    if (!scrollAreaRef.current)
+    const scrollArea = isMobile ? scrollAreaMobileRef.current : scrollAreaRef.current
+
+    if (!scrollArea)
       return
 
-    scrollAreaRef.current.addEventListener('scroll', e => {
-      if (!imagesAreaRef.current)
+    scrollArea.addEventListener('scroll', e => {
+      const imagesArea = isMobile ? imagesAreaMobileRef.current : imagesAreaRef.current
+
+      if (!imagesArea)
         return
 
-      const { scrollTop } = e.target as HTMLElement
-      const { children } = imagesAreaRef.current
+      const { scrollTop, scrollLeft } = e.target as HTMLElement
+      const { children } = imagesArea
       let minOffset = 1000
       let currentImageIndex = 0;
 
       [...children].forEach((img: any, imgIndex) => {
-        const offset = Math.abs(img.offsetTop - HEADER_HEIGHT - scrollTop)
+        const offset = isMobile ?
+          Math.abs(img.offsetLeft - scrollLeft)
+          :
+          Math.abs(img.offsetTop - HEADER_HEIGHT - scrollTop)
 
         if (offset < minOffset) {
           minOffset = offset
@@ -56,21 +67,59 @@ const Item: FC<ItemProps> = (item) => {
 
       setCurrentImage(currentImageIndex)
     })
-  }, [scrollAreaRef])
+  }, [
+    isMobile,
+    scrollAreaMobileRef,
+    scrollAreaRef
+  ])
 
   const scrollToImage = (imageIndex: number) => {
-    if (!imagesAreaRef.current || !scrollAreaRef.current)
+    const scrollArea = isMobile ? scrollAreaMobileRef.current : scrollAreaRef.current
+    const imagesArea = isMobile ? imagesAreaMobileRef.current : imagesAreaRef.current
+
+    if (!imagesArea || !scrollArea)
       return
 
-    const { children } = imagesAreaRef.current
+    const { children } = imagesArea
     const currentImgNode = [...children]
       .find((_img, imgIndex) => imgIndex === imageIndex)
 
     if (currentImgNode) {
-      scrollAreaRef.current
-        .scrollTo(0, (currentImgNode as any).offsetTop - HEADER_HEIGHT)
+      if (isMobile) {
+        scrollArea
+          .scrollTo((currentImgNode as any).offsetLeft - 25, 0)
+      } else {
+        scrollArea
+          .scrollTo(0, (currentImgNode as any).offsetTop - HEADER_HEIGHT)
+      }
     }
   }
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    // e.preventDefault()
+    const touch = e.changedTouches[0]
+    const touchScroller = touchScrollerRef.current
+
+    if (!touch || !touchScroller)
+      return
+
+    const progress = (touch.pageX - touchScroller.getBoundingClientRect().left) / touchScroller.clientWidth
+    const numberOfPhoto = Math.floor(progress * item.images.length) + 1
+
+    scrollToImage(numberOfPhoto)
+    // setCurrentMobileImage(numberOfPhoto)
+  }
+
+  const { currentColor } = useStore()
+  useEffect(() => {
+    if (currentColor) {
+      const imageIndex = item.images.findIndex(image =>
+        image.title.toLowerCase().includes(currentColor.color?.name?.toLocaleLowerCase?.() || '---'))
+
+      if (imageIndex >= 0) {
+        scrollToImage(imageIndex)
+      }
+    }
+  }, [currentColor])
 
   const syncCart = useSyncCart()
   syncCart()
@@ -148,33 +197,66 @@ const Item: FC<ItemProps> = (item) => {
           </div>
         </div>
 
-        <div className='row mobile-only'>
+        <div
+          ref={scrollAreaMobileRef}
+          className='mobile-only overflow-y-visible overflow-x-scroll'
+        >
           <div
-            className='col pe-4 overflow-hidden'
+            className='d-flex flex-row overflow-y-visible mb-3'
+            style={{
+              width: 'fit-content',
+              height: 'fit-content'
+            }}
             ref={imagesAreaMobileRef}
           >
-            <ImgDummyCSR
+            {/* <ImgDummyCSR
               img={item.images[0]}
               className='mb-2'
-            />
-            <ItemInfoCSR
-              className='mb-5'
-              {...item}
-            />
-            {item.images.slice(1).map(image =>
+            /> */}
+            {item.images.map(image =>
               <Img
                 key={image.id}
                 file={image.small}
-                className={`mb-2`}
+                className={`me-4`}
+                style={{
+                  width: '90vw',
+                }}
               />
             )}
-          </div>
 
-          <ImgScrollerMobile
+            {/* {item.images.slice(1).map(image =>
+              <Img
+              key={image.id}
+              file={image.small}
+              className={`mb-2`}
+              />
+              )} */}
+          </div>
+        </div>
+        <div
+          className='ImgScrollerMobileNew row mobile-only'
+          ref={touchScrollerRef}
+          onTouchMove={onTouchMove}
+        >
+          {item.images.map((image, imageIndex) =>
+            <div
+              key={imageIndex}
+              className={`
+                ImgScrollerMobileNew__square
+                ${imageIndex === currentImage && 'ImgScrollerMobileNew__square--selected'}
+              `}
+              onClick={() => scrollToImage(imageIndex)}
+            />
+          )}
+          <ItemInfoCSR
+            className='mb-5 mt-3'
+            {...item}
+          />
+          {/* <ImgScrollerMobile
             item={item}
             imagesAreaMobileRef={imagesAreaMobileRef}
             scrollAreaRef={scrollAreaRef}
-          />
+          /> */}
         </div>
 
       </div>
