@@ -1,0 +1,1 @@
+cd maytry/site-next ; git pull ; nvm use 20 ; yarn build ; pm2 stop maytry-site ; pm2 start maytry-site
