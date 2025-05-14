@@ -233,31 +233,36 @@ const Item: FC<ItemProps> = (item) => {
               )} */}
           </div>
         </div>
-        <div
-          className='ImgScrollerMobileNew row mobile-only'
-          ref={touchScrollerRef}
-          onTouchMove={onTouchMove}
-        >
-          {item.images.map((image, imageIndex) =>
-            <div
-              key={imageIndex}
-              className={`
-                ImgScrollerMobileNew__square
-                ${imageIndex === currentImage && 'ImgScrollerMobileNew__square--selected'}
-              `}
-              onClick={() => scrollToImage(imageIndex)}
-            />
-          )}
-          <ItemInfoCSR
-            className='mb-5 mt-3'
-            {...item}
-          />
-          {/* <ImgScrollerMobile
-            item={item}
-            imagesAreaMobileRef={imagesAreaMobileRef}
-            scrollAreaRef={scrollAreaRef}
-          /> */}
+        <div className='mobile-only'>
+          <div
+            className='ImgScrollerMobileNew d-flex flex-row mx-auto'
+            style={{
+              width: 'fit-content'
+            }}
+            ref={touchScrollerRef}
+            onTouchMove={onTouchMove}
+          >
+            {item.images.map((image, imageIndex) =>
+              <div
+                key={imageIndex}
+                className={`
+                  ImgScrollerMobileNew__square
+                  ${imageIndex === currentImage && 'ImgScrollerMobileNew__square--selected'}
+                `}
+                onClick={() => scrollToImage(imageIndex)}
+              />
+            )}
+          </div>
         </div>
+        <ItemInfoCSR
+          className='mb-5 mt-3'
+          {...item}
+        />
+        {/* <ImgScrollerMobile
+          item={item}
+          imagesAreaMobileRef={imagesAreaMobileRef}
+          scrollAreaRef={scrollAreaRef}
+        /> */}
 
       </div>
       <FooterCSR />

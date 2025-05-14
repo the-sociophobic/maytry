@@ -31,7 +31,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
       h1: item.metaH1 || item.name || 'undefined item',
       title: item.metaTitle || `${item.name} — купить в бренде одежды MAYTRY`,
       description: item.metaDescription || `Купите ${item.name}. Подробности на сайте.` || 'undefined item description',
-      alternates: { canonical: `https://maytry.ru/${link}` }
+      alternates: { canonical: `https://maytry.ru${link}` }
     }
   }
 
@@ -80,7 +80,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
       title: currentCategory.metaTitle,
       description: currentCategory.metaDescription,
       // ...canonicalOrNoIndex
-      alternates: { canonical: `https://maytry.ru/${link}` }
+      alternates: { canonical: `https://maytry.ru/categoriya/${categoryLink}/` }
     }
   }
 
