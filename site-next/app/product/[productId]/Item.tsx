@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 
 
 import Button from '../../lib/components/Button'
@@ -10,10 +11,8 @@ import useSyncCart from '../../lib/hooks/useSyncCart'
 import dataLayer from '../../lib/utils/dataLayer'
 import { CombinedItemType } from '../../lib/types/contentful.type'
 import createCurrentItemInCartBlank from '@/app/lib/utils/createCurrentItemInCartBlank'
-import ImgScrollerMobile from './ImgScrollerMobile'
 import { CONTAINER_PADDINGS, HEADER_HEIGHT, IMAGE_HEIGHT, IMAGE_WIDTH } from './consts'
 import useStore from '@/app/lib/hooks/useStore'
-import { isMobile } from 'react-device-detect'
 
 
 export type ItemProps = CombinedItemType
@@ -254,15 +253,6 @@ const Item: FC<ItemProps> = (item) => {
             )}
           </div>
         </div>
-        <ItemInfoCSR
-          className='mb-5 mt-3'
-          {...item}
-        />
-        {/* <ImgScrollerMobile
-          item={item}
-          imagesAreaMobileRef={imagesAreaMobileRef}
-          scrollAreaRef={scrollAreaRef}
-        /> */}
 
       </div>
       <FooterCSR />
