@@ -252,6 +252,10 @@ const Item: FC<ItemProps> = (item) => {
               />
             )}
           </div>
+          <ItemInfoCSR
+            className='mb-5 mt-3'
+            {...item}
+          />
         </div>
 
       </div>

@@ -64,17 +64,17 @@ export default function RootLayout({
 
         <Script type="text/javascript">
         {`
-          if (typeof window !== 'undefined') {
-            const sheet = new CSSStyleSheet()
-            sheet.replaceSync('.server-only { display: none !important; }')
-            document.adoptedStyleSheets = [sheet]
-          }
+          // if (typeof window !== 'undefined') {
+          //   const sheet = new CSSStyleSheet()
+          //   sheet.replaceSync('.server-only { display: none !important; }')
+          //   document.adoptedStyleSheets = [sheet]
+          // }
             
-          if (typeof document !== 'undefined') {
-            [...document.getElementsByTagName('div')]
-              .filter(element => element.className.includes('server-only'))
-              .forEach(element => element.setAttribute('style', 'display: none !important'))
-          }
+          // if (typeof document !== 'undefined') {
+          //   [...document.getElementsByTagName('div')]
+          //     .filter(element => element.className.includes('server-only'))
+          //     .forEach(element => element.setAttribute('style', 'display: none !important'))
+          // }
         `}
         </Script>
         

@@ -158,7 +158,7 @@ const ItemInfoCSR: FC<ItemInfoCSRProps> = ({ className, ...item }) => {
                   >
                     В КОРЗИНУ
                   </Button>
-                  <div className='d-flex flex-row mt-2'>
+                  <div className='d-flex flex-row mt-2 mb-5'>
                     <Button
                       black
                       className={`me-2`}
@@ -187,9 +187,10 @@ const ItemInfoCSR: FC<ItemInfoCSRProps> = ({ className, ...item }) => {
           </div>
         </div>
 
-        <div className='desktop-only mt-4 mb-5'>
+        <div className='desktop-only'>
           <SizesTable
             sizes={item.sizes}
+            className='mt-4 mb-5'
           />
         </div>
         {item.sizes &&
