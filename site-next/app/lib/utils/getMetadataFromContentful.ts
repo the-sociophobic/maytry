@@ -23,7 +23,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
   if (link.includes('/product/')) {
     const productId = link.replace('/product/', '')
     const item = contentful.items.find(item => item.link === productId)
-    
+
     if (!item)
       return metadataFallback
 
@@ -38,7 +38,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
   if (link.includes('/faq') || CUSTOM_PAGES_LINKS.includes(link.replace('/', ''))) {
     const page = contentful.pages
       .find(page => page.link.link === link)
-    
+
     return {
       h1: page?.metaH1 || 'undefined page',
       title: page?.metaTitle || 'undefined page title',
@@ -50,7 +50,7 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
 
   if (link === '/') {
     const site = contentful.sites[0]
-    
+
     return {
       h1: site ? site.metaH1 : 'undefined site',
       title: site ? site.metaTitle : 'undefined site title',
@@ -74,13 +74,21 @@ const getMetadataFromContentful = async (link: string): Promise<GetMetadataRetur
     //   { alternates: { canonical: `https://maytry.ru/${link.replace('?', '/')}` } }
     //   :
     //   { robots: { index: false } }
+    const _canonical = `https://maytry.ru${link}`
+    const canonical = _canonical.includes('?') ?
+      _canonical.endsWith('?') ?
+        _canonical.replace('?', '/')
+        :
+        _canonical.replace('?', '/?')
+      :
+      _canonical
 
     return {
       h1: currentCategory.metaH1,
       title: currentCategory.metaTitle,
       description: currentCategory.metaDescription,
       // ...canonicalOrNoIndex
-      alternates: { canonical: `https://maytry.ru/categoriya/${categoryLink}/` }
+      alternates: { canonical }
     }
   }
 
