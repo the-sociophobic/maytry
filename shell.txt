@@ -1,3 +1,3 @@
-cd maytry/site-next ; git pull ; nvm use 20 ; pm2 stop arhi-tect-urno ; pm2 stop bulgakov-bot ; yarn build ; pm2 stop maytry-site
+cd maytry/site-next ; git pull ; nvm use 20 ; pm2 stop bulgakov-bot ; yarn build ; pm2 stop maytry-site
 
 pm2 start maytry-site ; pm2 start bulgakov-bot ; pm2 start auto-bot
