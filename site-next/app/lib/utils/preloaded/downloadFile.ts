@@ -1,9 +1,10 @@
-const downloadFile = (data: Uint8Array | string, filename: string, type: string) => {
+const downloadFile = (data: Uint8Array | string, fileName: string, type: string) => {
   const a = document.createElement('a')
   const fileURL = createFileURL(data, type)
+  const fileNameWithType = fileName + '.' + type
 
   a.href = fileURL
-  a.download = filename
+  a.download = fileNameWithType
   document.body.appendChild(a)
   a.click()
   setTimeout(() => {
