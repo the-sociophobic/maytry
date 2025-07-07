@@ -2,4 +2,4 @@ cd maytry/site-next ; git pull ; nvm use 20 ; pm2 stop bulgakov-bot auto-bot ; y
 
 pm2 start maytry-site auto-bot bulgakov-bot
 
-cd maytry/server ; git checkout storage ; git pull ; rm -r storage_ ; cp -r storage storage_ ; cd storage_ ; rm users.json ; git add . ; git commit -m "upd storage_" ; git push ; git rebase main
+cd maytry/server ; git checkout storage ; git pull ; rm -r storage_ ; cp -r storage storage_ ; cd storage_ ; rm users.json ; git add . ; git commit -m "upd storage_" ; git push ; git checkout main
