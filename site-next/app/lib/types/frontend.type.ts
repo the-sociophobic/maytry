@@ -1,0 +1,5 @@
+export type SortOrderType = 'asc' | 'desc'
+export type MainPageViewType = 'IMG' | 'TXT'
+// export type SortByType = 'Default' | 'Category' | 'Style' | 'Season'
+export type DeliveryTypeType = 'Доставка до двери' | 'Пункт выдачи Boxberry'
+export type PaymentTypeType = 'Оплата онлайн' | 'Оплата долями CloudPayments' | 'Оплата при получении'

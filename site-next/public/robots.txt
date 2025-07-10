@@ -1,0 +1,25 @@
+User-agent: *
+Allow: /$
+Allow: /categoriya/
+Allow: /product/
+Disallow: /admin/
+Disallow: /_next/static/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /success/
+Disallow: /login/
+Disallow: /register/
+Disallow: /faq/
+Disallow: /privacy-policy/
+Disallow: /terms-of-service/
+Disallow: /404/
+
+# Блокировка дублей (если есть GET-параметры)
+Disallow: /*?*
+Allow: /*?sezon=
+Allow: /*?tip=
+Allow: /*?material=
+Allow: /*?svoistvo=
+
+# Sitemap
+Sitemap: https://maytry.ru/sitemap.xml
