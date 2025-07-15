@@ -15,4 +15,9 @@ export type UserType = {
   token?: string
   registrationDate: number
   bonuses?: BonusEntry[]
+  fullName?: string
+  phone?: string
+  birthdate?: string
+  deliveryType?: string
+  deliveryAddress?: string
 }

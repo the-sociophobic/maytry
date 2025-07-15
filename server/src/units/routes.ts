@@ -10,7 +10,7 @@ import CityByIP from '../routes/CityByIP'
 import Login from '../routes/auth/Login'
 import LoginAfterOrder from '../routes/auth/LoginAfterOrder'
 import Register from '../routes/auth/Register'
-import User from '../routes/auth/User'
+import User, { changePassword, resetPasswordRequest, resetPassword, updateUser } from '../routes/auth/User'
 import UserOrders from '../routes/auth/UserOrders'
 
 import { RouteType } from '../types/routes.type'
@@ -88,6 +88,26 @@ const routes: RouteType[] = [
     type: 'POST',
     path: '/user-orders',
     fn: UserOrders
+  },
+  {
+    type: 'POST',
+    path: '/change-password',
+    fn: changePassword
+  },
+  {
+    type: 'POST',
+    path: '/reset-password-request',
+    fn: resetPasswordRequest
+  },
+  {
+    type: 'POST',
+    path: '/reset-password',
+    fn: resetPassword
+  },
+  {
+    type: 'POST',
+    path: '/update-user',
+    fn: updateUser
   },
   // AUTHORIZATION END
 ]

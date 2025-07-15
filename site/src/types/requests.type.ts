@@ -26,6 +26,12 @@ export type UserResponseType = {
   email: string
   registrationDate: number
   bonuses?: import('./user.type').BonusEntry[]
+  fullName?: string
+  phone?: string
+  birthdate?: string
+  deliveryType?: string
+  deliveryAddress?: string
+  token?: string
 }
 
 export type UserOrdersRequestType = Pick<UserType, 'token'>

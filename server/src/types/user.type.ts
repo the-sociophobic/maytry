@@ -15,4 +15,11 @@ export type UserType = {
   token?: string
   registrationDate: number
   bonuses?: BonusEntry[]
+  passwordResetToken?: string // for password recovery
+  passwordResetTokenExpires?: number // timestamp for token expiry
+  fullName?: string
+  phone?: string
+  birthdate?: string
+  deliveryType?: string
+  deliveryAddress?: string
 }

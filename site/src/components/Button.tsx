@@ -5,6 +5,7 @@ export type ButtonProps = {
   title?: string
   children?: React.ReactNode
   onClick?: any
+  onMouseDown?: MouseEventHandler<HTMLButtonElement>
   disabled?: boolean
   className?: string | boolean
   gray?: boolean
@@ -45,6 +46,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={e => {
         onClick?.(e)
       }}
+      onMouseDown={other.onMouseDown}
       {...other}
     >
       {title ? title : ''}

@@ -32,7 +32,7 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
         if (onClick) {
           await proceedAfterAddressCheck(onClick)
         } else {
-          await proceedAfterAddressCheck(orderCreate)
+        await proceedAfterAddressCheck(orderCreate)
         }
         setIsLoading(false)
       }}
