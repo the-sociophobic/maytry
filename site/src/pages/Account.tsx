@@ -206,6 +206,7 @@ const Account: FC = () => {
     setDeliveryAddress(user?.deliveryAddress || '')
   }, [user])
 
+  // When saving, use phoneCode + phoneNumber
   const handleSave = async () => {
     setSaveError('')
     setSaveSuccess('')
@@ -241,8 +242,6 @@ const Account: FC = () => {
   if (!user || !orders || !contentful) {
     return <div>Не авторизован</div>
   }
-
-  const getPhonePlaceholder = () => PHONE_MASKS[phoneCode]?.placeholder || '999 999-99-99'
 
   return (
     <div className="container">
@@ -354,7 +353,7 @@ const Account: FC = () => {
                 value={phoneNumber}
                 disabled={!editMode}
                 onChange={handlePhoneInput}
-                placeholder={getPhonePlaceholder() + ' (номер)'}
+                placeholder={PHONE_MASKS[phoneCode]?.placeholder + ' (номер)'}
                 style={{ opacity: editMode ? 1 : 0.6, background: editMode ? undefined : '#f8f9fa' }}
                 maxLength={PHONE_MASKS[phoneCode]?.mask.replace(/[^9]/g, '').length || 15}
               />
@@ -424,7 +423,7 @@ const Account: FC = () => {
               position: 'fixed', left: 0, top: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.3)', zIndex: 1000,
               display: 'flex', alignItems: 'center', justifyContent: 'center'
             }}>
-              <div style={{ background: '#fff', padding: 16, borderRadius: 12, minWidth: '90vw', maxWidth: 400, width: '100%' }} className="mx-2 mx-md-0">
+              <div style={{ background: '#fff', padding: 16, borderRadius: 12, maxWidth: 600, width: '100%' }} className="mx-2 mx-md-0">
                 <h4 className='mb-3'>Смена пароля</h4>
                 <div className='mb-2 position-relative'>
                   <input
@@ -443,9 +442,11 @@ const Account: FC = () => {
                     onClick={() => setShowOld(v => !v)}
                   >
                     {showOld ? (
-                      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 4C5 4 1.73 8.11 1.13 8.94a1 1 0 0 0 0 1.12C1.73 11.89 5 16 10 16s8.27-4.11 8.87-4.94a1 1 0 0 0 0-1.12C18.27 8.11 15 4 10 4zm0 10c-3.31 0-6.13-2.94-7.19-4C3.87 8.94 6.69 6 10 6s6.13 2.94 7.19 4C16.13 11.06 13.31 14 10 14zm0-7a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+                      // Thin open eye
+                      <svg width="20" height="20" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="7" ry="4" stroke="#222" strokeWidth="1.5" fill="none"/><circle cx="10" cy="10" r="1.5" fill="#222"/></svg>
                     ) : (
-                      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2.39 1.73a1 1 0 0 0-1.41 1.41l2.06 2.06C2.73 6.11 1.13 8.11 1.13 8.94a1 1 0 0 0 0 1.12C1.73 11.89 5 16 10 16c1.61 0 3.09-.37 4.38-1l2.49 2.49a1 1 0 0 0 1.41-1.41l-16-16zM10 14c-3.31 0-6.13-2.94-7.19-4C3.87 8.94 6.69 6 10 6c.35 0 .69.03 1.03.08l1.56 1.56A3 3 0 0 0 10 7a3 3 0 0 0-3 3c0 .35.06.68.16 1l1.53 1.53A1 1 0 0 1 10 13a1 1 0 0 1-.16-1.97l1.53 1.53c-.32.1-.65.16-1 .16zm7.19-2c-1.06 1.06-3.88 4-7.19 4-.35 0-.68-.03-1.03-.08l-1.56-1.56A3 3 0 0 0 10 13a3 3 0 0 0 3-3c0-.35-.06-.68-.16-1l-1.53-1.53A1 1 0 0 1 10 7a1 1 0 0 1 .16 1.97l-1.53-1.53c.32-.1.65-.16 1-.16 3.31 0 6.13 2.94 7.19 4z"/></svg>
+                      // Thin closed eye (slash)
+                      <svg width="20" height="20" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="7" ry="4" stroke="#222" strokeWidth="1.5" fill="none"/><line x1="4" y1="16" x2="16" y2="4" stroke="#222" strokeWidth="1.2"/></svg>
                     )}
                   </button>
                 </div>
@@ -466,9 +467,9 @@ const Account: FC = () => {
                     onClick={() => setShowNew(v => !v)}
                   >
                     {showNew ? (
-                      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 4C5 4 1.73 8.11 1.13 8.94a1 1 0 0 0 0 1.12C1.73 11.89 5 16 10 16s8.27-4.11 8.87-4.94a1 1 0 0 0 0-1.12C18.27 8.11 15 4 10 4zm0 10c-3.31 0-6.13-2.94-7.19-4C3.87 8.94 6.69 6 10 6s6.13 2.94 7.19 4C16.13 11.06 13.31 14 10 14zm0-7a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+                      <svg width="20" height="20" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="7" ry="4" stroke="#222" strokeWidth="1.5" fill="none"/><circle cx="10" cy="10" r="1.5" fill="#222"/></svg>
                     ) : (
-                      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2.39 1.73a1 1 0 0 0-1.41 1.41l2.06 2.06C2.73 6.11 1.13 8.11 1.13 8.94a1 1 0 0 0 0 1.12C1.73 11.89 5 16 10 16c1.61 0 3.09-.37 4.38-1l2.49 2.49a1 1 0 0 0 1.41-1.41l-16-16zM10 14c-3.31 0-6.13-2.94-7.19-4C3.87 8.94 6.69 6 10 6c.35 0 .69.03 1.03.08l1.56 1.56A3 3 0 0 0 10 7a3 3 0 0 0-3 3c0 .35.06.68.16 1l1.53 1.53A1 1 0 0 1 10 13a1 1 0 0 1-.16-1.97l1.53 1.53c-.32.1-.65.16-1 .16zm7.19-2c-1.06 1.06-3.88 4-7.19 4-.35 0-.68-.03-1.03-.08l-1.56-1.56A3 3 0 0 0 10 13a3 3 0 0 0 3-3c0-.35-.06-.68-.16-1l-1.53-1.53A1 1 0 0 1 10 7a1 1 0 0 1 .16 1.97l-1.53-1.53c.32-.1.65-.16 1-.16 3.31 0 6.13 2.94 7.19 4z"/></svg>
+                      <svg width="20" height="20" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="7" ry="4" stroke="#222" strokeWidth="1.5" fill="none"/><line x1="4" y1="16" x2="16" y2="4" stroke="#222" strokeWidth="1.2"/></svg>
                     )}
                   </button>
                 </div>
@@ -489,15 +490,15 @@ const Account: FC = () => {
                     onClick={() => setShowConfirm(v => !v)}
                   >
                     {showConfirm ? (
-                      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 4C5 4 1.73 8.11 1.13 8.94a1 1 0 0 0 0 1.12C1.73 11.89 5 16 10 16s8.27-4.11 8.87-4.94a1 1 0 0 0 0-1.12C18.27 8.11 15 4 10 4zm0 10c-3.31 0-6.13-2.94-7.19-4C3.87 8.94 6.69 6 10 6s6.13 2.94 7.19 4C16.13 11.06 13.31 14 10 14zm0-7a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+                      <svg width="20" height="20" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="7" ry="4" stroke="#222" strokeWidth="1.5" fill="none"/><circle cx="10" cy="10" r="1.5" fill="#222"/></svg>
                     ) : (
-                      <svg width="20" height="20" viewBox="0 0 20 20"><path d="M2.39 1.73a1 1 0 0 0-1.41 1.41l2.06 2.06C2.73 6.11 1.13 8.11 1.13 8.94a1 1 0 0 0 0 1.12C1.73 11.89 5 16 10 16c1.61 0 3.09-.37 4.38-1l2.49 2.49a1 1 0 0 0 1.41-1.41l-16-16zM10 14c-3.31 0-6.13-2.94-7.19-4C3.87 8.94 6.69 6 10 6c.35 0 .69.03 1.03.08l1.56 1.56A3 3 0 0 0 10 7a3 3 0 0 0-3 3c0 .35.06.68.16 1l1.53 1.53A1 1 0 0 1 10 13a1 1 0 0 1-.16-1.97l1.53 1.53c-.32.1-.65.16-1 .16zm7.19-2c-1.06 1.06-3.88 4-7.19 4-.35 0-.68-.03-1.03-.08l-1.56-1.56A3 3 0 0 0 10 13a3 3 0 0 0 3-3c0-.35-.06-.68-.16-1l-1.53-1.53A1 1 0 0 1 10 7a1 1 0 0 1 .16 1.97l-1.53-1.53c.32-.1.65-.16 1-.16 3.31 0 6.13 2.94 7.19 4z"/></svg>
+                      <svg width="20" height="20" viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="7" ry="4" stroke="#222" strokeWidth="1.5" fill="none"/><line x1="4" y1="16" x2="16" y2="4" stroke="#222" strokeWidth="1.2"/></svg>
                     )}
                   </button>
                 </div>
                 {changePasswordError && <div className='text-danger mb-2'>{changePasswordError}</div>}
                 {changePasswordSuccess && <div className='text-success mb-2'>{changePasswordSuccess}</div>}
-                <div className='d-flex flex-column flex-md-row justify-content-between gap-2'>
+                <div style={{ marginTop: 24 }} className='d-flex flex-column flex-md-row justify-content-between gap-2'>
                   <Button black onClick={handleChangePassword} disabled={changePasswordLoading}>Сохранить</Button>
                   <Button onClick={() => setShowChangePassword(false)} disabled={changePasswordLoading}>Отмена</Button>
                 </div>

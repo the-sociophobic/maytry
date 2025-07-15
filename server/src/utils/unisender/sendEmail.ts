@@ -36,6 +36,7 @@ const sendEmail = async ({
   } catch (err) {
     console.log(err)
   }
+  console.log('Unisender API response:', res)
 
   return res
 }
