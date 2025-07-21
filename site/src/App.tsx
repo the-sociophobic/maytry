@@ -4,6 +4,8 @@ import ProtectedRoutes from './components/ProtectedRoutes'
 import QueryWrapper from './components/QueryWrapper'
 import useStore from './hooks/useStore'
 import Loader from './components/Loader'
+import { NotificationProvider } from './components/NotificationProvider';
+import { useNotification } from './components/NotificationProvider';
 
 
 export type ScrollToContextType = {
@@ -56,19 +58,21 @@ function App() {
   ])
 
   return (
-    <QueryWrapper>
-      <div className='App'>
-        <div className='content' ref={contentRef}>
-          <ScrollToProvider value={{
-            scrollTo,
-            contentRef
-          }}>
-            <ProtectedRoutes />
-          </ScrollToProvider>
+    <NotificationProvider>
+      <QueryWrapper>
+        <div className='App'>
+          <div className='content' ref={contentRef}>
+            <ScrollToProvider value={{
+              scrollTo,
+              contentRef
+            }}>
+              <ProtectedRoutes />
+            </ScrollToProvider>
+          </div>
+          {isLoading && <Loader />}
         </div>
-        {isLoading && <Loader />}
-      </div>
-    </QueryWrapper>
+      </QueryWrapper>
+    </NotificationProvider>
   )
 }
 

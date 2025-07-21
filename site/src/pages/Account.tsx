@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import useUser from '../hooks/user/useUser'
 import useStore from '../hooks/useStore'
@@ -11,6 +11,11 @@ import Button from '../components/Button'
 import { post } from '../utils/requests'
 import { useState as useToggleState } from 'react'
 import { useQueryClient } from 'react-query'
+import { YMaps, Map, Placemark, GeolocationControl } from 'react-yandex-maps'
+import MapModal from '../components/MapModal'; // путь скорректируйте
+import { useNotification } from '../components/NotificationProvider';
+
+const YANDEX_MAP_API_KEY = '7e543b8e-d5d8-4b9c-9389-bf58e8c9af88'
 
 const Account: FC = () => {
   const { data: user } = useUser()
@@ -20,6 +25,7 @@ const Account: FC = () => {
   const orders = data?.orders
   const { data: contentful } = useContentful()
   const queryClient = useQueryClient()
+  const { showNotification } = useNotification();
 
   // Editable personal data state
   const [fullName, setFullName] = useState(user?.fullName || '')
@@ -229,6 +235,7 @@ const Account: FC = () => {
         setSaveSuccess('Данные успешно сохранены')
         setEditMode(false)
         await queryClient.invalidateQueries({ queryKey: ['user'] })
+        showNotification('Настройки успешно сохранены')
       } else {
         setSaveError('Ошибка сохранения данных')
       }
@@ -237,6 +244,34 @@ const Account: FC = () => {
     } finally {
       setSaveLoading(false)
     }
+  }
+
+  const [showMapModal, setShowMapModal] = useState(false)
+  const [mapAddress, setMapAddress] = useState('')
+  const [mapCoords, setMapCoords] = useState<[number, number] | null>(null)
+  const [searchValue, setSearchValue] = useState('')
+  const [mapCenter, setMapCenter] = useState<[number, number]>([55.751574, 37.573856])
+
+  const handleSearch = async () => {
+    if (!searchValue) return
+    const res = await fetch(`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_MAP_API_KEY}&format=json&geocode=${encodeURIComponent(searchValue)}`)
+    const data = await res.json()
+    const geoObj = data.response.GeoObjectCollection.featureMember[0]?.GeoObject
+    if (geoObj) {
+      const pos = geoObj.Point.pos.split(' ').map(Number)
+      const coords: [number, number] = [parseFloat(pos[1]), parseFloat(pos[0])]
+      setMapCenter(coords)
+      setMapCoords(coords)
+      const address = geoObj.metaDataProperty.GeocoderMetaData.text
+      setMapAddress(address)
+    }
+  }
+
+  const handleMapSelect = (address: string, coords: [number, number]) => {
+    setDeliveryAddress(address)
+    setMapAddress(address)
+    setMapCoords(coords)
+    setShowMapModal(false)
   }
 
   if (!user || !orders || !contentful) {
@@ -309,9 +344,9 @@ const Account: FC = () => {
                 </table>
               </div>
               <div className="mb-3">
-                <a href="/loyalty" className="text-primary" style={{ textDecoration: 'underline', cursor: 'pointer' }}>
-                  г) Условия получения бонусов
-                </a>
+                <Link to="/loyalty" className="text-primary" style={{ textDecoration: 'underline', cursor: 'pointer' }}>
+                  Условия получения бонусов
+                </Link>
               </div>
             </div>
           ) : (
@@ -374,15 +409,18 @@ const Account: FC = () => {
           </div>
           <div className='mb-3'>
             <label>Способ доставки:</label>
-            <input
-              type='text'
+            <select
               className='form-control'
               value={deliveryType}
               disabled={!editMode}
               onChange={e => setDeliveryType(e.target.value)}
               style={{ opacity: editMode ? 1 : 0.6, background: editMode ? undefined : '#f8f9fa' }}
-              placeholder="Курьер / Самовывоз"
-            />
+            >
+              <option value=''>Выберите способ доставки</option>
+              <option value='Курьер'>Курьер</option>
+              <option value='Самовывоз'>Самовывоз</option>
+              <option value='Пункт выдачи'>Пункт выдачи</option>
+            </select>
           </div>
           <div className='mb-3'>
             <label>Адрес доставки:</label>
@@ -392,10 +430,18 @@ const Account: FC = () => {
               value={deliveryAddress}
               disabled={!editMode}
               onChange={e => setDeliveryAddress(e.target.value)}
-              style={{ opacity: editMode ? 1 : 0.6, background: editMode ? undefined : '#f8f9fa' }}
+              onClick={editMode ? () => setShowMapModal(true) : undefined}
+              style={{ opacity: editMode ? 1 : 0.6, background: editMode ? undefined : '#f8f9fa', cursor: editMode ? 'pointer' : undefined }}
               placeholder="г. Москва, ул. Пушкина, д. 1"
+              readOnly={editMode} // prevent manual typing in edit mode, only allow via map
             />
           </div>
+          {showMapModal && (
+            <MapModal
+              onClose={() => setShowMapModal(false)}
+              onSelect={handleMapSelect}
+            />
+          )}
           <div className="d-flex flex-column flex-md-row align-items-stretch align-items-md-center mt-3 gap-2 gap-md-0">
             {editMode ? (
               <Button

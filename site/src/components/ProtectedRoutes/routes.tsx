@@ -3,6 +3,7 @@ import Cart from '../../pages/Cart'
 import Main from '../../pages/Main'
 import Register from '../../pages/Register'
 import Account from '../../pages/Account'
+import Loyalty from '../../pages/loyalty'
 import Redirect from '../Redirect'
 import Success from '../../pages/Success'
 import Fail from '../../pages/Fail'
@@ -33,6 +34,11 @@ const routes: RouteType[] = [
     to: '/account',
     title: 'Аккаунт',
     Comp: <Account />,
+  },
+  {
+    to: '/loyalty',
+    title: 'Система лояльности',
+    Comp: <Loyalty />,
   },
   {
     to: '/cart',

@@ -14,6 +14,7 @@ export type ButtonProps = {
   medium?: boolean
   hoverable?: boolean
   onMouseOver?: MouseEventHandler<HTMLButtonElement>
+  type?: 'button' | 'submit' | 'reset'
 }
 
 
@@ -28,10 +29,12 @@ const Button: React.FC<ButtonProps> = ({
   transparent,
   medium,
   hoverable,
+  type = 'button',
   ...other
 }) => {
   return (
     <button
+      type={type}
       disabled={disabled}
       className={`
         Button

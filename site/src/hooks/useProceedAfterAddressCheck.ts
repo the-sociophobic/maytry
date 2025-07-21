@@ -9,7 +9,6 @@ const ZIP_ERRORS = [
   'Необходимо указать Отделение получения, Город получения или Почтовый индекс'
 ]
 
-
 const useProceedAfterAddressCheck = () => {
   const { deliveryType } = useStore()
   const { setParselCreateError } = useStore()

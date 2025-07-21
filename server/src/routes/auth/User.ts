@@ -103,13 +103,22 @@ export const updateUser = async (request: Request, response: Response): Promise<
     response.status(401).send({ error: 'Неверный token' })
     return
   }
+  let birthdateBonusGiven = false;
   if (fullName !== undefined) user.fullName = fullName
   if (phone !== undefined) user.phone = phone
-  if (birthdate !== undefined) user.birthdate = birthdate
+  if (birthdate !== undefined) {
+    if (!user.birthdate && birthdate) {
+      // Grant 500₽ perpetual bonus for filling birthday for the first time
+      const { addBonus } = await import('../../utils/bonuses');
+      user = addBonus(user, 500, 'perpetual', 'Бонус за заполнение дня рождения');
+      birthdateBonusGiven = true;
+    }
+    user.birthdate = birthdate
+  }
   if (deliveryType !== undefined) user.deliveryType = deliveryType
   if (deliveryAddress !== undefined) user.deliveryAddress = deliveryAddress
   await storage.update('users.json', user)
-  response.send({ success: true })
+  response.send({ success: true, birthdateBonusGiven })
 }
 
 
