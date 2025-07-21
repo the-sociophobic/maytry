@@ -412,29 +412,29 @@ $color-square-size: 12px
 .Radio
   @extend .d-flex
   @extend .flex-column
-  &__option
-    padding-left: 12px
-    position: relative
-    cursor: pointer
-    &::before,
-    &::after
-      content: ''
-      position: absolute
-      border-radius: 10px
-      top: 50%
-      transform: translateY(-50%)
-    &::before
-      left: 0
-      width: 10px
-      height: 10px
-      border: 1px solid black
-    &--selected
-      cursor: default
-      &::after
-        left: 2px
-        width: 6px
-        height: 6px
-        background-color: black
+
+// Auth pages layout
+.auth-layout
+  display: flex
+  min-height: calc(100vh - 70px) // Assuming 70px header height
+  align-items: stretch // Stretch columns to full height
+  overflow-x: hidden // Prevent horizontal scrolling
+
+  &__form
+    flex: 1 1 50%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    padding: 2rem
+
+  &__image
+    flex: 1 1 50%
+    background-size: cover
+    background-position: center
+    display: none // Hidden by default on small screens
+    @include media-breakpoint-up(md)
+      display: block // Shown on medium screens and up
 
 
 .Orders

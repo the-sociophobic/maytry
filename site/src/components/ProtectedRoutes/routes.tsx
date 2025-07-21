@@ -9,6 +9,7 @@ import Success from '../../pages/Success'
 import Fail from '../../pages/Fail'
 import Admin from '../../pages/Admin'
 import Checkout from '../../pages/Checkout'
+import PrivacyPolicy from '../../pages/PrivacyPolicy'
 
 
 export type RouteType = {
@@ -39,6 +40,11 @@ const routes: RouteType[] = [
     to: '/loyalty',
     title: 'Система лояльности',
     Comp: <Loyalty />,
+  },
+  {
+    to: '/privacy-policy',
+    title: 'Политика конфиденциальности',
+    Comp: <PrivacyPolicy />,
   },
   {
     to: '/cart',
