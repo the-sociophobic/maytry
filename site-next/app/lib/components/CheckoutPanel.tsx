@@ -15,6 +15,9 @@ import useTotalPriceWithPromocode from '../hooks/useTotalPriceWithPromocode'
 import countableModels from '../utils/countable/models'
 import { PaymentTypeType } from '../types/frontend.type'
 import useTotalPriceWithPromocodeAndBoxberry from '../hooks/useTotalPriceWithPromocodeAndBoxberry'
+import Checkbox from './Checkbox'
+import useOrderCreate from '../hooks/useOrderCreate'
+import useUser from '../hooks/user/useUser'
 
 
 const CheckoutPanel: FC = () => {
@@ -34,6 +37,11 @@ const CheckoutPanel: FC = () => {
   const { userCity } = useStore()
   const { parselCreateError } = useStore()
   const { setParselCreateError } = useStore()
+  const { useBonuses, setUseBonuses } = useStore()
+  const { data: user } = useUser()
+  const orderCreate = useOrderCreate()
+  const [showBonusSnackbar, setShowBonusSnackbar] = useState(false)
+  const [bonusesSpent, setBonusesSpent] = useState(0)
 
   const data_not_filled = userFullName.length < 3
     || userPhone.length < 7
@@ -93,6 +101,11 @@ const CheckoutPanel: FC = () => {
       'Оплата долями CloudPayments',
       'Оплата при получении'
     ]
+
+  const availableBonuses = (user?.bonuses ?? []).filter((b: any) => (!b.expiresAt || b.expiresAt > Date.now())).reduce((sum: number, b: any) => sum + (b.amount - (b.usedAmount || 0)), 0)
+  const maxBonusesToUse = Math.floor(totalPriceWithPromocode * 0.3)
+  const bonusesToUse = useBonuses ? Math.min(availableBonuses, maxBonusesToUse) : 0
+  const totalWithBonuses = totalPriceWithPromocodeAndBoxberry - bonusesToUse
 
   return (
     <>
@@ -161,6 +174,16 @@ const CheckoutPanel: FC = () => {
           </div>
         </div>
       }
+      {useBonuses && bonusesToUse > 0 && (
+        <div className='d-flex flex-row mt-3' style={{ color: '#1a8917', fontWeight: 500 }}>
+          <div className=''>
+            Использовано:
+          </div>
+          <div className='ms-auto'>
+            {bonusesToUse} CTRL
+          </div>
+        </div>
+      )}
       <div
         className='d-flex flex-row mt-3'
       >
@@ -168,7 +191,7 @@ const CheckoutPanel: FC = () => {
           Итого.
         </div>
         <div className='ms-auto'>
-          {printPrice(totalPriceWithPromocodeAndBoxberry)}
+          {printPrice(totalWithBonuses)}
         </div>
       </div>
 
@@ -193,11 +216,45 @@ const CheckoutPanel: FC = () => {
           ERR: {parselCreateError}
         </div>
       }
-      <div className='d-flex flex-row justify-content-between py-3 mt-5'>
-        <OrderCreateButton
-          disabled={data_not_filled}
+      <div className='d-flex flex-row align-items-center my-3'>
+        <Checkbox
+          value={useBonuses}
+          onChange={setUseBonuses}
+          label={`Использовать бонусы (Ctrl Coins) — доступно: ${availableBonuses} ₽ (до 30% от суммы заказа)`}
         />
       </div>
+      <div className='d-flex flex-row justify-content-between py-3'>
+        <OrderCreateButton
+          disabled={data_not_filled}
+          price={totalWithBonuses}
+          onClick={async () => {
+            const { bonusesUsed } = await orderCreate({ bonusesToUse, totalWithBonuses })
+            if (bonusesUsed > 0) {
+              setBonusesSpent(bonusesUsed)
+              setShowBonusSnackbar(true)
+              setTimeout(() => setShowBonusSnackbar(false), 5000)
+            }
+          }}
+        />
+      </div>
+      {showBonusSnackbar && (
+        <div style={{
+          position: 'fixed',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          margin: '0 auto',
+          background: '#222',
+          color: '#fff',
+          padding: 16,
+          textAlign: 'center',
+          zIndex: 9999,
+          borderRadius: 8,
+          maxWidth: 400
+        }}>
+          Использовано: {bonusesSpent} CTRL
+        </div>
+      )}
     </>
   )
 }

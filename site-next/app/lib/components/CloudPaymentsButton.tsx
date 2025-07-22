@@ -14,11 +14,15 @@ import useTotalPriceWithPromocodeAndBoxberry from '../hooks/useTotalPriceWithPro
 
 export type CloudPaymentsButtonProps = {
   disabled?: boolean
+  price?: number
+  onClick?: () => void | Promise<void>
 }
 
 
 const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
-  disabled
+  disabled,
+  price,
+  onClick
 }) => {
   const totalPriceWithPromocodeAndBoxberry = useTotalPriceWithPromocodeAndBoxberry()
 
@@ -32,9 +36,9 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
     .map(item => `${item.name} (${item.color?.name} ${item.size.name}) × ${item.quantity}`)
     .join(', ')
 
-  const onClick = () => {
+  const onClickDefault = () => {
     proceedAfterAddressCheck(async () => openCloudpayments({
-      amount: totalPriceWithPromocodeAndBoxberry,
+      amount: price ?? totalPriceWithPromocodeAndBoxberry,
       description: itemsList,
       onSuccess: (_options) => console.log('onSuccess', _options),
       onFail: () => {
@@ -55,9 +59,9 @@ const CloudPaymentsButton: FC<CloudPaymentsButtonProps> = ({
     <Button
       black
       disabled={disabled}
-      onClick={onClick}
+      onClick={onClick ? onClick : onClickDefault}
     >
-      ОПЛАТИТЬ {printPrice(totalPriceWithPromocodeAndBoxberry)}
+      ОПЛАТИТЬ {printPrice(price ?? totalPriceWithPromocodeAndBoxberry)}
     </Button>
   )
 }

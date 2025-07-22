@@ -3,14 +3,14 @@
 import { FC } from 'react'
 
 import useLogin from '../lib/hooks/user/useLogin'
-import CredentialsInput from '../lib/components/CredentialsInput'
+import CredentialsInputLogin from '../lib/components/CredentialsInputLogin'
 
 
 const Login: FC = () => {
   const login = useLogin()
 
   return (
-    <CredentialsInput
+    <CredentialsInputLogin
       label='Вход'
       buttonLabel='Войти'
       onClick={login}

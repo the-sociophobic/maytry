@@ -38,6 +38,7 @@ export type ParselCreateRequestTypeBE = {
 
 export type ParselCreateRequestTypeFE = Omit<ParselCreateRequestTypeBE, 'order_id' | 'items'> & {
   items: ItemInCartType[]
+  bonusesUsed?: number
 }
 
 export type OrderType = ParselCreateRequestTypeFE & {

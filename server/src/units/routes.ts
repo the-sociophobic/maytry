@@ -12,6 +12,7 @@ import LoginAfterOrder from '../routes/auth/LoginAfterOrder'
 import Register from '../routes/auth/Register'
 import User, { changePassword, resetPasswordRequest, resetPassword, updateUser } from '../routes/auth/User'
 import UserOrders from '../routes/auth/UserOrders'
+import Users from '../routes/auth/Users'
 
 import { RouteType } from '../types/routes.type'
 
@@ -108,6 +109,11 @@ const routes: RouteType[] = [
     type: 'POST',
     path: '/update-user',
     fn: updateUser
+  },
+  {
+    type: 'GET',
+    path: '/users',
+    fn: Users
   },
   // AUTHORIZATION END
 ]

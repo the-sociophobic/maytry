@@ -93,7 +93,7 @@ export const resetPassword = async (request: Request, response: Response): Promi
 
 // Обновление персональных данных пользователя
 export const updateUser = async (request: Request, response: Response): Promise<void> => {
-  const { token, fullName, phone, birthdate, deliveryType, deliveryAddress } = request.body
+  const { token, fullName, phone, birthdate, deliveryType, deliveryAddress, bonuses } = request.body
   if (!token) {
     response.status(400).send({ error: 'Token обязателен' })
     return
@@ -117,6 +117,7 @@ export const updateUser = async (request: Request, response: Response): Promise<
   }
   if (deliveryType !== undefined) user.deliveryType = deliveryType
   if (deliveryAddress !== undefined) user.deliveryAddress = deliveryAddress
+  if (bonuses !== undefined) user.bonuses = bonuses
   await storage.update('users.json', user)
   response.send({ success: true, birthdateBonusGiven })
 }

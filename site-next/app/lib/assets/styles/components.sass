@@ -570,3 +570,31 @@ $color-square-size: 12px
 .DolyameImg
   height: 10px
   width: auto
+
+.auth-layout
+  display: flex
+  min-height: calc(100vh - 70px)
+  align-items: stretch
+  overflow-x: hidden
+
+  &__form
+    flex: 1 1 50%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    padding: 2rem
+
+  &__image
+    flex: 1 1 50%
+    background-size: cover
+    background-position: center
+    display: none // Hidden by default on small screens
+    @include media-breakpoint-up(md)
+      display: block
+
+a, .link-underline-black
+  text-decoration: underline !important
+  text-decoration-color: #000 !important
+  text-underline-offset: 2px
+  color: #000 !important

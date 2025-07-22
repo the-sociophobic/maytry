@@ -126,6 +126,9 @@ export type StateType = {
 
   currentColor: ParsedColorType | undefined
   setCurrentColor: (currentColor: ParsedColorType | undefined) => void
+
+  useBonuses: boolean
+  setUseBonuses: (useBonuses: boolean) => void
 }
 
 
@@ -280,5 +283,8 @@ export const initializer = (set: initializerFnType) => ({
 
   currentColor: undefined,
   setCurrentColor: (currentColor: ParsedColorType | undefined) => set({ currentColor }),
+
+  useBonuses: false,
+  setUseBonuses: (useBonuses: boolean) => set({ useBonuses }),
 
 })

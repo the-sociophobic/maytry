@@ -21,7 +21,7 @@ export type RegisterRequestType = LoginRequestType
 export type RegisterResponseType = LoginResponseType
 
 export type UserRequestType = Pick<UserType, 'token'>
-export type UserResponseType = Pick<UserType, 'id' | 'email' | 'registrationDate'>
+export type UserResponseType = Omit<UserType, 'password'>
 
 export type UserOrdersRequestType = Pick<UserType, 'token'>
 export type UserOrdersResponseType = { orders: OrderType[] }

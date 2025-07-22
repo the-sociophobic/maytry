@@ -9,11 +9,15 @@ import useProceedAfterAddressCheck from '../hooks/useProceedAfterAddressCheck'
 
 export type OrderCreateButtonProps = {
   disabled?: boolean
+  price?: number
+  onClick?: () => void | Promise<void>
 }
 
 
 const OrderCreateButton: FC<OrderCreateButtonProps> = ({
-  disabled
+  disabled,
+  price,
+  onClick
 }) => {
   const { paymentType } = useStore()
   const orderCreate = useOrderCreate()
@@ -26,7 +30,11 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
       disabled={disabled}
       onClick={async () => {
         setIsLoading(true)
-        await proceedAfterAddressCheck(orderCreate)
+        if (onClick) {
+          await onClick()
+        } else {
+          await proceedAfterAddressCheck(orderCreate)
+        }
         setIsLoading(false)
       }}
     >
@@ -35,6 +43,8 @@ const OrderCreateButton: FC<OrderCreateButtonProps> = ({
     :
     <CloudPaymentsButton
       disabled={disabled}
+      price={price}
+      onClick={onClick}
     />
 }
 

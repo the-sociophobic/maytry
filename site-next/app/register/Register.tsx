@@ -3,14 +3,14 @@
 import { FC } from 'react'
 
 import useRegister from '../lib/hooks/user/useRegister'
-import CredentialsInput from '../lib/components/CredentialsInput'
+import CredentialsInputRegister from '../lib/components/CredentialsInputRegister'
 
 
 const Register: FC = () => {
   const register = useRegister()
 
   return (
-    <CredentialsInput
+    <CredentialsInputRegister
       label='Регистрация'
       buttonLabel='Зарегистрироваться'
       onClick={register}

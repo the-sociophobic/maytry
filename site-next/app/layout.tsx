@@ -4,6 +4,7 @@ import QueryWrapper from './lib/components/QueryWrapper'
 import { ScrollToWrapper } from './lib/components/ScrollTo'
 import AppLayout from './lib/components/AppLayout'
 import { StoreProvider } from './lib/hooks/useStore/StoreProvider'
+import { NotificationProvider } from './lib/components/NotificationProvider';
 
 import '@/app/lib/assets/styles/index.sass'
 
@@ -24,7 +25,9 @@ export default function RootLayout({
           <StoreProvider>
             <ScrollToWrapper>
               <AppLayout>
-                {children}
+                <NotificationProvider>
+                  {children}
+                </NotificationProvider>
               </AppLayout>
             </ScrollToWrapper>
           </StoreProvider>

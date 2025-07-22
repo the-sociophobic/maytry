@@ -43,10 +43,10 @@ const useOrderCreate = () => {
   
   const loginAfterOrder = useLoginAfterOrder()
 
-  const orderCreate = useCallback(async () => {
+  const orderCreate = useCallback(async ({ bonusesToUse, totalWithBonuses }: { bonusesToUse?: number, totalWithBonuses?: number } = {}) => {
     const res = await parselCreate({
-      price: totalPriceWithPromocode,
-      payment_sum: paymentType === 'Оплата при получении' ? totalPriceWithPromocodeAndBoxberry : 0,
+      price: totalWithBonuses ?? totalPriceWithPromocode,
+      payment_sum: paymentType === 'Оплата при получении' ? (totalWithBonuses ?? totalPriceWithPromocodeAndBoxberry) : 0,
       delivery_sum: deliveryPrice,
 
       pvz_number: kurdost ? undefined : boxberryData?.id || '',
@@ -59,13 +59,15 @@ const useOrderCreate = () => {
       email: userEmail,
 
       items: itemsInCart,
-      promocode: currentPromocode
+      promocode: currentPromocode,
+      bonusesUsed: bonusesToUse || 0
     })
     console.log('parselCreate', res)
 
     if ((res as ParselCreateResponseErrorType).err) {
       setParselCreateError((res as ParselCreateResponseErrorType).err)
       router.push('/fail')
+      return { bonusesUsed: 0 }
     } else {
       dataLayer({
         actionType: 'purchase',
@@ -80,6 +82,7 @@ const useOrderCreate = () => {
       loginAfterOrder({ email: userEmail })
       // setBoxberryData(undefined)
       router.push('/success')
+      return { bonusesUsed: (res as any).bonusesUsed || 0 }
     }
   }, [
     totalPriceWithPromocode,
@@ -103,7 +106,6 @@ const useOrderCreate = () => {
     userPhone,
     userZIP
   ])
-
 
   return orderCreate
 }
